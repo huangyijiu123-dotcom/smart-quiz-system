@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主界面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dark-theme.css">
+    <script src="webview-compat.js"></script>
+    <script src="theme-manager.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 主内容区域 -->
+    <div class="bg-white min-h-screen">
+        <!-- 头部区域 -->
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-8 text-white">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold mb-1">智能刷题</h1>
+                    <p class="text-blue-100 text-sm">让学习更高效</p>
+                </div>
+                <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-graduation-cap text-xl"></i>
+                </div>
+            </div>
+            
+            <!-- 今日数据卡片 -->
+            <div class="bg-white bg-opacity-10 rounded-2xl p-4 backdrop-blur-sm">
+                <div class="flex justify-between items-center">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold" id="today-questions">0</div>
+                        <div class="text-xs text-blue-100">今日答题</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold" id="accuracy-rate">0%</div>
+                        <div class="text-xs text-blue-100">正确率</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 题目类型选择 -->
+        <div class="px-6 py-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">选择题目类型</h2>
+            <div class="space-y-4">
+                <!-- 单选题 -->
+                <div class="card-hover bg-white rounded-2xl p-5 shadow-sm border border-gray-100 cursor-pointer">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-dot-circle text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">单选题</h3>
+                                <p class="text-sm text-gray-500">从多个选项中选择一个正确答案</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">0题</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 多选题 -->
+                <div class="card-hover bg-white rounded-2xl p-5 shadow-sm border border-gray-100 cursor-pointer">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-check-square text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">多选题</h3>
+                                <p class="text-sm text-gray-500">从多个选项中选择多个正确答案</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">0题</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 判断题 -->
+                <div class="card-hover bg-white rounded-2xl p-5 shadow-sm border border-gray-100 cursor-pointer">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-question-circle text-orange-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">判断题</h3>
+                                <p class="text-sm text-gray-500">判断题目描述是否正确</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">0题</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 快捷功能 -->
+        <div class="px-6 py-4">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">快捷功能</h2>
+            <div class="grid grid-cols-1 gap-4">
+                <!-- 设置 -->
+                <div class="card-hover bg-gradient-to-br from-gray-600 to-gray-700 rounded-2xl p-5 text-white cursor-pointer">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold mb-1">设置</h3>
+                            <p class="text-xs text-gray-300">个性化配置</p>
+                        </div>
+                        <i class="fas fa-cog text-2xl text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 最近练习 -->
+        <div class="px-6 py-4 pb-24">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">最近练习</h2>
+            <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-book-open text-gray-400 text-2xl"></i>
+                </div>
+                <h3 class="text-gray-600 font-medium mb-2">暂无练习记录</h3>
+                <p class="text-gray-400 text-sm">开始你的第一次练习吧</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3">
+        <div class="flex justify-around items-center">
+            <div class="flex flex-col items-center space-y-1 nav-item" data-page="main">
+                <i class="fas fa-home text-blue-600 text-lg"></i>
+                <span class="text-xs text-blue-600 font-medium">首页</span>
+            </div>
+            <div class="flex flex-col items-center space-y-1 nav-item" data-page="wrong">
+                <i class="fas fa-exclamation-triangle text-gray-400 text-lg"></i>
+                <span class="text-xs text-gray-400">错题</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 页面跳转功能
+        function navigateTo(page) {
+            // 检查是否在iframe中
+            if (window.parent !== window) {
+                // 在iframe中，使用postMessage通信
+                window.parent.postMessage({ action: 'navigate', page: page.replace('.html', '') }, '*');
+            } else {
+                // 直接访问，使用location跳转
+                window.location.href = page;
+            }
+        }
+
+        // 题目类型选择跳转
+        function selectQuestionType(type) {
+            WebViewCompat.storage.setItem('questionType', type);
+            navigateTo('select.html');
+        }
+
+        // 底部导航栏跳转
+        function navigateToTab(tab) {
+            switch(tab) {
+                case 'home':
+                    // 已在首页，无需跳转
+                    break;
+                case 'practice':
+                    navigateTo('select.html');
+                    break;
+                case 'wrong':
+                    navigateTo('wrong.html');
+                    break;
+            }
+        }
+
+        // 更新今日统计数据
+        function updateTodayStats() {
+            const today = new Date().toDateString();
+            
+            // 获取今日答题记录
+            const todayAnswers = JSON.parse(WebViewCompat.storage.getItem('todayAnswers') || '[]');
+            const todayQuestions = todayAnswers.filter(answer => 
+                new Date(answer.date).toDateString() === today
+            );
+            
+            // 计算今日答题数量
+            const todayCount = todayQuestions.length;
+            
+            // 计算今日正确率
+            let accuracyRate = 0;
+            if (todayCount > 0) {
+                const correctCount = todayQuestions.filter(answer => answer.isCorrect).length;
+                accuracyRate = Math.round((correctCount / todayCount) * 100);
+            }
+            
+            // 更新页面显示
+            const todayQuestionsElement = document.getElementById('today-questions');
+            const accuracyRateElement = document.getElementById('accuracy-rate');
+            
+            if (todayQuestionsElement) {
+                todayQuestionsElement.textContent = todayCount;
+            }
+            
+            if (accuracyRateElement) {
+                accuracyRateElement.textContent = accuracyRate + '%';
+            }
+        }
+        
+        // 更新题目数量显示
+        function updateQuestionCounts() {
+            // 检查题库是否已加载
+            if (!window.questionBank) {
+                console.log('题库未加载，无法更新题目数量');
+                return;
+            }
+            
+            try {
+                // 获取各题型的题目数量
+                const singleChoiceCount = window.questionBank.getTotalCount('单选题') || 0;
+                const multipleChoiceCount = window.questionBank.getTotalCount('多选题') || 0;
+                const judgmentCount = window.questionBank.getTotalCount('判断题') || 0;
+                
+                console.log('题目数量统计:', {
+                    单选题: singleChoiceCount,
+                    多选题: multipleChoiceCount,
+                    判断题: judgmentCount
+                });
+                
+                // 更新单选题数量显示
+                const questionCards = document.querySelectorAll('.card-hover');
+                if (questionCards.length >= 3) {
+                    const singleChoiceSpan = questionCards[0].querySelector('span.text-xs.bg-blue-100');
+                    if (singleChoiceSpan) {
+                        singleChoiceSpan.textContent = singleChoiceCount + '题';
+                    }
+                    
+                    // 更新多选题数量显示
+                    const multipleChoiceSpan = questionCards[1].querySelector('span.text-xs.bg-green-100');
+                    if (multipleChoiceSpan) {
+                        multipleChoiceSpan.textContent = multipleChoiceCount + '题';
+                    }
+                    
+                    // 更新判断题数量显示
+                    const judgmentSpan = questionCards[2].querySelector('span.text-xs.bg-orange-100');
+                    if (judgmentSpan) {
+                        judgmentSpan.textContent = judgmentCount + '题';
+                    }
+                }
+                
+            } catch (error) {
+                console.error('更新题目数量时出错:', error);
+            }
+        }
+
+        // 页面加载完成后添加事件监听
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化主题
+            if (window.themeManager) {
+                window.themeManager.init();
+            }
+            
+            // 更新今日统计数据
+            updateTodayStats();
+            
+            // 延迟更新题目数量，确保题库已加载
+            setTimeout(function() {
+                updateQuestionCounts();
+            }, 100);
+            
+            // 如果题库还未加载，再次尝试
+            setTimeout(function() {
+                if (window.questionBank) {
+                    updateQuestionCounts();
+                }
+            }, 500);
+            
+            // 题目类型卡片点击事件
+            const questionCards = document.querySelectorAll('.card-hover');
+            questionCards.forEach((card, index) => {
+                card.addEventListener('click', function() {
+                    const types = ['single', 'multiple', 'judge'];
+                    if (index < 3) {
+                        selectQuestionType(types[index]);
+                    }
+                });
+            });
+
+            // 快捷功能按钮点击事件
+            const settingsBtn = document.querySelector('.bg-gradient-to-br.from-gray-600');
+            
+            if (settingsBtn) {
+                settingsBtn.addEventListener('click', () => navigateTo('settings.html'));
+            }
+
+            // 底部导航栏点击事件
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((item) => {
+                item.addEventListener('click', function() {
+                    const page = item.getAttribute('data-page');
+                    if (page === 'main') {
+                        // 已在首页，无需跳转
+                        return;
+                    }
+                    navigateTo(page + '.html');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

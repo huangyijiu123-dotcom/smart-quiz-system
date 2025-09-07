@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错题库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dark-theme.css">
+    <script src="webview-compat.js"></script>
+    <script src="theme-manager.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .empty-state {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .difficulty-easy { background: linear-gradient(135deg, #10b981, #34d399); }
+        .difficulty-medium { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .difficulty-hard { background: linear-gradient(135deg, #ef4444, #f87171); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 主内容区域 -->
+    <div class="bg-white min-h-screen">
+        <!-- 头部导航 -->
+        <div class="bg-white px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-arrow-left text-gray-600 text-lg cursor-pointer"></i>
+                    <h1 class="text-xl font-semibold text-gray-800">错题库</h1>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-filter text-gray-400 text-lg cursor-pointer"></i>
+                    <i class="fas fa-search text-gray-400 text-lg cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 错题统计卡片 -->
+        <div class="px-6 py-4 bg-gradient-to-r from-red-50 to-orange-50">
+            <div class="bg-white rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-red-600">0</div>
+                        <div class="text-xs text-gray-500">错题总数</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-orange-600">0</div>
+                        <div class="text-xs text-gray-500">待复习</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-600">0</div>
+                        <div class="text-xs text-gray-500">已掌握</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-600">0%</div>
+                        <div class="text-xs text-gray-500">掌握率</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 快捷操作 -->
+        <div class="px-6 py-4">
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <button class="card-hover bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-2xl p-4 font-medium" onclick="startReview()">
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fas fa-play"></i>
+                        <span>开始复习</span>
+                    </div>
+                </button>
+                <button class="card-hover bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-2xl p-4 font-medium" onclick="randomPractice()">
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fas fa-random"></i>
+                        <span>随机练习</span>
+                    </div>
+                </button>
+            </div>
+            <button class="card-hover bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-2xl p-4 font-medium w-full" onclick="resetWrongQuestions()">
+                <div class="flex items-center justify-center space-x-2">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>重置错题库</span>
+                </div>
+            </button>
+        </div>
+
+        <!-- 错题分类 -->
+        <div class="px-6 py-2">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">错题分类</h3>
+                <span class="text-sm text-gray-500">按题型分组</span>
+            </div>
+            
+            <div class="space-y-3">
+                <!-- 单选题错题 -->
+                <div class="card-hover bg-white rounded-2xl p-4 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-dot-circle text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">单选题</h4>
+                                <p class="text-sm text-gray-500">0道错题待复习</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">0题</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 多选题错题 -->
+                <div class="card-hover bg-white rounded-2xl p-4 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-check-square text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">多选题</h4>
+                                <p class="text-sm text-gray-500">0道错题待复习</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">0题</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 判断题错题 -->
+                <div class="card-hover bg-white rounded-2xl p-4 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-question-circle text-orange-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">判断题</h4>
+                                <p class="text-sm text-gray-500">0道错题待复习</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">0题</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 最近错题 -->
+        <div class="px-6 py-4 pb-24">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">最近错题</h3>
+                <span class="text-sm text-blue-600 cursor-pointer">查看全部</span>
+            </div>
+            
+            <div class="space-y-3">
+                <!-- 错题1 -->
+                <div class="card-hover bg-white rounded-2xl p-4 border border-gray-200">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-red-600 font-semibold text-sm">1</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-800 font-medium text-sm mb-2">
+                                在JavaScript中，以下哪个方法可以用来向数组末尾添加元素？
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">单选题</span>
+                                    <span class="text-xs difficulty-medium text-white px-2 py-1 rounded-full">中等</span>
+                                    <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">错误2次</span>
+                                </div>
+                                <span class="text-xs text-gray-500">2小时前</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 错题2 -->
+                <div class="card-hover bg-white rounded-2xl p-4 border border-gray-200">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-red-600 font-semibold text-sm">2</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-800 font-medium text-sm mb-2">
+                                CSS中flex布局的主轴方向默认是什么？
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">多选题</span>
+                                    <span class="text-xs difficulty-easy text-white px-2 py-1 rounded-full">简单</span>
+                                    <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">错误1次</span>
+                                </div>
+                                <span class="text-xs text-gray-500">昨天</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 错题3 -->
+                <div class="card-hover bg-white rounded-2xl p-4 border border-gray-200">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-red-600 font-semibold text-sm">3</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-800 font-medium text-sm mb-2">
+                                HTTP状态码404表示什么意思？
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">判断题</span>
+                                    <span class="text-xs difficulty-hard text-white px-2 py-1 rounded-full">困难</span>
+                                    <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">错误3次</span>
+                                </div>
+                                <span class="text-xs text-gray-500">3天前</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 空状态页面（当没有错题时显示） -->
+        <div id="emptyState" class="hidden px-6 py-12 text-center empty-state">
+            <div class="w-32 h-32 mx-auto mb-6 bg-green-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-check-circle text-6xl text-green-500"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">太棒了！</h3>
+            <p class="text-gray-500 mb-6">目前没有错题，继续保持这个好习惯</p>
+            <button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium px-8 py-3 rounded-2xl card-hover">
+                开始新的练习
+            </button>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3">
+        <div class="flex justify-around items-center">
+            <div class="flex flex-col items-center space-y-1 nav-item" data-page="main">
+                <i class="fas fa-home text-gray-400 text-lg"></i>
+                <span class="text-xs text-gray-400">首页</span>
+            </div>
+            <div class="flex flex-col items-center space-y-1 nav-item" data-page="wrong">
+                <i class="fas fa-exclamation-triangle text-red-600 text-lg"></i>
+                <span class="text-xs text-red-600 font-medium">错题</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 错题数据（过滤掉已移出的错题）
+        let allWrongQuestions = JSON.parse(WebViewCompat.storage.getItem('wrongQuestions') || '[]');
+        let wrongQuestions = allWrongQuestions.filter(q => !q.isRemoved);
+        
+        // 当前筛选条件
+        let currentFilter = 'all'; // all, 单选题, 多选题, 判断题
+        let currentSort = 'time'; // time, difficulty, wrongCount
+        
+        // 页面初始化
+        window.onload = function() {
+            // 初始化主题
+            if (window.themeManager) {
+                window.themeManager.init();
+            }
+            
+            loadWrongQuestions();
+            updateStatistics();
+            renderWrongQuestions();
+            bindEvents();
+        };
+        
+        // 加载错题数据（过滤已移出的错题）
+        function loadWrongQuestions() {
+            allWrongQuestions = JSON.parse(WebViewCompat.storage.getItem('wrongQuestions') || '[]');
+            wrongQuestions = allWrongQuestions.filter(q => !q.isRemoved);
+        }
+        
+        // 更新统计数据
+        function updateStatistics() {
+            const totalWrong = wrongQuestions.length;
+            const toReview = wrongQuestions.filter(q => q.status === '待复习').length;
+            const mastered = wrongQuestions.filter(q => q.status === '已掌握').length;
+            const masteryRate = totalWrong > 0 ? Math.round((mastered / totalWrong) * 100) : 0;
+            
+            // 更新统计卡片
+            const stats = document.querySelectorAll('.text-2xl.font-bold');
+            stats[0].textContent = totalWrong;
+            stats[1].textContent = toReview;
+            stats[2].textContent = mastered;
+            stats[3].textContent = masteryRate + '%';
+            
+            // 更新分类统计
+            const singleChoice = wrongQuestions.filter(q => q.type === '单选题').length;
+            const multiChoice = wrongQuestions.filter(q => q.type === '多选题').length;
+            const judgment = wrongQuestions.filter(q => q.type === '判断题').length;
+            
+            const categoryCards = document.querySelectorAll('.space-y-3 .card-hover');
+            if (categoryCards.length >= 3) {
+                categoryCards[0].querySelector('p').textContent = `${singleChoice}道错题待复习`;
+                categoryCards[0].querySelector('.text-xs.bg-red-100').textContent = `${singleChoice}题`;
+                
+                categoryCards[1].querySelector('p').textContent = `${multiChoice}道错题待复习`;
+                categoryCards[1].querySelector('.text-xs.bg-red-100').textContent = `${multiChoice}题`;
+                
+                categoryCards[2].querySelector('p').textContent = `${judgment}道错题待复习`;
+                categoryCards[2].querySelector('.text-xs.bg-red-100').textContent = `${judgment}题`;
+            }
+        }
+        
+        // 渲染错题列表
+        function renderWrongQuestions() {
+            const container = document.querySelector('.px-6.py-4.pb-24 .space-y-3');
+            if (!container) return;
+            
+            let filteredQuestions = wrongQuestions;
+            
+            // 应用筛选
+            if (currentFilter !== 'all') {
+                filteredQuestions = wrongQuestions.filter(q => q.type === currentFilter);
+            }
+            
+            // 应用排序
+            filteredQuestions.sort((a, b) => {
+                switch (currentSort) {
+                    case 'wrongCount':
+                        return b.wrongCount - a.wrongCount;
+                    case 'difficulty':
+                        const difficultyOrder = {'简单': 1, '中等': 2, '困难': 3};
+                        return difficultyOrder[b.difficulty] - difficultyOrder[a.difficulty];
+                    default:
+                        return new Date(b.lastWrongTime) - new Date(a.lastWrongTime);
+                }
+            });
+            
+            // 清空容器
+            container.innerHTML = '';
+            
+            // 渲染错题
+            filteredQuestions.forEach((question, index) => {
+                const questionElement = createQuestionElement(question, index + 1);
+                container.appendChild(questionElement);
+            });
+            
+            // 检查是否显示空状态
+            toggleEmptyState(filteredQuestions.length === 0);
+        }
+        
+        // 创建错题元素
+        function createQuestionElement(question, index) {
+            const div = document.createElement('div');
+            div.className = 'card-hover bg-white rounded-2xl p-4 border border-gray-200 cursor-pointer';
+            div.onclick = () => reviewQuestion(question.id);
+            
+            const difficultyClass = {
+                '简单': 'difficulty-easy',
+                '中等': 'difficulty-medium',
+                '困难': 'difficulty-hard'
+            }[question.difficulty];
+            
+            const typeColor = {
+                '单选题': 'bg-blue-100 text-blue-600',
+                '多选题': 'bg-green-100 text-green-600',
+                '判断题': 'bg-orange-100 text-orange-600'
+            }[question.type];
+            
+            div.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span class="text-red-600 font-semibold text-sm">${index}</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-gray-800 font-medium text-sm mb-2">
+                            ${question.question}
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs ${typeColor} px-2 py-1 rounded-full">${question.type}</span>
+                                <span class="text-xs ${difficultyClass} text-white px-2 py-1 rounded-full">${question.difficulty}</span>
+                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">错误${question.wrongCount}次</span>
+                            </div>
+                            <span class="text-xs text-gray-500">${question.lastWrongTime}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+        
+        // 切换空状态
+        function toggleEmptyState(isEmpty) {
+            const emptyState = document.getElementById('emptyState');
+            const contentSections = document.querySelectorAll('.px-6.py-4, .px-6.py-2');
+            
+            if (isEmpty) {
+                emptyState.classList.remove('hidden');
+                contentSections.forEach(section => {
+                    if (!section.querySelector('#emptyState')) {
+                        section.style.display = 'none';
+                    }
+                });
+            } else {
+                emptyState.classList.add('hidden');
+                contentSections.forEach(section => {
+                    section.style.display = 'block';
+                });
+            }
+        }
+        
+        // 开始复习
+        function startReview() {
+            const toReviewQuestions = wrongQuestions.filter(q => q.status === '待复习');
+            if (toReviewQuestions.length === 0) {
+                WebViewCompat.dialog.alert('暂无待复习的错题');
+                return;
+            }
+            
+            const questionIds = toReviewQuestions.map(q => q.id).join(',');
+            if (window.parent !== window) {
+                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=all&questions=${questionIds}` }, '*');
+            } else {
+                window.location.href = `review.html?mode=all&questions=${questionIds}`;
+            }
+        }
+        
+        // 随机练习
+        function randomPractice() {
+            if (wrongQuestions.length === 0) {
+                WebViewCompat.dialog.alert('暂无错题可供练习');
+                return;
+            }
+            
+            const shuffledQuestions = [...wrongQuestions].sort(() => Math.random() - 0.5);
+            const questionIds = shuffledQuestions.map(q => q.id).join(',');
+            if (window.parent !== window) {
+                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=all&questions=${questionIds}` }, '*');
+            } else {
+                window.location.href = `review.html?mode=all&questions=${questionIds}`;
+            }
+        }
+        
+        // 复习单个错题
+        function reviewQuestion(questionId) {
+            if (window.parent !== window) {
+                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=single&questionId=${questionId}` }, '*');
+            } else {
+                window.location.href = `review.html?mode=single&questionId=${questionId}`;
+            }
+        }
+        
+        // 筛选错题
+        function filterQuestions(type) {
+            currentFilter = type;
+            renderWrongQuestions();
+        }
+        
+        // 排序错题
+        function sortQuestions(sortType) {
+            currentSort = sortType;
+            renderWrongQuestions();
+        }
+        
+        // 删除错题
+        function removeWrongQuestion(questionId) {
+            const index = wrongQuestions.findIndex(q => q.id === questionId);
+            if (index !== -1) {
+                wrongQuestions.splice(index, 1);
+                // 同时从allWrongQuestions中删除
+                const allIndex = allWrongQuestions.findIndex(q => q.id === questionId);
+                if (allIndex !== -1) {
+                    allWrongQuestions.splice(allIndex, 1);
+                }
+                // 保存到localStorage
+                WebViewCompat.storage.setItem('wrongQuestions', JSON.stringify(allWrongQuestions));
+                
+                updateStatistics();
+                renderWrongQuestions();
+                
+                // 触发数据更新事件
+                window.dispatchEvent(new CustomEvent('practiceDataUpdated', {
+                    detail: { type: 'wrongQuestions', action: 'delete', questionId }
+                }));
+                
+                // 向父窗口发送消息
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'practiceDataUpdated',
+                        data: { type: 'wrongQuestions', action: 'delete', questionId }
+                    }, '*');
+                }
+            }
+        }
+        
+        // 标记为已掌握
+        function markAsMastered(questionId) {
+            const question = wrongQuestions.find(q => q.id === questionId);
+            if (question) {
+                question.status = '已掌握';
+                // 同时更新allWrongQuestions中的状态
+                const allQuestion = allWrongQuestions.find(q => q.id === questionId);
+                if (allQuestion) {
+                    allQuestion.status = '已掌握';
+                }
+                // 保存到localStorage
+                WebViewCompat.storage.setItem('wrongQuestions', JSON.stringify(allWrongQuestions));
+                
+                updateStatistics();
+                renderWrongQuestions();
+                
+                // 触发数据更新事件
+                window.dispatchEvent(new CustomEvent('practiceDataUpdated', {
+                    detail: { type: 'wrongQuestions', action: 'mastered', questionId }
+                }));
+                
+                // 向父窗口发送消息
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'practiceDataUpdated',
+                        data: { type: 'wrongQuestions', action: 'mastered', questionId }
+                    }, '*');
+                }
+            }
+        }
+        
+        // 绑定事件
+        function bindEvents() {
+            // 返回按钮
+            document.querySelector('.fas.fa-arrow-left').onclick = () => window.history.back();
+            
+            // 筛选按钮
+            document.querySelector('.fas.fa-filter').onclick = showFilterMenu;
+            
+            // 搜索按钮
+            document.querySelector('.fas.fa-search').onclick = showSearchDialog;
+            
+            // 快捷操作按钮
+            const actionButtons = document.querySelectorAll('.grid.grid-cols-2 button');
+            actionButtons[0].onclick = startReview;
+            actionButtons[1].onclick = randomPractice;
+            
+            // 分类卡片点击
+            const categoryCards = document.querySelectorAll('.space-y-3 .card-hover');
+            if (categoryCards.length >= 3) {
+                categoryCards[0].onclick = () => filterQuestions('单选题');
+                categoryCards[1].onclick = () => filterQuestions('多选题');
+                categoryCards[2].onclick = () => filterQuestions('判断题');
+            }
+            
+            // 查看全部
+            document.querySelector('.text-sm.text-blue-600').onclick = () => filterQuestions('all');
+            
+            // 空状态按钮
+            const emptyStateButton = document.querySelector('#emptyState button');
+            if (emptyStateButton) {
+                emptyStateButton.onclick = () => {
+                    if (window.parent !== window) {
+                        window.parent.postMessage({ action: 'navigate', page: 'select' }, '*');
+                    } else {
+                        window.location.href = 'select.html';
+                    }
+                };
+            }
+            
+            // 底部导航
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            function navigateToPage(page) {
+                if (window.parent !== window) {
+                    window.parent.postMessage({ action: 'navigate', page: page }, '*');
+                } else {
+                    window.location.href = page + '.html';
+                }
+            }
+            
+            navItems.forEach((item) => {
+                item.onclick = () => {
+                    const page = item.getAttribute('data-page');
+                    if (page === 'wrong') {
+                        // 已在错题页面，无需跳转
+                        return;
+                    }
+                    navigateToPage(page);
+                };
+            });
+        }
+        
+        // 显示筛选菜单
+        function showFilterMenu() {
+            const options = ['全部', '单选题', '多选题', '判断题', '按错误次数', '按难度', '按时间'];
+            const choice = WebViewCompat.dialog.prompt('选择筛选条件：\n' + options.map((opt, i) => `${i + 1}. ${opt}`).join('\n'));
+            
+            if (choice) {
+                const index = parseInt(choice) - 1;
+                if (index >= 0 && index < 4) {
+                    currentFilter = index === 0 ? 'all' : options[index];
+                } else if (index >= 4 && index < 7) {
+                    currentSort = ['wrongCount', 'difficulty', 'time'][index - 4];
+                }
+                renderWrongQuestions();
+            }
+        }
+        
+        // 显示搜索对话框
+        function showSearchDialog() {
+            const keyword = WebViewCompat.dialog.prompt('请输入搜索关键词：');
+            if (keyword) {
+                const filteredQuestions = wrongQuestions.filter(q => 
+                    q.question.includes(keyword) || 
+                    q.explanation.includes(keyword)
+                );
+                
+                if (filteredQuestions.length === 0) {
+                    WebViewCompat.dialog.alert('未找到相关错题');
+                } else {
+                    // 临时显示搜索结果
+                    const container = document.querySelector('.px-6.py-4.pb-24 .space-y-3');
+                    container.innerHTML = '';
+                    filteredQuestions.forEach((question, index) => {
+                        const questionElement = createQuestionElement(question, index + 1);
+                        container.appendChild(questionElement);
+                    });
+                }
+            }
+        }
+        
+        // 重置错题库
+        function resetWrongQuestions() {
+            if (WebViewCompat.dialog.confirm('确定要清空所有错题吗？此操作不可恢复！')) {
+                WebViewCompat.storage.removeItem('wrongQuestions');
+                wrongQuestions = [];
+                allWrongQuestions = [];
+                updateStatistics();
+                renderWrongQuestions();
+                WebViewCompat.dialog.alert('错题库已清空');
+            }
+        }
+    </script>
+</body>
+</html>

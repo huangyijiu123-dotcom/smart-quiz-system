@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刷题数量选择</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dark-theme.css">
+    <script src="webview-compat.js"></script>
+    <script src="theme-manager.js"></script>
+    <script src="questionBank.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .selected {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background-color: #e5e7eb;
+            border-radius: 12px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        .toggle-switch.active {
+            background-color: #3b82f6;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 主内容区域 -->
+    <div class="bg-white min-h-screen">
+        <!-- 头部导航 -->
+        <div class="bg-white px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-arrow-left text-gray-600 text-lg cursor-pointer"></i>
+                    <h1 class="text-xl font-semibold text-gray-800">练习设置</h1>
+                </div>
+                <i class="fas fa-question-circle text-gray-400 text-lg cursor-pointer"></i>
+            </div>
+        </div>
+
+        <!-- 题目类型显示 -->
+        <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-dot-circle text-blue-600"></i>
+                </div>
+                <div>
+                    <h2 class="font-semibold text-gray-800">单选题练习</h2>
+                    <p class="text-sm text-gray-500">共 1,245 道题目可供练习</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 刷题数量选择 -->
+        <div class="px-6 py-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">选择练习数量</h3>
+            <div class="space-y-3">
+                <!-- 50题 -->
+                <div class="card-hover bg-white rounded-2xl p-4 border-2 border-gray-200 cursor-pointer selected" onclick="selectCount(this, 50)">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                <span class="text-green-600 font-bold text-lg">50</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">快速练习</h4>
+                                <p class="text-sm text-gray-500">适合碎片时间学习</p>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 border-2 border-blue-600 rounded-full bg-blue-600 flex items-center justify-center">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 100题 -->
+                <div class="card-hover bg-white rounded-2xl p-4 border-2 border-gray-200 cursor-pointer" onclick="selectCount(this, 100)">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                                <span class="text-orange-600 font-bold text-lg">100</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">标准练习</h4>
+                                <p class="text-sm text-gray-500">深度学习，巩固知识</p>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- 全部 -->
+                <div class="card-hover bg-white rounded-2xl p-4 border-2 border-gray-200 cursor-pointer" onclick="selectCount(this, 'all')">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-infinity text-purple-600 text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">全部题目</h4>
+                                <p class="text-sm text-gray-500">挑战所有题目</p>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 练习模式设置 -->
+        <div class="px-6 py-4">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">练习模式</h3>
+            <div class="space-y-4">
+                <!-- 顺序练习 -->
+                <div class="bg-white rounded-2xl p-4 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-list-ol text-blue-600 text-lg"></i>
+                            <div>
+                                <h4 class="font-medium text-gray-800">顺序练习</h4>
+                                <p class="text-sm text-gray-500">按题目顺序依次练习</p>
+                            </div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+                    </div>
+                </div>
+
+                <!-- 随机练习 -->
+                <div class="bg-white rounded-2xl p-4 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-random text-green-600 text-lg"></i>
+                            <div>
+                                <h4 class="font-medium text-gray-800">随机练习</h4>
+                                <p class="text-sm text-gray-500">随机打乱题目顺序</p>
+                            </div>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+                    </div>
+                </div>
+
+                <!-- 错题回顾 -->
+                <div class="bg-white rounded-2xl p-4 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-exclamation-triangle text-red-600 text-lg"></i>
+                            <div>
+                                <h4 class="font-medium text-gray-800">错题回顾</h4>
+                                <p class="text-sm text-gray-500">优先练习之前做错的题目</p>
+                            </div>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他设置 -->
+        <div class="px-6 py-4">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">其他设置</h3>
+            <div class="space-y-3">
+                <!-- 重置进度 -->
+                <div class="bg-white rounded-2xl p-4 border border-gray-200 cursor-pointer card-hover">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-redo text-orange-600 text-lg"></i>
+                            <div>
+                                <h4 class="font-medium text-gray-800">重置进度</h4>
+                                <p class="text-sm text-gray-500">清除当前练习记录</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </div>
+
+                <!-- 查看统计 -->
+                <div class="bg-white rounded-2xl p-4 border border-gray-200 cursor-pointer card-hover">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-chart-bar text-purple-600 text-lg"></i>
+                            <div>
+                                <h4 class="font-medium text-gray-800">查看统计</h4>
+                                <p class="text-sm text-gray-500">查看详细练习数据</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 开始练习按钮 -->
+        <div class="px-6 py-6 pb-24">
+            <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-4 rounded-2xl shadow-lg card-hover">
+                <div class="flex items-center justify-center space-x-2">
+                    <i class="fas fa-play text-lg"></i>
+                    <span class="text-lg">开始练习</span>
+                </div>
+            </button>
+            
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-500">预计用时：<span class="font-medium text-gray-700">25-30分钟</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3">
+        <div class="flex justify-around items-center">
+            <div class="flex flex-col items-center space-y-1 nav-item" data-page="main">
+                <i class="fas fa-home text-gray-400 text-lg"></i>
+                <span class="text-xs text-gray-400">首页</span>
+            </div>
+            <div class="flex flex-col items-center space-y-1 nav-item" data-page="wrong">
+                <i class="fas fa-exclamation-triangle text-gray-400 text-lg"></i>
+                <span class="text-xs text-gray-400">错题</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedCount = 50;
+        let practiceMode = {
+            sequential: true,
+            random: false,
+            wrongReview: false
+        };
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化主题
+            if (window.themeManager) {
+                window.themeManager.init();
+            }
+            
+            // 获取题目类型并显示
+            const questionType = WebViewCompat.storage.getItem('questionType') || 'single';
+            updateQuestionTypeDisplay(questionType);
+            
+            // 添加事件监听
+            addEventListeners();
+        });
+
+        // 更新题目类型显示
+        function updateQuestionTypeDisplay(type) {
+            const typeInfo = {
+                'single': {
+                    icon: 'fas fa-dot-circle',
+                    title: '单选题练习',
+                    chineseType: '单选题'
+                },
+                'multiple': {
+                    icon: 'fas fa-check-square',
+                    title: '多选题练习',
+                    chineseType: '多选题'
+                },
+                'judge': {
+                    icon: 'fas fa-question-circle',
+                    title: '判断题练习',
+                    chineseType: '判断题'
+                }
+            };
+
+            const info = typeInfo[type];
+            
+            // 从题库获取题目数量
+            let count = 0;
+            if (window.questionBank) {
+                count = questionBank.getTotalCount(info.chineseType);
+            }
+            
+            const iconElement = document.querySelector('.bg-blue-100 i');
+            const titleElement = document.querySelector('.bg-gradient-to-r h2');
+            const countElement = document.querySelector('.bg-gradient-to-r p');
+
+            if (iconElement) iconElement.className = info.icon + ' text-blue-600';
+            if (titleElement) titleElement.textContent = info.title;
+            if (countElement) countElement.textContent = `共 ${count} 道题目可供练习`;
+        }
+
+        // 选择题目数量
+        function selectCount(element, count) {
+            // 如果是'all'，获取当前题型的总题目数量
+            if (count === 'all') {
+                const currentType = localStorage.getItem('questionType') || 'single';
+                console.log('当前题型:', currentType);
+                
+                // 将英文类型转换为中文类型
+                const typeMapping = {
+                    'single': '单选题',
+                    'multiple': '多选题',
+                    'judge': '判断题'
+                };
+                const chineseType = typeMapping[currentType];
+                console.log('转换后的中文类型:', chineseType);
+                
+                if (window.questionBank && chineseType) {
+                    selectedCount = window.questionBank.getTotalCount(chineseType);
+                    console.log('从题库获取的题目总数:', selectedCount);
+                } else {
+                    // 备用方案：根据题型设置默认值
+                    selectedCount = currentType === 'single' ? 500 : currentType === 'multiple' ? 200 : 100;
+                    console.log('使用备用方案，题目总数:', selectedCount);
+                }
+            } else {
+                selectedCount = count;
+                console.log('选择的题目数量:', selectedCount);
+            }
+            
+            // 移除所有选中状态
+            document.querySelectorAll('.selected').forEach(el => {
+                el.classList.remove('selected');
+                const checkIcon = el.querySelector('.w-5');
+                checkIcon.innerHTML = '';
+                checkIcon.className = 'w-5 h-5 border-2 border-gray-300 rounded-full';
+            });
+            
+            // 添加选中状态
+            element.classList.add('selected');
+            const checkIcon = element.querySelector('.w-5');
+            checkIcon.className = 'w-5 h-5 border-2 border-blue-600 rounded-full bg-blue-600 flex items-center justify-center';
+            checkIcon.innerHTML = '<i class="fas fa-check text-white text-xs"></i>';
+            
+            // 更新预计用时
+            updateEstimatedTime(selectedCount);
+        }
+        
+        // 切换开关
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+            
+            // 更新练习模式状态
+            const parentDiv = element.closest('.bg-white');
+            const modeText = parentDiv.querySelector('h4').textContent;
+            
+            if (modeText.includes('顺序')) {
+                practiceMode.sequential = element.classList.contains('active');
+                if (practiceMode.sequential) {
+                    practiceMode.random = false;
+                    updateSwitchState('随机练习', false);
+                }
+            } else if (modeText.includes('随机')) {
+                practiceMode.random = element.classList.contains('active');
+                if (practiceMode.random) {
+                    practiceMode.sequential = false;
+                    updateSwitchState('顺序练习', false);
+                }
+            } else if (modeText.includes('错题')) {
+                practiceMode.wrongReview = element.classList.contains('active');
+            }
+        }
+
+        // 更新开关状态
+        function updateSwitchState(modeText, isActive) {
+            const switches = document.querySelectorAll('.toggle-switch');
+            switches.forEach(switchEl => {
+                const parentText = switchEl.closest('.bg-white').querySelector('h4').textContent;
+                if (parentText.includes(modeText.split('练习')[0])) {
+                    if (isActive) {
+                        switchEl.classList.add('active');
+                    } else {
+                        switchEl.classList.remove('active');
+                    }
+                }
+            });
+        }
+
+        // 更新预计用时
+        function updateEstimatedTime(count) {
+            const timeElement = document.querySelector('.text-gray-700');
+            let estimatedTime;
+            
+            if (count === 50) {
+                estimatedTime = '25-30分钟';
+            } else if (count === 100) {
+                estimatedTime = '50-60分钟';
+            } else {
+                estimatedTime = '2-3小时';
+            }
+            
+            if (timeElement) {
+                timeElement.textContent = estimatedTime;
+            }
+        }
+
+        // 开始练习
+        function startPractice() {
+            // 获取题目类型
+            const questionType = localStorage.getItem('questionType') || 'single';
+            
+            // 转换题目类型为中文
+            const typeMap = {
+                'single': '单选题',
+                'multiple': '多选题',
+                'judge': '判断题'
+            };
+            
+            const chineseType = typeMap[questionType] || '单选题';
+            
+            // 保存练习设置
+            const practiceSettings = {
+                questionType: questionType,
+                count: selectedCount,
+                mode: practiceMode
+            };
+            
+            WebViewCompat.storage.setItem('practiceSettings', JSON.stringify(practiceSettings));
+            
+            // 构建URL参数
+            const params = `?type=${encodeURIComponent(chineseType)}&count=${selectedCount}`;
+            console.log('构建的URL参数:', params);
+            console.log('selectedCount值:', selectedCount);
+            
+            // 跳转到答题页面
+            if (window.parent !== window) {
+                window.parent.postMessage({ action: 'navigate', page: 'question', params: params }, '*');
+            } else {
+                window.location.href = 'question.html' + params;
+            }
+        }
+
+        // 返回上一页
+        function goBack() {
+            if (window.parent !== window) {
+                window.parent.postMessage({ action: 'navigate', page: 'main' }, '*');
+            } else {
+                window.location.href = 'main.html';
+            }
+        }
+
+        // 重置进度
+        function resetProgress() {
+            if (WebViewCompat.dialog.confirm('确定要重置当前练习进度吗？此操作不可恢复。')) {
+                WebViewCompat.storage.removeItem('practiceProgress');
+                WebViewCompat.storage.removeItem('wrongQuestions');
+                WebViewCompat.storage.removeItem('practiceHistory');
+                
+                // 触发数据更新事件
+                window.dispatchEvent(new CustomEvent('practiceDataUpdated', {
+                    detail: { type: 'reset', action: 'clear_all' }
+                }));
+                
+                // 向父窗口发送消息
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'practiceDataUpdated',
+                        data: { type: 'reset', action: 'clear_all' }
+                    }, '*');
+                }
+                
+                WebViewCompat.dialog.alert('进度已重置');
+            }
+        }
+
+        // 查看统计
+        function viewStatistics() {
+            alert('统计功能暂未开放');
+        }
+
+        // 底部导航
+        function navigateToTab(tab) {
+            if (window.parent !== window) {
+                // 在iframe中，使用postMessage通信
+                switch(tab) {
+                    case 'home':
+                        window.parent.postMessage({ action: 'navigate', page: 'main' }, '*');
+                        break;
+                    case 'practice':
+                        // 已在练习页面
+                        break;
+                    case 'wrong':
+                        window.parent.postMessage({ action: 'navigate', page: 'wrong' }, '*');
+                        break;
+                     break;
+                }
+            } else {
+                // 直接访问，使用location跳转
+                switch(tab) {
+                    case 'home':
+                        window.location.href = 'main.html';
+                        break;
+                    case 'practice':
+                        // 已在练习页面
+                        break;
+                    case 'wrong':
+                        window.location.href = 'wrong.html';
+                        break;
+                     break;
+                }
+            }
+        }
+
+        // 添加事件监听器
+        function addEventListeners() {
+            // 返回按钮
+            const backBtn = document.querySelector('.fa-arrow-left');
+            if (backBtn) {
+                backBtn.addEventListener('click', goBack);
+            }
+
+            // 开始练习按钮
+            const startBtn = document.querySelector('.bg-gradient-to-r.from-blue-600');
+            if (startBtn) {
+                startBtn.addEventListener('click', startPractice);
+            }
+
+            // 重置进度按钮
+            const resetBtn = document.querySelector('.fa-redo').closest('.bg-white');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', resetProgress);
+            }
+
+            // 查看统计按钮
+            const statsBtn = document.querySelector('.fa-chart-bar').closest('.bg-white');
+            if (statsBtn) {
+                statsBtn.addEventListener('click', viewStatistics);
+            }
+
+            // 底部导航
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((item) => {
+                item.addEventListener('click', function() {
+                    const page = item.getAttribute('data-page');
+                    if (page === 'select') {
+                        // 已在练习页面，无需跳转
+                        return;
+                    }
+                    const tabs = {'main': 'home', 'wrong': 'wrong'};
+                    navigateToTab(tabs[page]);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能刷题</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="webview-compat.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+        
+        /* 深色主题样式 */
+        body.theme-dark {
+            background-color: #1a1a1a;
+        }
+        
+        body.theme-dark .bg-white {
+            background-color: #2d2d2d !important;
+        }
+        
+        body.theme-dark .text-gray-800 {
+            color: #ffffff !important;
+        }
+        
+        body.theme-dark .text-red-500 {
+            color: #ff6b6b !important;
+        }
+        
+        body.theme-dark .bg-blue-500 {
+            background-color: #4a90e2 !important;
+        }
+        .app-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        .main-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+                /* WebView兼容性：为不支持gap的浏览器添加margin */
+                margin: -8px;
+            }
+            .nav-item {
+                margin: 8px;
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 加载动画 -->
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p class="text-gray-600">正在加载...</p>
+        </div>
+        
+        <!-- 主应用iframe -->
+        <iframe id="mainIframe" class="main-iframe hidden" src="main.html"></iframe>
+    </div>
+
+    <script>
+        // 应用状态管理
+        let currentPage = 'main';
+        const iframe = document.getElementById('mainIframe');
+        const loading = document.getElementById('loading');
+
+        // 页面导航函数
+        function navigateToPage(page, params = '') {
+            const fullPage = page + params;
+            if (currentPage === fullPage) return;
+            
+            console.log('导航到页面:', fullPage);
+            currentPage = fullPage;
+            
+            // 显示加载动画
+            loading.classList.remove('hidden');
+            iframe.classList.add('hidden');
+            
+            // 更新iframe源
+            iframe.src = page + '.html' + params;
+        }
+
+        // iframe加载完成处理
+        iframe.addEventListener('load', function() {
+            console.log('页面加载完成:', currentPage);
+            
+            // 隐藏加载动画，显示内容
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                iframe.classList.remove('hidden');
+                
+                // 向新加载的页面发送可见事件
+                setTimeout(() => {
+                    if (iframe.contentWindow) {
+                        iframe.contentWindow.postMessage({
+                            action: 'pageVisible',
+                            page: currentPage
+                        }, '*');
+                    }
+                }, 100);
+            }, 300);
+        });
+
+        // 监听来自iframe的消息
+        window.addEventListener('message', function(event) {
+            console.log('收到消息:', event.data);
+            
+            if (event.data && event.data.action === 'navigate') {
+                const targetPage = event.data.page;
+                const params = event.data.params || '';
+                if (targetPage) {
+                    navigateToPage(targetPage, params);
+                }
+            } else if (event.data && event.data.action === 'themeChange') {
+                // 应用主题到主窗口
+                const body = document.body;
+                body.classList.remove('theme-light', 'theme-dark', 'theme-auto');
+                
+                if (event.data.isDark) {
+                    body.classList.add('theme-dark');
+                } else {
+                    body.classList.add('theme-light');
+                }
+                
+                // 保存主题设置
+                WebViewCompat.storage.setItem('appTheme', event.data.theme);
+            } else if (event.data && event.data.action === 'practiceDataUpdated') {
+                // 转发练习数据更新消息给当前iframe
+                const currentIframe = document.getElementById('mainIframe');
+                if (currentIframe && currentIframe.contentWindow) {
+                    currentIframe.contentWindow.postMessage({
+                        action: 'practiceDataUpdated',
+                        data: event.data.data
+                    }, '*');
+                }
+                
+                // 同时触发全局事件
+                window.dispatchEvent(new CustomEvent('practiceDataUpdated', {
+                    detail: { practiceRecord: event.data.data }
+                }));
+            }
+        });
+
+        // 初始化应用
+        function initApp() {
+            console.log('初始化应用');
+            
+            // 加载保存的主题设置
+            const savedTheme = WebViewCompat.storage.getItem('appTheme');
+            if (savedTheme) {
+                const body = document.body;
+                body.classList.remove('theme-light', 'theme-dark', 'theme-auto');
+                
+                if (savedTheme === 'dark') {
+                    body.classList.add('theme-dark');
+                } else if (savedTheme === 'auto') {
+                    // 自动主题逻辑
+                    if (WebViewCompat.mediaQuery.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        body.classList.add('theme-dark');
+                    } else {
+                        const hour = new Date().getHours();
+                        if (hour >= 18 || hour <= 6) {
+                            body.classList.add('theme-dark');
+                        }
+                    }
+                } else {
+                    body.classList.add('theme-light');
+                }
+            }
+            
+            // 初始加载主页面
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                iframe.classList.remove('hidden');
+            }, 1000);
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        // 错误处理
+        iframe.addEventListener('error', function() {
+            console.error('页面加载失败:', currentPage);
+            loading.innerHTML = `
+                <div class="text-red-500">
+                    <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                    <p>页面加载失败</p>
+                    <button onclick="location.reload()" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">重新加载</button>
+                </div>
+            `;
+        });
+
+        // 暴露导航函数到全局
+        window.navigateToPage = navigateToPage;
+    </script>
+</body>
+</html>
