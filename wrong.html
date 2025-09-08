@@ -852,16 +852,7 @@
             const navItems = document.querySelectorAll('.nav-item');
             
             function navigateToPage(page) {
-                // 特殊处理首页跳转
-                if (page === 'main') {
-                    if (window.parent !== window) {
-                        window.parent.postMessage({ action: 'navigate', page: 'main' }, '*');
-                    } else {
-                        window.location.href = 'index.html';
-                    }
-                } else {
-                    window.NavigationUtils.navigateToPage(page);
-                }
+                window.NavigationUtils.navigateToPage(page);
             }
             
             navItems.forEach((item) => {
