@@ -225,17 +225,23 @@
         const questionType = urlParams.get('type') || '单选题';
         const questionCount = parseInt(urlParams.get('count')) || 50;
         const isContinueMode = urlParams.get('continue') === 'true';
+        const practiceMode = urlParams.get('mode') || 'normal'; // 添加练习模式参数
         
         console.log('URL参数 - 题目类型:', questionType);
         console.log('URL参数 - 题目数量:', questionCount);
         console.log('URL参数 - 继续模式:', isContinueMode);
+        console.log('URL参数 - 练习模式:', practiceMode);
         console.log('完整URL:', window.location.href);
         
         // 更新页面标题显示
         function updatePageTitle() {
             const titleElement = document.getElementById('question-type-title');
             if (titleElement) {
-                titleElement.textContent = questionType + '练习';
+                if (practiceMode === 'wrong') {
+                    titleElement.textContent = questionType + '错题练习';
+                } else {
+                    titleElement.textContent = questionType + '练习';
+                }
             }
         }
         
@@ -255,19 +261,60 @@
             console.log('window.questionBank存在:', !!window.questionBank);
             console.log('window.questionBank类型:', typeof window.questionBank);
             
+            // 检查是否为错题练习模式
+            if (practiceMode === 'wrong') {
+                console.log('错题练习模式，从错题库获取题目...');
+                
+                // 从localStorage获取错题数据
+                const wrongQuestionsList = JSON.parse(WebViewCompat.storage.getItem('wrongQuestions') || '[]');
+                console.log('错题库数据:', wrongQuestionsList);
+                
+                // 根据题目类型筛选错题
+                const filteredWrongQuestions = wrongQuestionsList.filter(q => {
+                    // 判断题目类型
+                    if (questionType === '判断题') {
+                        return q.options && q.options.length === 2 && 
+                               q.options.includes('正确') && q.options.includes('错误');
+                    } else if (questionType === '多选题') {
+                        return Array.isArray(q.correct) && q.correct.length > 1;
+                    } else {
+                        // 单选题：correct可能是数字或长度为1的数组
+                        return !Array.isArray(q.correct) || (Array.isArray(q.correct) && q.correct.length === 1);
+                    }
+                });
+                
+                console.log('筛选后的错题数量:', filteredWrongQuestions.length);
+                
+                if (filteredWrongQuestions.length > 0) {
+                    questions = filteredWrongQuestions.slice(0, questionCount);
+                    totalQuestions = questions.length;
+                    console.log('错题练习题目数量:', questions.length);
+                } else {
+                    console.log('没有找到对应类型的错题，显示提示信息');
+                    // 显示无错题提示
+                    setTimeout(() => {
+                        alert(`暂无${questionType}错题，请先进行正常练习产生错题后再使用错题练习功能。`);
+                        window.history.back();
+                    }, 100);
+                    return;
+                }
+                
+                return;
+            }
+            
             if (window.questionBank) {
                 console.log('题库已加载，获取题目...');
                 console.log('questionBank对象:', window.questionBank);
                 
                 // 获取练习设置
                 const practiceSettings = JSON.parse(WebViewCompat.storage.getItem('practiceSettings') || '{}');
-                const practiceMode = practiceSettings.mode || { sequential: true, random: false };
+                const practiceSettingsMode = practiceSettings.mode || { sequential: true, random: false };
                 
                 console.log('练习设置:', practiceSettings);
-                console.log('练习模式:', practiceMode);
+                console.log('练习模式:', practiceSettingsMode);
                 
                 // 根据练习模式获取题目
-                const isSequential = practiceMode.sequential && !practiceMode.random;
+                const isSequential = practiceSettingsMode.sequential && !practiceSettingsMode.random;
                 console.log('是否顺序练习:', isSequential);
                 
                 questions = questionBank.getQuestionsByMode(questionType, questionCount, isSequential);
@@ -473,6 +520,7 @@
                         return;
                     } else {
                         console.log('无法恢复进度，开始新的练习');
+                        // 继续执行下面的新练习初始化逻辑
                     }
                 }
                 
@@ -496,6 +544,9 @@
                         
                         // 恢复进度后不需要再次保存，避免索引重复增加
                         return;
+                    } else {
+                        console.log('没有有效的保存进度，开始新的练习');
+                        // 继续执行下面的新练习初始化逻辑
                     }
                 }
                 
@@ -546,6 +597,12 @@
         };
         
         function updateQuestionDisplay() {
+            // 检查题目数组是否为空
+            if (!questions || questions.length === 0) {
+                console.error('题目数组为空，无法显示题目');
+                return;
+            }
+            
             // 确保题目索引在有效范围内
             if (currentQuestionIndex >= questions.length) {
                 console.error('题目索引超出范围:', currentQuestionIndex, '题目总数:', questions.length);

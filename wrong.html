@@ -521,9 +521,9 @@
             const questionIds = toReviewQuestions.map(q => q.id).join(',');
             const typeParam = `&type=${encodeURIComponent(selectedType)}`;
             if (window.parent !== window) {
-                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=type&questions=${questionIds}${typeParam}` }, '*');
+                window.parent.postMessage({ action: 'navigate', page: 'question', params: `?mode=wrong&questions=${questionIds}${typeParam}` }, '*');
             } else {
-                window.location.href = `review.html?mode=type&questions=${questionIds}${typeParam}`;
+                window.location.href = `question.html?mode=wrong&questions=${questionIds}${typeParam}`;
             }
         }
         
@@ -574,9 +574,9 @@
             const questionIds = shuffledQuestions.map(q => q.id).join(',');
             const typeParam = `&type=${encodeURIComponent(selectedType)}`;
             if (window.parent !== window) {
-                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=type&questions=${questionIds}${typeParam}` }, '*');
+                window.parent.postMessage({ action: 'navigate', page: 'question', params: `?mode=wrong&questions=${questionIds}${typeParam}` }, '*');
             } else {
-                window.location.href = `review.html?mode=type&questions=${questionIds}${typeParam}`;
+                window.location.href = `question.html?mode=wrong&questions=${questionIds}${typeParam}`;
             }
         }
         
