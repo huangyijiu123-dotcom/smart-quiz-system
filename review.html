@@ -817,7 +817,8 @@
         function finishReview() {
             clearInterval(timerInterval);
             const completedCount = currentQuestionIndex;
-            WebViewCompat.dialog.alert(`错题复习完成！\n已复习：${completedCount}题\n已掌握：${masteredCount}题`);
+            // 移除弹窗，直接返回错题库
+            // WebViewCompat.dialog.alert(`错题复习完成！\n已复习：${completedCount}题\n已掌握：${masteredCount}题`);
             goBack();
         }
         

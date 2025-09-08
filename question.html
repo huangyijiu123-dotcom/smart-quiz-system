@@ -1072,7 +1072,8 @@
                     }, 100);
                 }
                 
-                WebViewCompat.dialog.alert(`练习完成！\n正确率：${accuracy}%\n正确：${correctCount}题\n错误：${wrongCount}题`);
+                // 移除弹窗，直接返回上一页
+                // WebViewCompat.dialog.alert(`练习完成！\n正确率：${accuracy}%\n正确：${correctCount}题\n错误：${wrongCount}题`);
                 goBack();
             } else {
                 // 重置选项状态
