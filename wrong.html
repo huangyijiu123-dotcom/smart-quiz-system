@@ -305,7 +305,7 @@
         let currentSort = 'time'; // time, difficulty, wrongCount
         
         // 页面初始化
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             // 初始化主题
             if (window.themeManager) {
                 window.themeManager.init();
@@ -316,7 +316,7 @@
             renderWrongQuestions();
             updateInterfaceState();
             bindEvents();
-        };
+        });
         
         // 加载错题数据（过滤已移出的错题）
         function loadWrongQuestions() {
