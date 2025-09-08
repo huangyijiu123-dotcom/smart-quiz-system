@@ -394,17 +394,25 @@
                 correctQuestions: correctQuestions,
                 wrongQuestions: wrongQuestions,
                 questions: questions, // 保存题目顺序
-                lastSaveTime: Date.now()
+                lastSaveTime: Date.now(),
+                practiceMode: practiceMode // 添加练习模式标识
             };
             
-            // 根据题目类型确定存储键
+            // 根据题目类型和练习模式确定存储键
             const typeMap = {
                 '单选题': 'single',
                 '多选题': 'multiple',
                 '判断题': 'judge'
             };
             const englishType = typeMap[questionType] || 'single';
-            const progressKey = `practiceProgress_${englishType}`;
+            
+            // 错题练习和普通练习使用不同的存储键
+            let progressKey;
+            if (practiceMode === 'wrong') {
+                progressKey = `wrongPracticeProgress_${englishType}`;
+            } else {
+                progressKey = `practiceProgress_${englishType}`;
+            }
             
             WebViewCompat.storage.setItem(progressKey, JSON.stringify(progressData));
             console.log('进度已保存:', progressData, '存储键:', progressKey);
@@ -412,14 +420,21 @@
         
         // 进度恢复函数
         function restoreProgress() {
-            // 根据题目类型确定存储键
+            // 根据题目类型和练习模式确定存储键
             const typeMap = {
                 '单选题': 'single',
                 '多选题': 'multiple',
                 '判断题': 'judge'
             };
             const englishType = typeMap[questionType] || 'single';
-            const progressKey = `practiceProgress_${englishType}`;
+            
+            // 错题练习和普通练习使用不同的存储键
+            let progressKey;
+            if (practiceMode === 'wrong') {
+                progressKey = `wrongPracticeProgress_${englishType}`;
+            } else {
+                progressKey = `practiceProgress_${englishType}`;
+            }
             
             const savedProgress = WebViewCompat.storage.getItem(progressKey);
             if (!savedProgress) return false;
@@ -427,9 +442,14 @@
             try {
                 const progressData = JSON.parse(savedProgress);
                 
-                // 检查是否是同一类型和数量的练习
+                // 检查是否是同一类型、数量和练习模式的练习
                 if (progressData.questionType !== questionType || 
-                    progressData.questionCount !== questionCount) {
+                    progressData.questionCount !== questionCount ||
+                    progressData.practiceMode !== practiceMode) {
+                    console.log('进度不匹配:', {
+                        saved: { type: progressData.questionType, count: progressData.questionCount, mode: progressData.practiceMode },
+                        current: { type: questionType, count: questionCount, mode: practiceMode }
+                    });
                     return false;
                 }
                 
@@ -477,14 +497,21 @@
         
         // 清除进度
         function clearProgress() {
-            // 根据题目类型确定存储键
+            // 根据题目类型和练习模式确定存储键
             const typeMap = {
                 '单选题': 'single',
                 '多选题': 'multiple',
                 '判断题': 'judge'
             };
             const englishType = typeMap[questionType] || 'single';
-            const progressKey = `practiceProgress_${englishType}`;
+            
+            // 错题练习和普通练习使用不同的存储键
+            let progressKey;
+            if (practiceMode === 'wrong') {
+                progressKey = `wrongPracticeProgress_${englishType}`;
+            } else {
+                progressKey = `practiceProgress_${englishType}`;
+            }
             
             WebViewCompat.storage.removeItem(progressKey);
             console.log('进度已清除，存储键:', progressKey);
