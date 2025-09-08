@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="dark-theme.css">
+    <link rel="stylesheet" href="common-styles.css">
     <script src="webview-compat.js"></script>
     <script src="theme-manager.js"></script>
     <script src="questionBank.js"></script>
@@ -14,13 +15,7 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
+        /* card-hover样式已移至common-styles.css */
         .selected {
             border-color: #3b82f6;
             background-color: #eff6ff;
@@ -80,10 +75,36 @@
             </div>
         </div>
 
+        <!-- 继续练习按钮区域 -->
+        <div id="continue-practice-section" class="px-6 py-4" style="display: none;">
+            <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-4 border-2 border-green-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-play-circle text-green-600 text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">发现未完成的练习</h4>
+                            <p id="progress-info" class="text-sm text-gray-600">单选题 - 第11题/共50题 (22%)</p>
+                        </div>
+                    </div>
+                    <button id="clear-progress-btn" class="text-red-500 hover:text-red-700 text-sm font-medium">
+                        <i class="fas fa-times-circle mr-1"></i>清除进度
+                    </button>
+                </div>
+                <button id="continue-practice-btn" class="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold py-3 rounded-xl shadow-lg card-hover">
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fas fa-play-circle text-lg"></i>
+                        <span class="text-lg">继续练习</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
         <!-- 刷题数量选择 -->
         <div class="px-6 py-6">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">选择练习数量</h3>
-            <div class="space-y-3">
+            <div id="count-selection-container" class="space-y-3">
                 <!-- 50题 -->
                 <div class="card-hover bg-white rounded-2xl p-4 border-2 border-gray-200 cursor-pointer selected" onclick="selectCount(this, 50)">
                     <div class="flex items-center justify-between">
@@ -136,10 +157,36 @@
             </div>
         </div>
 
-        <!-- 练习模式设置 -->
+        <!-- 继续练习按钮区域 -->
+        <div id="continue-practice-section" class="px-6 py-4" style="display: none;">
+            <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-4 border-2 border-green-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-play-circle text-green-600 text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">发现未完成的练习</h4>
+                            <p id="progress-info" class="text-sm text-gray-600">单选题 - 第11题/共50题 (22%)</p>
+                        </div>
+                    </div>
+                    <button id="clear-progress-btn" class="text-red-500 hover:text-red-700 text-sm font-medium">
+                        <i class="fas fa-times-circle mr-1"></i>清除进度
+                    </button>
+                </div>
+                <button id="continue-practice-btn" class="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold py-3 rounded-xl shadow-lg card-hover">
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fas fa-play-circle text-lg"></i>
+                        <span class="text-lg">继续练习</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 练习数量设置 -->
         <div class="px-6 py-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">练习模式</h3>
-            <div class="space-y-4">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">练习数量</h3>
+            <div id="count-selection-container" class="space-y-4">
                 <!-- 顺序练习 -->
                 <div class="bg-white rounded-2xl p-4 border border-gray-200">
                     <div class="flex items-center justify-between">
@@ -168,59 +215,15 @@
                     </div>
                 </div>
 
-                <!-- 错题回顾 -->
-                <div class="bg-white rounded-2xl p-4 border border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <i class="fas fa-exclamation-triangle text-red-600 text-lg"></i>
-                            <div>
-                                <h4 class="font-medium text-gray-800">错题回顾</h4>
-                                <p class="text-sm text-gray-500">优先练习之前做错的题目</p>
-                            </div>
-                        </div>
-                        <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
-                    </div>
-                </div>
+
             </div>
         </div>
 
-        <!-- 其他设置 -->
-        <div class="px-6 py-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">其他设置</h3>
-            <div class="space-y-3">
-                <!-- 重置进度 -->
-                <div class="bg-white rounded-2xl p-4 border border-gray-200 cursor-pointer card-hover">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <i class="fas fa-redo text-orange-600 text-lg"></i>
-                            <div>
-                                <h4 class="font-medium text-gray-800">重置进度</h4>
-                                <p class="text-sm text-gray-500">清除当前练习记录</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-400"></i>
-                    </div>
-                </div>
 
-                <!-- 查看统计 -->
-                <div class="bg-white rounded-2xl p-4 border border-gray-200 cursor-pointer card-hover">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <i class="fas fa-chart-bar text-purple-600 text-lg"></i>
-                            <div>
-                                <h4 class="font-medium text-gray-800">查看统计</h4>
-                                <p class="text-sm text-gray-500">查看详细练习数据</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-400"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- 开始练习按钮 -->
-        <div class="px-6 py-6 pb-24">
-            <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-4 rounded-2xl shadow-lg card-hover">
+        <!-- 新开始练习按钮 -->
+        <div id="new-practice-section" class="px-6 py-6 pb-32" style="margin-bottom: 80px;">
+            <button id="start-practice-btn" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-4 rounded-2xl shadow-lg card-hover" style="position: relative; z-index: 100;">
                 <div class="flex items-center justify-center space-x-2">
                     <i class="fas fa-play text-lg"></i>
                     <span class="text-lg">开始练习</span>
@@ -228,13 +231,13 @@
             </button>
             
             <div class="mt-4 text-center">
-                <p class="text-sm text-gray-500">预计用时：<span class="font-medium text-gray-700">25-30分钟</span></p>
+                <p class="text-sm text-gray-500">预计用时：<span id="estimated-time" class="font-medium text-gray-700">25-30分钟</span></p>
             </div>
         </div>
     </div>
 
     <!-- 底部导航栏 -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3">
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3" style="z-index: 1000;">
         <div class="flex justify-around items-center">
             <div class="flex flex-col items-center space-y-1 nav-item" data-page="main">
                 <i class="fas fa-home text-gray-400 text-lg"></i>
@@ -268,7 +271,58 @@
             
             // 添加事件监听
             addEventListeners();
+            
+            // 检查当前选择的题目数量，如果是50或100题，应用练习模式限制
+            checkAndApplyPracticeModeRestrictions();
+            
+            // 延迟更新界面状态，确保页面完全渲染
+            setTimeout(() => {
+                // 修复完成：现在只检查题目类型匹配，忽略数量限制
+                // 这样用户在有练习进度时，不论选择多少题目都会显示"继续练习"
+                
+                updateInterfaceState();
+                console.log('页面初始化完成，界面状态已更新');
+                
+                // 测试按钮是否可点击
+                const testBtn = document.getElementById('start-practice-btn');
+                if (testBtn) {
+                    console.log('按钮测试 - 元素存在:', testBtn);
+                    console.log('按钮测试 - 可见性:', testBtn.offsetParent !== null);
+                    console.log('按钮测试 - 禁用状态:', testBtn.disabled);
+                    console.log('按钮测试 - 样式display:', window.getComputedStyle(testBtn).display);
+                    console.log('按钮测试 - 样式visibility:', window.getComputedStyle(testBtn).visibility);
+                    
+                    // 检查按钮文本
+                    const btnText = testBtn.querySelector('span');
+                    if (btnText) {
+                        console.log('按钮当前文本:', btnText.textContent);
+                        
+                        console.log('按钮更新完成 - 文本:', btnText.textContent, '禁用状态:', testBtn.disabled);
+                    }
+                }
+            }, 100);
         });
+        
+        // 监听页面显示事件（处理浏览器前进后退）
+        window.addEventListener('pageshow', function(event) {
+            console.log('页面显示事件触发，更新界面状态');
+            // 增加延迟确保从练习页面返回时进度已保存
+            setTimeout(() => {
+                console.log('pageshow延迟后检查进度状态');
+                updateInterfaceState();
+            }, 200);
+        });
+        
+        // 检查并应用练习模式限制
+        function checkAndApplyPracticeModeRestrictions() {
+            if (selectedCount === 50 || selectedCount === 100) {
+                practiceMode.random = true;
+                practiceMode.sequential = false;
+                updateSwitchState('随机练习', true);
+                updateSwitchState('顺序练习', false);
+                disablePracticeModeToggle(true);
+            }
+        }
 
         // 更新题目类型显示
         function updateQuestionTypeDisplay(type) {
@@ -311,7 +365,7 @@
         function selectCount(element, count) {
             // 如果是'all'，获取当前题型的总题目数量
             if (count === 'all') {
-                const currentType = localStorage.getItem('questionType') || 'single';
+                const currentType = WebViewCompat.storage.getItem('questionType') || 'single';
                 console.log('当前题型:', currentType);
                 
                 // 将英文类型转换为中文类型
@@ -352,10 +406,30 @@
             
             // 更新预计用时
             updateEstimatedTime(selectedCount);
+            
+            // 如果选择50或100题，自动设置为随机练习并禁用切换
+            if (selectedCount === 50 || selectedCount === 100) {
+                practiceMode.random = true;
+                practiceMode.sequential = false;
+                updateSwitchState('随机练习', true);
+                updateSwitchState('顺序练习', false);
+                disablePracticeModeToggle(true);
+            } else {
+                // 其他数量时，启用练习模式切换
+                disablePracticeModeToggle(false);
+            }
+            
+            // 重新验证进度并更新界面状态
+            updateInterfaceState();
         }
         
         // 切换开关
         function toggleSwitch(element) {
+            // 检查是否被禁用
+            if (element.classList.contains('disabled')) {
+                return; // 如果被禁用，直接返回，不执行任何操作
+            }
+            
             element.classList.toggle('active');
             
             // 更新练习模式状态
@@ -365,18 +439,51 @@
             if (modeText.includes('顺序')) {
                 practiceMode.sequential = element.classList.contains('active');
                 if (practiceMode.sequential) {
+                    // 启用顺序练习时，关闭随机练习
                     practiceMode.random = false;
                     updateSwitchState('随机练习', false);
+                } else {
+                    // 关闭顺序练习时，如果随机练习也是关闭的，则自动启用随机练习
+                    if (!practiceMode.random) {
+                        practiceMode.random = true;
+                        updateSwitchState('随机练习', true);
+                    }
                 }
             } else if (modeText.includes('随机')) {
                 practiceMode.random = element.classList.contains('active');
                 if (practiceMode.random) {
+                    // 启用随机练习时，关闭顺序练习
                     practiceMode.sequential = false;
                     updateSwitchState('顺序练习', false);
+                } else {
+                    // 关闭随机练习时，如果顺序练习也是关闭的，则自动启用顺序练习
+                    if (!practiceMode.sequential) {
+                        practiceMode.sequential = true;
+                        updateSwitchState('顺序练习', true);
+                    }
                 }
             } else if (modeText.includes('错题')) {
                 practiceMode.wrongReview = element.classList.contains('active');
             }
+        }
+        
+        // 禁用/启用练习模式切换
+        function disablePracticeModeToggle(disable) {
+            const switches = document.querySelectorAll('.toggle-switch');
+            switches.forEach(switchEl => {
+                const parentText = switchEl.closest('.bg-white').querySelector('h4').textContent;
+                if (parentText.includes('顺序') || parentText.includes('随机')) {
+                    if (disable) {
+                        switchEl.classList.add('disabled');
+                        switchEl.style.opacity = '0.5';
+                        switchEl.style.cursor = 'not-allowed';
+                    } else {
+                        switchEl.classList.remove('disabled');
+                        switchEl.style.opacity = '1';
+                        switchEl.style.cursor = 'pointer';
+                    }
+                }
+            });
         }
 
         // 更新开关状态
@@ -412,10 +519,193 @@
             }
         }
 
+        // 检查是否有进度
+        function checkProgress() {
+            const currentQuestionType = WebViewCompat.storage.getItem('questionType') || 'single';
+            const progressKey = `practiceProgress_${currentQuestionType}`;
+            const savedProgress = WebViewCompat.storage.getItem(progressKey);
+            if (!savedProgress) return null;
+            
+            try {
+                const progressData = JSON.parse(savedProgress);
+                
+                // 检查保存时间是否超过24小时
+                const timeDiff = Date.now() - progressData.lastSaveTime;
+                if (timeDiff > 24 * 60 * 60 * 1000) {
+                    WebViewCompat.storage.removeItem(progressKey);
+                    return null;
+                }
+                
+                return progressData;
+            } catch (error) {
+                console.error('检查进度失败:', error);
+                WebViewCompat.storage.removeItem(progressKey);
+                return null;
+            }
+        }
+        
+        // 更新界面状态
+        function updateInterfaceState() {
+            console.log('=== updateInterfaceState函数被调用 ===');
+            
+            const progress = checkProgress();
+            const currentQuestionType = WebViewCompat.storage.getItem('questionType') || 'single';
+            
+            // 检查进度是否与当前设置匹配
+            let isProgressValid = false;
+            if (progress) {
+                const typeMap = {
+                    'single': '单选题',
+                    'multiple': '多选题', 
+                    'judge': '判断题'
+                };
+                const currentChineseType = typeMap[currentQuestionType];
+                const savedTypeMatches = progress.questionType === currentChineseType || 
+                                       progress.questionType === currentQuestionType;
+                isProgressValid = savedTypeMatches;
+            }
+            
+            const continueSection = document.getElementById('continue-practice-section');
+            const newPracticeSection = document.getElementById('new-practice-section');
+            const countSelectionContainer = document.getElementById('count-selection-container');
+            
+            if (progress && isProgressValid) {
+                // 显示继续练习区域
+                continueSection.style.display = 'block';
+                newPracticeSection.style.display = 'none';
+                
+                // 禁用数量选择
+                countSelectionContainer.style.opacity = '0.5';
+                countSelectionContainer.style.pointerEvents = 'none';
+                
+                // 更新进度信息
+                const progressInfo = document.getElementById('progress-info');
+                const currentProgress = Math.round(((progress.currentQuestionIndex + 1) / progress.totalQuestions) * 100);
+                progressInfo.textContent = `${progress.questionType} - 第${progress.currentQuestionIndex + 1}题/共${progress.totalQuestions}题 (${currentProgress}%)`;
+                
+            } else {
+                // 显示新开始练习区域
+                continueSection.style.display = 'none';
+                newPracticeSection.style.display = 'block';
+                
+                // 启用数量选择
+                countSelectionContainer.style.opacity = '1';
+                countSelectionContainer.style.pointerEvents = 'auto';
+                
+                // 由于现在每个题型都有独立的存储键，不需要清除不匹配的进度数据
+                
+                // 更新预计用时
+                updateEstimatedTime(selectedCount);
+            }
+        }
+        
+        // 继续练习
+        function continuePractice() {
+            console.log('=== continuePractice函数被调用 ===');
+            
+            const progress = checkProgress();
+            const questionType = WebViewCompat.storage.getItem('questionType') || 'single';
+            
+            if (!progress) {
+                WebViewCompat.dialog.alert('未找到练习进度');
+                return;
+            }
+            
+            // 保存练习设置
+            const practiceSettings = {
+                questionType: questionType,
+                count: progress.totalQuestions,
+                mode: practiceMode,
+                continueMode: true
+            };
+            
+            WebViewCompat.storage.setItem('practiceSettings', JSON.stringify(practiceSettings));
+            
+            // 构建URL参数
+            const params = `?type=${encodeURIComponent(progress.questionType)}&count=${progress.totalQuestions}&continue=true`;
+            
+            // 跳转到答题页面
+            if (window.parent !== window) {
+                window.parent.postMessage({ action: 'navigate', page: 'question', params: params }, '*');
+            } else {
+                window.location.href = 'question.html' + params;
+            }
+        }
+        
+        // 清除练习进度功能
+        function clearPracticeProgress() {
+            if (WebViewCompat.dialog.confirm('确定要清除当前练习进度吗？\n\n此操作不可恢复。')) {
+                const currentQuestionType = WebViewCompat.storage.getItem('questionType') || 'single';
+                const progressKey = `practiceProgress_${currentQuestionType}`;
+                WebViewCompat.storage.removeItem(progressKey);
+                
+                // 触发数据更新事件
+                window.dispatchEvent(new CustomEvent('practiceDataUpdated', {
+                    detail: { type: 'progress', action: 'clear' }
+                }));
+                
+                // 向父窗口发送消息
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'practiceDataUpdated',
+                        data: { type: 'progress', action: 'clear' }
+                    }, '*');
+                }
+                
+                // 更新界面状态
+                updateInterfaceState();
+                
+                WebViewCompat.dialog.alert('练习进度已清除');
+            }
+        }
+        
+        // 更新开始练习按钮状态（保持兼容性）
+        function updateStartButton() {
+            updateInterfaceState();
+        }
+
         // 开始练习
         function startPractice() {
-            // 获取题目类型
-            const questionType = localStorage.getItem('questionType') || 'single';
+            console.log('=== startPractice函数被调用 ===');
+            console.log('调用时间:', new Date().toLocaleTimeString());
+            
+            // 检查是否有有效进度
+            const progress = checkProgress();
+            const questionType = WebViewCompat.storage.getItem('questionType') || 'single';
+            
+            console.log('=== startPractice 存储检查 ===');
+            console.log('原始进度数据:', WebViewCompat.storage.getItem('practiceProgress'));
+            console.log('解析后进度:', progress);
+            console.log('题目类型:', questionType);
+            console.log('选择数量:', selectedCount);
+            console.log('练习模式:', practiceMode);
+            
+            // 检查是否有有效进度
+            let isProgressValid = false;
+            if (progress) {
+                const typeMap = {
+                    'single': '单选题',
+                    'multiple': '多选题', 
+                    'judge': '判断题'
+                };
+                const currentChineseType = typeMap[questionType];
+                const savedTypeMatches = progress.questionType === currentChineseType || 
+                                       progress.questionType === questionType;
+                isProgressValid = savedTypeMatches; // 只检查类型匹配，忽略数量限制
+                
+                console.log('=== startPractice 进度验证 ===');
+                console.log('当前中文类型:', currentChineseType);
+                console.log('保存的类型:', progress.questionType);
+                console.log('类型匹配:', savedTypeMatches);
+                console.log('进度有效性:', isProgressValid);
+            } else {
+                console.log('没有进度数据');
+            }
+            
+            console.log('获取到的题目类型:', questionType);
+            console.log('当前选择的数量:', selectedCount);
+            console.log('练习模式:', practiceMode);
+            console.log('是否有有效进度:', isProgressValid);
             
             // 转换题目类型为中文
             const typeMap = {
@@ -430,13 +720,18 @@
             const practiceSettings = {
                 questionType: questionType,
                 count: selectedCount,
-                mode: practiceMode
+                mode: practiceMode,
+                continueMode: isProgressValid // 标记是否为继续练习模式
             };
             
             WebViewCompat.storage.setItem('practiceSettings', JSON.stringify(practiceSettings));
             
             // 构建URL参数
-            const params = `?type=${encodeURIComponent(chineseType)}&count=${selectedCount}`;
+            let params = `?type=${encodeURIComponent(chineseType)}&count=${selectedCount}`;
+            if (isProgressValid) {
+                params += '&continue=true'; // 添加继续练习标记
+            }
+            
             console.log('构建的URL参数:', params);
             console.log('selectedCount值:', selectedCount);
             
@@ -457,34 +752,9 @@
             }
         }
 
-        // 重置进度
-        function resetProgress() {
-            if (WebViewCompat.dialog.confirm('确定要重置当前练习进度吗？此操作不可恢复。')) {
-                WebViewCompat.storage.removeItem('practiceProgress');
-                WebViewCompat.storage.removeItem('wrongQuestions');
-                WebViewCompat.storage.removeItem('practiceHistory');
-                
-                // 触发数据更新事件
-                window.dispatchEvent(new CustomEvent('practiceDataUpdated', {
-                    detail: { type: 'reset', action: 'clear_all' }
-                }));
-                
-                // 向父窗口发送消息
-                if (window.parent !== window) {
-                    window.parent.postMessage({
-                        type: 'practiceDataUpdated',
-                        data: { type: 'reset', action: 'clear_all' }
-                    }, '*');
-                }
-                
-                WebViewCompat.dialog.alert('进度已重置');
-            }
-        }
 
-        // 查看统计
-        function viewStatistics() {
-            alert('统计功能暂未开放');
-        }
+
+
 
         // 底部导航
         function navigateToTab(tab) {
@@ -528,21 +798,33 @@
             }
 
             // 开始练习按钮
-            const startBtn = document.querySelector('.bg-gradient-to-r.from-blue-600');
+            const startBtn = document.getElementById('start-practice-btn');
             if (startBtn) {
-                startBtn.addEventListener('click', startPractice);
+                startBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    startPractice();
+                });
             }
-
-            // 重置进度按钮
-            const resetBtn = document.querySelector('.fa-redo').closest('.bg-white');
-            if (resetBtn) {
-                resetBtn.addEventListener('click', resetProgress);
+            
+            // 继续练习按钮
+            const continueBtn = document.getElementById('continue-practice-btn');
+            if (continueBtn) {
+                continueBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    continuePractice();
+                });
             }
-
-            // 查看统计按钮
-            const statsBtn = document.querySelector('.fa-chart-bar').closest('.bg-white');
-            if (statsBtn) {
-                statsBtn.addEventListener('click', viewStatistics);
+            
+            // 清除进度按钮事件监听器
+            const clearProgressBtn = document.getElementById('clear-progress-btn');
+            if (clearProgressBtn) {
+                clearProgressBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    clearPracticeProgress();
+                });
             }
 
             // 底部导航

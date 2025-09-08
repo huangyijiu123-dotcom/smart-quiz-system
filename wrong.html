@@ -7,19 +7,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="dark-theme.css">
+    <link rel="stylesheet" href="common-styles.css">
     <script src="webview-compat.js"></script>
     <script src="theme-manager.js"></script>
+    <script src="utils.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
+        /* card-hover样式已移至common-styles.css */
         .empty-state {
             animation: fadeIn 0.5s ease-in;
         }
@@ -73,22 +69,61 @@
             </div>
         </div>
 
-        <!-- 快捷操作 -->
+        <!-- 题目类型选择 -->
         <div class="px-6 py-4">
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <button class="card-hover bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-2xl p-4 font-medium" onclick="startReview()">
-                    <div class="flex items-center justify-center space-x-2">
-                        <i class="fas fa-play"></i>
-                        <span>开始复习</span>
-                    </div>
-                </button>
-                <button class="card-hover bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-2xl p-4 font-medium" onclick="randomPractice()">
-                    <div class="flex items-center justify-center space-x-2">
-                        <i class="fas fa-random"></i>
-                        <span>随机练习</span>
-                    </div>
-                </button>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">题目类型选择</label>
+                <select id="questionTypeFilter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onchange="onQuestionTypeChange()">
+                    <option value="单选题">单选题</option>
+                    <option value="多选题">多选题</option>
+                    <option value="判断题">判断题</option>
+                </select>
             </div>
+            
+            <!-- 继续练习区域 -->
+            <div id="continue-practice-section" class="mb-4" style="display: none;">
+                <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-4 border-2 border-green-200">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-play-circle text-green-600 text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">发现未完成的练习</h4>
+                                <p id="progress-info" class="text-sm text-gray-600">单选题 - 第11题/共50题 (22%)</p>
+                            </div>
+                        </div>
+                        <button id="clear-progress-btn" class="text-red-500 hover:text-red-700 text-sm font-medium" onclick="clearPracticeProgress()">
+                            <i class="fas fa-times-circle mr-1"></i>清除进度
+                        </button>
+                    </div>
+                    <button id="continue-practice-btn" class="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold py-3 rounded-xl shadow-lg card-hover" onclick="continuePractice()">
+                        <div class="flex items-center justify-center space-x-2">
+                            <i class="fas fa-play-circle text-lg"></i>
+                            <span class="text-lg">继续练习</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 新开始练习区域 -->
+            <div id="new-practice-section">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <button class="card-hover bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-2xl p-4 font-medium" onclick="startReview()">
+                        <div class="flex items-center justify-center space-x-2">
+                            <i class="fas fa-play"></i>
+                            <span>开始练习</span>
+                        </div>
+                    </button>
+                    <button class="card-hover bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-2xl p-4 font-medium" onclick="randomPractice()">
+                        <div class="flex items-center justify-center space-x-2">
+                            <i class="fas fa-random"></i>
+                            <span>随机练习</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
             <button class="card-hover bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-2xl p-4 font-medium w-full" onclick="resetWrongQuestions()">
                 <div class="flex items-center justify-center space-x-2">
                     <i class="fas fa-trash-alt"></i>
@@ -273,7 +308,7 @@
         let wrongQuestions = allWrongQuestions.filter(q => !q.isRemoved);
         
         // 当前筛选条件
-        let currentFilter = 'all'; // all, 单选题, 多选题, 判断题
+        let currentFilter = '单选题'; // 单选题, 多选题, 判断题
         let currentSort = 'time'; // time, difficulty, wrongCount
         
         // 页面初始化
@@ -286,6 +321,7 @@
             loadWrongQuestions();
             updateStatistics();
             renderWrongQuestions();
+            updateInterfaceState();
             bindEvents();
         };
         
@@ -335,9 +371,7 @@
             let filteredQuestions = wrongQuestions;
             
             // 应用筛选
-            if (currentFilter !== 'all') {
-                filteredQuestions = wrongQuestions.filter(q => q.type === currentFilter);
-            }
+            filteredQuestions = wrongQuestions.filter(q => q.type === currentFilter);
             
             // 应用排序
             filteredQuestions.sort((a, b) => {
@@ -429,33 +463,105 @@
         
         // 开始复习
         function startReview() {
-            const toReviewQuestions = wrongQuestions.filter(q => q.status === '待复习');
+            // 获取选择的题型
+            const select = document.getElementById('questionTypeFilter');
+            const selectedType = select ? select.value : 'all';
+            
+            let toReviewQuestions = wrongQuestions.filter(q => q.status === '待复习');
+            
+            // 根据选择的题型筛选
+            if (selectedType !== 'all') {
+                toReviewQuestions = toReviewQuestions.filter(q => q.type === selectedType);
+            }
+            
             if (toReviewQuestions.length === 0) {
-                WebViewCompat.dialog.alert('暂无待复习的错题');
+                const typeText = selectedType === 'all' ? '' : selectedType;
+                WebViewCompat.dialog.alert(`暂无${typeText}待复习的错题`);
                 return;
             }
             
+            // 清除当前题型的练习进度（开始新练习）
+            const typeMap = {
+                '单选题': 'single',
+                '多选题': 'multiple',
+                '判断题': 'judge'
+            };
+            
+            // 清除特定题型的进度
+            const englishType = typeMap[selectedType];
+            if (englishType) {
+                const progressKey = `wrongPracticeProgress_${englishType}`;
+                WebViewCompat.storage.removeItem(progressKey);
+            }
+            
+            // 保存练习状态，包括选择的题型
+            const practiceState = {
+                mode: 'wrongQuestions',
+                selectedType: selectedType,
+                questions: toReviewQuestions,
+                startTime: new Date().toISOString()
+            };
+            WebViewCompat.storage.setItem('wrongPracticeState', JSON.stringify(practiceState));
+            
             const questionIds = toReviewQuestions.map(q => q.id).join(',');
+            const typeParam = `&type=${encodeURIComponent(selectedType)}`;
             if (window.parent !== window) {
-                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=all&questions=${questionIds}` }, '*');
+                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=type&questions=${questionIds}${typeParam}` }, '*');
             } else {
-                window.location.href = `review.html?mode=all&questions=${questionIds}`;
+                window.location.href = `review.html?mode=type&questions=${questionIds}${typeParam}`;
             }
         }
         
         // 随机练习
         function randomPractice() {
-            if (wrongQuestions.length === 0) {
-                WebViewCompat.dialog.alert('暂无错题可供练习');
+            // 获取选择的题型
+            const select = document.getElementById('questionTypeFilter');
+            const selectedType = select ? select.value : 'all';
+            
+            let practiceQuestions = [...wrongQuestions];
+            
+            // 根据选择的题型筛选
+            if (selectedType !== 'all') {
+                practiceQuestions = practiceQuestions.filter(q => q.type === selectedType);
+            }
+            
+            if (practiceQuestions.length === 0) {
+                const typeText = selectedType === 'all' ? '' : selectedType;
+                WebViewCompat.dialog.alert(`暂无${typeText}错题可供练习`);
                 return;
             }
             
-            const shuffledQuestions = [...wrongQuestions].sort(() => Math.random() - 0.5);
+            const shuffledQuestions = practiceQuestions.sort(() => Math.random() - 0.5);
+            
+            // 清除当前题型的练习进度（开始新练习）
+            const typeMap = {
+                '单选题': 'single',
+                '多选题': 'multiple',
+                '判断题': 'judge'
+            };
+            
+            // 清除特定题型的进度
+            const englishType = typeMap[selectedType];
+            if (englishType) {
+                const progressKey = `wrongPracticeProgress_${englishType}`;
+                WebViewCompat.storage.removeItem(progressKey);
+            }
+            
+            // 保存练习状态，包括选择的题型
+            const practiceState = {
+                mode: 'randomPractice',
+                selectedType: selectedType,
+                questions: shuffledQuestions,
+                startTime: new Date().toISOString()
+            };
+            WebViewCompat.storage.setItem('wrongPracticeState', JSON.stringify(practiceState));
+            
             const questionIds = shuffledQuestions.map(q => q.id).join(',');
+            const typeParam = `&type=${encodeURIComponent(selectedType)}`;
             if (window.parent !== window) {
-                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=all&questions=${questionIds}` }, '*');
+                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=type&questions=${questionIds}${typeParam}` }, '*');
             } else {
-                window.location.href = `review.html?mode=all&questions=${questionIds}`;
+                window.location.href = `review.html?mode=type&questions=${questionIds}${typeParam}`;
             }
         }
         
@@ -468,9 +574,177 @@
             }
         }
         
+        // 继续练习
+        // 题型变化处理
+        function onQuestionTypeChange() {
+            const select = document.getElementById('questionTypeFilter');
+            const selectedType = select.value;
+            currentFilter = selectedType;
+            renderWrongQuestions();
+            updateInterfaceState();
+        }
+        
+        // 检查是否有进度
+        function checkProgress() {
+            const select = document.getElementById('questionTypeFilter');
+            const selectedType = select ? select.value : '单选题';
+            
+            const typeMap = {
+                '单选题': 'single',
+                '多选题': 'multiple',
+                '判断题': 'judge'
+            };
+            
+            // 检查特定题型的练习进度
+            const englishType = typeMap[selectedType];
+            if (!englishType) return null;
+            
+            const progressKey = `wrongPracticeProgress_${englishType}`;
+            const savedProgress = WebViewCompat.storage.getItem(progressKey);
+            if (!savedProgress) return null;
+            
+            try {
+                const progressData = JSON.parse(savedProgress);
+                    
+                    // 检查保存时间是否超过24小时
+                    const timeDiff = Date.now() - progressData.lastSaveTime;
+                    if (timeDiff > 24 * 60 * 60 * 1000) {
+                        WebViewCompat.storage.removeItem(progressKey);
+                        return null;
+                    }
+                    
+                    return progressData;
+                } catch (error) {
+                    console.error('检查进度失败:', error);
+                    WebViewCompat.storage.removeItem(progressKey);
+                    return null;
+                }
+        }
+        
+        // 更新界面状态
+        function updateInterfaceState() {
+            const progress = checkProgress();
+            const select = document.getElementById('questionTypeFilter');
+            const selectedType = select ? select.value : 'all';
+            
+            // 检查进度是否与当前设置匹配
+            let isProgressValid = false;
+            if (progress) {
+                const typeMap = {
+                    'single': '单选题',
+                    'multiple': '多选题', 
+                    'judge': '判断题'
+                };
+                
+                if (selectedType === 'all') {
+                    // 全部模式下，任何有效进度都可以继续
+                    isProgressValid = true;
+                } else {
+                    // 特定题型模式下，检查类型匹配
+                    const currentChineseType = selectedType;
+                    const savedTypeMatches = progress.questionType === currentChineseType;
+                    isProgressValid = savedTypeMatches;
+                }
+            }
+            
+            const continueSection = document.getElementById('continue-practice-section');
+            const newPracticeSection = document.getElementById('new-practice-section');
+            
+            if (progress && isProgressValid) {
+                // 显示继续练习区域
+                continueSection.style.display = 'block';
+                newPracticeSection.style.display = 'none';
+                
+                // 更新进度信息
+                const progressInfo = document.getElementById('progress-info');
+                const currentProgress = Math.round(((progress.currentQuestionIndex + 1) / progress.totalQuestions) * 100);
+                progressInfo.textContent = `${progress.questionType} - 第${progress.currentQuestionIndex + 1}题/共${progress.totalQuestions}题 (${currentProgress}%)`;
+                
+            } else {
+                // 显示新开始练习区域
+                continueSection.style.display = 'none';
+                newPracticeSection.style.display = 'block';
+            }
+        }
+        
+        // 继续练习
+        function continuePractice() {
+            const progress = checkProgress();
+            
+            if (!progress) {
+                WebViewCompat.dialog.alert('未找到练习进度');
+                return;
+            }
+            
+            // 检查进度模式，决定跳转页面
+            if (progress.mode === 'review') {
+                // 错题复习模式，跳转到review.html
+                const questionIds = progress.questions.map(q => q.id).join(',');
+                if (window.parent !== window) {
+                    window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=all&questions=${questionIds}` }, '*');
+                } else {
+                    window.location.href = `review.html?mode=all&questions=${questionIds}`;
+                }
+            } else {
+                // 普通练习模式，跳转到question.html
+                if (window.parent !== window) {
+                    window.parent.postMessage({ action: 'navigate', page: 'question', params: '?continue=true' }, '*');
+                } else {
+                    window.location.href = 'question.html?continue=true';
+                }
+            }
+        }
+        
+        // 清除练习进度功能
+        function clearPracticeProgress() {
+            if (WebViewCompat.dialog.confirm('确定要清除当前练习进度吗？\n\n此操作不可恢复。')) {
+                const select = document.getElementById('questionTypeFilter');
+                const selectedType = select ? select.value : '单选题';
+                
+                const typeMap = {
+                    '单选题': 'single',
+                    '多选题': 'multiple',
+                    '判断题': 'judge'
+                };
+                
+                // 清除特定题型的进度
+                const englishType = typeMap[selectedType];
+                if (englishType) {
+                    const progressKey = `wrongPracticeProgress_${englishType}`;
+                    WebViewCompat.storage.removeItem(progressKey);
+                }
+                
+                // 触发数据更新事件
+                window.dispatchEvent(new CustomEvent('practiceDataUpdated', {
+                    detail: { type: 'progress', action: 'clear' }
+                }));
+                
+                // 向父窗口发送消息
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'practiceDataUpdated',
+                        data: { type: 'progress', action: 'clear' }
+                    }, '*');
+                }
+                
+                // 更新界面状态
+                updateInterfaceState();
+                
+                WebViewCompat.dialog.alert('练习进度已清除');
+            }
+        }
+        
         // 筛选错题
         function filterQuestions(type) {
             currentFilter = type;
+            renderWrongQuestions();
+        }
+        
+        // 题目类型筛选（下拉框）
+        function filterByQuestionType() {
+            const select = document.getElementById('questionTypeFilter');
+            const selectedType = select.value;
+            currentFilter = selectedType;
             renderWrongQuestions();
         }
         
@@ -585,11 +859,7 @@
             const navItems = document.querySelectorAll('.nav-item');
             
             function navigateToPage(page) {
-                if (window.parent !== window) {
-                    window.parent.postMessage({ action: 'navigate', page: page }, '*');
-                } else {
-                    window.location.href = page + '.html';
-                }
+                window.NavigationUtils.navigateToPage(page);
             }
             
             navItems.forEach((item) => {
@@ -606,15 +876,15 @@
         
         // 显示筛选菜单
         function showFilterMenu() {
-            const options = ['全部', '单选题', '多选题', '判断题', '按错误次数', '按难度', '按时间'];
+            const options = ['单选题', '多选题', '判断题', '按错误次数', '按难度', '按时间'];
             const choice = WebViewCompat.dialog.prompt('选择筛选条件：\n' + options.map((opt, i) => `${i + 1}. ${opt}`).join('\n'));
             
             if (choice) {
                 const index = parseInt(choice) - 1;
-                if (index >= 0 && index < 4) {
-                    currentFilter = index === 0 ? 'all' : options[index];
-                } else if (index >= 4 && index < 7) {
-                    currentSort = ['wrongCount', 'difficulty', 'time'][index - 4];
+                if (index >= 0 && index < 3) {
+                    currentFilter = options[index];
+                } else if (index >= 3 && index < 6) {
+                    currentSort = ['wrongCount', 'difficulty', 'time'][index - 3];
                 }
                 renderWrongQuestions();
             }

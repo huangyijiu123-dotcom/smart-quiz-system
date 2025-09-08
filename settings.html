@@ -7,8 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="dark-theme.css">
+    <link rel="stylesheet" href="common-styles.css">
     <script src="webview-compat.js"></script>
     <script src="theme-manager.js"></script>
+    <script src="utils.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -60,48 +62,19 @@
         body.theme-dark .bg-gray-200 {
             background-color: #404040 !important;
         }
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        /* 页面特定的切换开关样式覆盖 */
         .toggle-switch {
-            position: relative;
-            display: inline-block;
             width: 50px;
             height: 28px;
         }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
         .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
             border-radius: 28px;
         }
         .slider:before {
-            position: absolute;
-            content: "";
             height: 20px;
             width: 20px;
             left: 4px;
             bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: #3b82f6;
         }
         input:checked + .slider:before {
             transform: translateX(22px);
@@ -309,75 +282,7 @@
             </div>
         </div>
 
-        <!-- 数据管理 -->
-        <div class="px-6 py-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">数据管理</h3>
-            <div class="bg-white rounded-2xl border border-gray-200">
-                <!-- 数据同步 -->
-                <div class="card-hover p-6 border-b border-gray-100 cursor-pointer">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-sync text-blue-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-800">数据同步</h4>
-                                <p class="text-sm text-gray-500">同步学习进度到云端</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-400"></i>
-                    </div>
-                </div>
-                
-                <!-- 导出数据 -->
-                <div class="card-hover p-6 border-b border-gray-100 cursor-pointer">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-download text-green-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-800">导出数据</h4>
-                                <p class="text-sm text-gray-500">导出学习记录和统计</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-400"></i>
-                    </div>
-                </div>
-                
-                <!-- 清除缓存 -->
-                <div class="card-hover p-6 border-b border-gray-100 cursor-pointer">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-trash text-orange-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-800">清除缓存</h4>
-                                <p class="text-sm text-gray-500">清理应用缓存数据</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-400"></i>
-                    </div>
-                </div>
-                
-                <!-- 重置数据 -->
-                <div class="card-hover p-6 cursor-pointer">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-exclamation-triangle text-red-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-800">重置所有数据</h4>
-                                <p class="text-sm text-gray-500">清除所有学习记录</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-400"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- 关于应用 -->
         <div class="px-6 py-4 pb-24">
@@ -567,9 +472,9 @@
         // 返回上一页
         function goBack() {
             if (window.parent !== window) {
-                window.parent.postMessage({ action: 'navigate', page: 'profile' }, '*');
+                window.parent.postMessage({ action: 'navigate', page: 'main' }, '*');
             } else {
-                window.location.href = 'profile.html';
+                window.location.href = 'main.html';
             }
         }
 
@@ -630,24 +535,10 @@
                 });
             });
 
-            // 数据管理功能
-            const dataSections = document.querySelectorAll('h3');
-            let dataSection = null;
-            dataSections.forEach(h3 => {
-                if (h3.textContent.includes('数据管理')) {
-                    dataSection = h3;
-                }
-            });
-            if (dataSection) {
-                const dataContainer = dataSection.nextElementSibling;
-                const dataActions = dataContainer.querySelectorAll('.card-hover');
-                if (dataActions[0]) dataActions[0].addEventListener('click', syncData);
-                if (dataActions[1]) dataActions[1].addEventListener('click', exportData);
-                if (dataActions[2]) dataActions[2].addEventListener('click', clearCache);
-                if (dataActions[3]) dataActions[3].addEventListener('click', resetData);
-            }
+
 
             // 关于应用功能
+            const dataSections = document.querySelectorAll('h3');
             let aboutSection = null;
             dataSections.forEach(h3 => {
                 if (h3.textContent.includes('关于应用')) {
@@ -666,101 +557,7 @@
             // 底部导航事件绑定已移至bindBottomNavigation函数
         }
 
-        // 数据同步
-        function syncData() {
-            showToast('正在同步数据...');
-            // 模拟同步过程
-            setTimeout(() => {
-                showToast('数据同步成功！');
-            }, 2000);
-        }
 
-        // 导出数据
-        function exportData() {
-            const data = {
-                settings: settings,
-                exportTime: new Date().toISOString(),
-                version: '1.2.0'
-            };
-            
-            const dataStr = JSON.stringify(data, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `学习数据_${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-            
-            showToast('数据导出成功！');
-        }
-
-        // 清除缓存
-        function clearCache() {
-            if (WebViewCompat.dialog.confirm('确定要清除缓存吗？这将清理临时数据但保留学习记录。')) {
-                // 清除除设置外的其他缓存
-                const keysToKeep = ['appSettings'];
-                const allKeys = WebViewCompat.storage.getAllKeys();
-                
-                allKeys.forEach(key => {
-                    if (!keysToKeep.includes(key)) {
-                        WebViewCompat.storage.removeItem(key);
-                    }
-                });
-                
-                // 触发数据更新事件
-                window.dispatchEvent(new CustomEvent('practiceDataUpdated', {
-                    detail: { type: 'cache', action: 'clear' }
-                }));
-                
-                // 发送消息给父窗口
-                if (window.parent && window.parent !== window) {
-                    window.parent.postMessage({
-                        action: 'practiceDataUpdated',
-                        type: 'cache',
-                        action: 'clear'
-                    }, '*');
-                }
-                
-                showToast('缓存清除成功！');
-            }
-        }
-
-        // 重置数据
-        function resetData() {
-            if (WebViewCompat.dialog.confirm('警告：此操作将清除所有数据，包括学习记录和设置，且无法恢复。确定要继续吗？')) {
-                if (WebViewCompat.dialog.confirm('请再次确认：真的要重置所有数据吗？')) {
-                    WebViewCompat.storage.clear();
-                    settings = {
-                        theme: 'light',
-                        answerDelay: 3,
-                        autoNext: true,
-                        vibration: false,
-                        sound: true,
-                        dailyTarget: 20,
-                        studyReminder: true,
-                        wrongReminder: true
-                    };
-                    updateUI();
-                    saveSettings();
-                    
-                    // 触发数据更新事件
-                    window.dispatchEvent(new CustomEvent('practiceDataUpdated', {
-                        detail: { type: 'data', action: 'reset' }
-                    }));
-                    
-                    // 发送消息给父窗口
-                    if (window.parent && window.parent !== window) {
-                        window.parent.postMessage({
-                            action: 'practiceDataUpdated',
-                            type: 'data',
-                            action: 'reset'
-                        }, '*');
-                    }
-                    
-                    showToast('所有数据已重置！');
-                }
-            }
-        }
 
         // 显示版本信息
         function showVersion() {
@@ -818,11 +615,7 @@
             const navItems = document.querySelectorAll('.nav-item');
             
             function navigateToPage(page) {
-                if (window.parent !== window) {
-                    window.parent.postMessage({ action: 'navigate', page: page }, '*');
-                } else {
-                    window.location.href = page + '.html';
-                }
+                window.NavigationUtils.navigateToPage(page);
             }
             
             navItems.forEach((item) => {

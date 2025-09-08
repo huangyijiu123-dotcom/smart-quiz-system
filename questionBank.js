@@ -4,2898 +4,3477 @@
 // 单选题题库
 const singleChoiceQuestions = [
                                    {
+                    id: 1,
                     question: "职业道德是从事一定职业的人们在职业活动过程中所应遵循的（）和行为规范的总和",
                     correctAnswers: ["道德原则"],
                     wrongAnswers: ["政治义务", "职业守则", "立法制约"],
                 },
                 {
+                    id: 2,
                     question: "职业道德是一种内在的（）的约束机制。",
                     correctAnswers: ["非强制性"],
                     wrongAnswers: ["强制性", "随意性", "自发性"],
                 },
                 {
+                    id: 3,
                     question: "下列选项中，属于新的职业道德观念的核心理念是（）",
                     correctAnswers: ["服务意识"],
                     wrongAnswers: ["尽忠职守", "公德意识", "劳动技术"],
                 },
                 {
+                    id: 4,
                     question: "下列选项中，不属于职业道德具有的特征是（）",
                     correctAnswers: ["行业的多样性"],
                     wrongAnswers: ["范围的有限性", "内容的稳定性和连续性", "形式的多样性"],
                 },
                 {
+                    id: 5,
                     question: "增强职业道德，可以（）增强企业内部凝聚力。",
                     correctAnswers: ["协调员工之间的关系"],
                     wrongAnswers: ["增加员工福利", "为员工创造发展空间", "调节企业与社会的关系"],
                 },
                 {
+                    id: 6,
                     question: "职业道德不能通过（）的关系，增强企业的凝聚力。",
                     correctAnswers: ["调节企业与市场"],
                     wrongAnswers: ["协调企业职工间", "调节领导与职工", "协调职工与企业"],
                 },
                 {
+                    id: 7,
                     question: "下列关于职业道德的说法中，正确的是（）。",
                     correctAnswers: ["职业道德从一个侧面反映人的整体道德素质"],
                     wrongAnswers: ["职业道德与人格无关", "职业道德的养成只能靠教化", "职业道德只能靠制度规约"],
                 },
                 {
+                    id: 8,
                     question: "朱熹指出的'专心致志，以事其业'说的是（）",
                     correctAnswers: ["敬业精神"],
                     wrongAnswers: ["奉献精神", "公仆意识", "意志品质"],
                 },
                 {
+                    id: 9,
                     question: "团结进取的基本要求不包括（）",
                     correctAnswers: ["保护环境"],
                     wrongAnswers: ["加强协作", "顾全大局", "平等尊重"],
                 },
                 {
+                    id: 10,
                     question: "在下列选项中，符合办事公道规范的有（）。",
                     correctAnswers: ["秉公执法，不徇私情"],
                     wrongAnswers: ["顾全大局、服从上级", "知人善任、培养亲信", "公私不分，一切平等"],
                 },
                 {
+                    id: 11,
                     question: "下列符合遵纪守法要求的做法不包括（）",
                     correctAnswers: ["在楼下没人的时候可以高空抛物"],
                     wrongAnswers: ["遵守法律法规", "遵守行为规范", "遵守所在机构的规章制度"],
                 },
                 {
+                    id: 12,
                     question: "职业纪律是最明确的职业规范，它以（）的方式规定职业活动中对从业人员的基本要求。",
                     correctAnswers: ["道德规范"],
                     wrongAnswers: ["自律", "办法", "习俗"],
                 },
                 {
+                    id: 13,
                     question: "安全操作的基本要求不包括（）",
                     correctAnswers: ["爱岗敬业"],
                     wrongAnswers: ["高度重视", "严格检查", "强化责任"],
                 },
                 {
+                    id: 14,
                     question: "生产经营单位应当在有较大危险因素的生产经营场所和有关设施、设备上，设置明显的（）。",
                     correctAnswers: ["安全警示标志"],
                     wrongAnswers: ["安全宣传标语", "安全宣传挂图", "安全说明"],
                 },
                 {
+                    id: 15,
                     question: "以下不是安全生产检查的方式是（）。",
                     correctAnswers: ["经验检查法"],
                     wrongAnswers: ["常规检查", "安全检查表法", "仪器检查法"],
                 },
                 {
+                    id: 16,
                     question: "诚实守信的基本要求不包括（）。",
                     correctAnswers: ["积极进取"],
                     wrongAnswers: ["保密守信", "不搞虚假", "忠于职守"],
                 },
                 {
+                    id: 17,
                     question: "做人之本，立事之基，为政之根是（）。",
                     correctAnswers: ["诚实守信"],
                     wrongAnswers: ["服务群众", "爱岗敬业", "办事公道"],
                 },
                 {
+                    id: 18,
                     question: "诸葛亮的“鞠躬尽瘁，死而后己”，《淮南子》中的“公正无私，一言而万民齐”，范仲淹所说的“先天下之忧而忧，后天下之乐而乐”，体现了传统文明继承的职业道德精华，即（）",
                     correctAnswers: ["忠诚和奉献精神"],
                     wrongAnswers: ["积极进取精神", "勤俭节约精神", "艰苦奋斗精神"],
                 },
                 {
+                    id: 19,
                     question: "'佛山陶瓷'不是体现工匠精神的典型特征是（）",
                     correctAnswers: ["顾客为主"],
                     wrongAnswers: ["精益求精", "品牌意识", "不断创新"],
                 },
                 {
+                    id: 20,
                     question: "显示器的（）指标越高，显示的图像越清晰。",
                     correctAnswers: ["分辨率"],
                     wrongAnswers: ["对比度", "刷新频率", "亮度"],
                 },
                 {
+                    id: 21,
                     question: "一个完整的计算机系统是除了硬件系统，还包括（）组成。",
                     correctAnswers: ["软件系统"],
                     wrongAnswers: ["操作系统", "输入输出设备", "中央处理器"],
                 },
                 {
+                    id: 22,
                     question: "单处理机计算机系统中，（）是并行操作的。",
                     correctAnswers: ["处理机操作和通道操作"],
                     wrongAnswers: ["程序与程子程序", "用户程序与操作系统程序", "操作系统与软件系统"],
                 },
                 {
+                    id: 23,
                     question: "与计算机硬件关系最密切的软件的是（）。",
                     correctAnswers: ["操作系统"],
                     wrongAnswers: ["编译程序", "数据库管理程序", "软件系统"],
                 },
                 {
+                    id: 24,
                     question: "计算机网络的主要功能目的是实现计算机之间的资源共享，以下选项不属于资源共享的是（）。",
                     correctAnswers: ["网络资源共享"],
                     wrongAnswers: ["硬件资源共享", "软件资源共享", "数据资源贡献"],
                 },
                 {
+                    id: 25,
                     question: "网络传输介质中，抗干扰能力最强的是以下选项()",
                     correctAnswers: ["光纤"],
                     wrongAnswers: ["微波", "双绞线", "同轴电缆"],
                 },
                 {
+                    id: 26,
                     question: "以下属于是网关的基本功能（）。",
                     correctAnswers: ["解析数据包"],
                     wrongAnswers: ["信息安全", "数据重新分组", "简单指令计算"],
                 },
                 {
+                    id: 27,
                     question: "计算机安全所涵盖的内容从技术上不包括（）",
                     correctAnswers: ["用电安全"],
                     wrongAnswers: ["实体安全", "系统安全", "信息安全"],
                 },
                 {
+                    id: 28,
                     question: "关于计算机病毒，以下选项是正确的描述（）",
                     correctAnswers: ["计算机病毒是一种人为特制的具有破坏性的程序"],
                     wrongAnswers: ["计算机病毒可以烧毁计算机的电子元件", "计算机病毒是一种传染力极强的生物细菌", "计算机病毒一旦产生便无法清除"],
                 },
                 {
+                    id: 29,
                     question: "下列关于数据库的叙述中，正确的是（）。",
                     correctAnswers: ["数据库减少了数据冗余"],
                     wrongAnswers: ["数据库避免了数据冗余", "数据库中的数据一致性是指数据类型一致", "数据库系统比文件系统能够管理更多数据"],
                 },
                 {
+                    id: 30,
                     question: "视图是从一个或多个表中或视图中导出的（）",
                     correctAnswers: ["表"],
                     wrongAnswers: ["查询", "报表", "数据"],
                 },
                 {
+                    id: 31,
                     question: "Oracle中，用于限制分组函数的返回值的子句是()",
                     correctAnswers: ["having"],
                     wrongAnswers: ["where", "orderby", "select"],
                 },
                 {
+                    id: 32,
                     question: "Linux中权限最大的账户是（）。",
                     correctAnswers: ["root"],
                     wrongAnswers: ["admin", "guest", "super"],
                 },
                 {
+                    id: 33,
                     question: "计算机的主要性能指标有主频、字长、内存容量及其他指标，其中主频是指计算机CPU在单位时间内输出的（）。",
                     correctAnswers: ["脉冲数"],
                     wrongAnswers: ["字节数", "位数", "指令"],
                 },
                 {
+                    id: 34,
                     question: "下列硬件中，不用安装驱动程序即可工作的是（）",
                     correctAnswers: ["硬盘"],
                     wrongAnswers: ["显卡", "声卡", "网卡"],
                 },
                 {
+                    id: 35,
                     question: "不属于计算机系统的软件故障（）",
                     correctAnswers: ["人为破坏"],
                     wrongAnswers: ["系统故障", "程序故障", "病毒故障"],
                 },
                 {
+                    id: 36,
                     question: "键盘中CapsLock键的作用是（）。",
                     correctAnswers: ["用于大小写字母转换"],
                     wrongAnswers: ["用于取消前一时刻不当操作或退出某种状态", "用于将光标向右跳过8个字节的位置", "切换输入时插入、改写状态"],
                 },
                 {
+                    id: 37,
                     question: "运算器的组成部分不包括以下选项（）",
                     correctAnswers: ["译码器"],
                     wrongAnswers: ["控制线路", "加法器", "寄存器"],
                 },
                 {
+                    id: 38,
                     question: "WPS是一种（）软件。",
                     correctAnswers: ["文字处理"],
                     wrongAnswers: ["游戏", "图形处理", "工程设计"],
                 },
                 {
+                    id: 39,
                     question: "如果希望将幻灯片由横排变为竖排，需要更换（）",
                     correctAnswers: ["版式"],
                     wrongAnswers: ["设计模版", "背景", "幻灯片切换"],
                 },
                 {
+                    id: 40,
                     question: "WPS表格的主要功能不包括（）。",
                     correctAnswers: ["计算器"],
                     wrongAnswers: ["电子表格", "图表", "数据库"],
                 },
                 {
+                    id: 41,
                     question: "微博、博客等自媒体平台让普通大众具有了更多话语权，信息发布更加方便。以下关于自媒体平台描述不正确的是（）。",
                     correctAnswers: ["只有加关注的人发布的信息才可以被自己看到"],
                     wrongAnswers: ["能发布自己的信息，也能转载他人的信息", "能通过跟帖或回复与他人进行交流", "传播、制造虚假信息，会被追究法律责任"],
                 },
                 {
+                    id: 42,
                     question: "以下选项不属于即时通讯软件（）。",
                     correctAnswers: ["Xmind"],
                     wrongAnswers: ["钉钉", "微信", "飞书"],
                 },
                 {
+                    id: 43,
                     question: "计算机病毒可以分为系统病毒、蠕虫病毒、木马病毒以及脚本病毒等，其中木马病毒的前缀是（）",
                     correctAnswers: ["Trojian"],
                     wrongAnswers: ["Worm", "Scrip", "Backdoor"],
                 },
                 {
+                    id: 44,
                     question: "以下选项不属于计算机病毒特征（）",
                     correctAnswers: ["免疫性"],
                     wrongAnswers: ["潜伏性", "传染性", "激发性"],
                 },
                 {
+                    id: 45,
                     question: "计算机浏览器的窗口组成部分不包括（）。",
                     correctAnswers: ["编辑栏"],
                     wrongAnswers: ["标题栏", "菜单栏", "工具栏"],
                 },
                 {
+                    id: 46,
                     question: "浏览器模式改为兼容模式的操作是以下选项（）",
                     correctAnswers: ["点击'兼容性视图设置'选项"],
                     wrongAnswers: ["点击书签选项", "点击常规选项", "点击收藏选项"],
                 },
                 {
+                    id: 47,
                     question: "在百度网站上搜索歌曲“我爱我的祖国”，那么输入的文字称为（）",
                     correctAnswers: ["关键词"],
                     wrongAnswers: ["目录名称", "网页名称", "歌曲名称"],
                 },
                 {
+                    id: 48,
                     question: "搜索引擎是指根据一定的（）、运用特定的计算机程序从互联网上搜集信息，为用户提供检索服务。",
                     correctAnswers: ["策略"],
                     wrongAnswers: ["目录", "选项卡", "字体"],
                 },
                 {
+                    id: 49,
                     question: "不属于搜索引擎涉及的搜索方式是（）。",
                     correctAnswers: ["直接搜索"],
                     wrongAnswers: ["全文索引", "目录索引", "集合氏搜索引擎"],
                 },
                 {
+                    id: 50,
                     question: "每个电子邮件服务器之上都可以开设多个电子邮件，电子邮箱也称之为（）地址。",
                     correctAnswers: ["E-mail"],
                     wrongAnswers: ["用户", "接收", "IP"],
                 },
                 {
+                    id: 51,
                     question: "不属于常用的电子邮箱的是（）",
                     correctAnswers: ["迅雷"],
                     wrongAnswers: ["126邮箱", "163邮箱", "189邮箱"],
                 },
                 {
+                    id: 52,
                     question: "光纤传输是以（）为介质进行的数据、信号传输。",
                     correctAnswers: ["光导纤维"],
                     wrongAnswers: ["中继器", "玻璃丝", "填充物"],
                 },
                 {
+                    id: 53,
                     question: "CUteFTP具有网际快车不具备的功能是以下选项()",
                     correctAnswers: ["视频播放"],
                     wrongAnswers: ["下载文件", "断点续传", "上传文件"],
                 },
                 {
+                    id: 54,
                     question: "处理和播放多媒体声音的关键部件是（）。",
                     correctAnswers: ["声卡"],
                     wrongAnswers: ["显卡", "适配器", "显示器"],
                 },
                 {
+                    id: 55,
                     question: "以下选项不属于多媒体的范畴（）。",
                     correctAnswers: ["手绘画报"],
                     wrongAnswers: ["交互式视频游戏", "电子图书", "立体声乐"],
                 },
                 {
+                    id: 56,
                     question: "以下选项不属于多媒体播放工具的是（）。",
                     correctAnswers: ["WinRAR"],
                     wrongAnswers: ["暴风影音", "千千静听", "Realone Player"],
                 },
                 {
+                    id: 57,
                     question: "公司安排员工春节期间上班，根据劳动法，该公司方法其不低于原工资报酬的（）。",
                     correctAnswers: ["300%"],
                     wrongAnswers: ["150%", "200%", "400%"],
                 },
                 {
+                    id: 58,
                     question: "以下选项不属于劳动者的权利（）。",
                     correctAnswers: ["专利分享的权利"],
                     wrongAnswers: ["取得劳动薪酬的权利", "享有社会保险的福利的权利", "提请劳动争议处理的权利"],
                 },
                 {
+                    id: 59,
                     question: "网络运营者应为（）、国家安全机关依法维护国家安全和侦察犯罪的活动提供技术支持和协助。",
                     correctAnswers: ["公安机关"],
                     wrongAnswers: ["网信部门", "工信部门", "检察院"],
                 },
                 {
+                    id: 60,
                     question: "国家支持网络运营者之间在网络安全信息不在以下（）方面进行合作，提高网络运营者的安全保障能力。",
                     correctAnswers: ["机密"],
                     wrongAnswers: ["分析", "应急处置", "收集"],
                 },
                 {
+                    id: 61,
                     question: "软件著作权人，是指依照条例的，对软件享有（）的自然人、法人或者其他组织。",
                     correctAnswers: ["著作权"],
                     wrongAnswers: ["修改权", "管理权", "开发权"],
                 },
                 {
+                    id: 62,
                     question: "依据《计算机软件保护条例》，软件著作人享有的权利不包含（）。",
                     correctAnswers: ["占用权"],
                     wrongAnswers: ["发表权", "复制权", "修改权"],
                 },
                 {
+                    id: 63,
                     question: "以下选项关于从事国际联网经营活动的接入单位条件不正确的是（）。",
                     correctAnswers: ["自行使用其他信道进行国际联网"],
                     wrongAnswers: ["依法设立企业法人", "具有健全的安全保密制度", "符合法律和国务院规定"],
                 },
                 {
+                    id: 64,
                     question: "互联网可行性报告的主要内容不包括（）。",
                     correctAnswers: ["网络完全规则"],
                     wrongAnswers: ["网络服务性质和范围", "网络技术方案", "管理办法"],
                 },
                 {
+                    id: 65,
                     question: "ETL不仅仅是对一个企业部门、一个应用系统数据的简单整理，还是跨部门、跨（）的数据整合处理。",
                     correctAnswers: ["系统"],
                     wrongAnswers: ["业务", "流程", "产品"],
                 },
                 {
+                    id: 66,
                     question: "ETL在企业数据模型的基础上，构建合理的数据存储模式，建立企业的数据（）平台。",
                     correctAnswers: ["交换"],
                     wrongAnswers: ["模式", "标准", "规则"],
                 },
                 {
+                    id: 67,
                     question: "Oracle Goldengate没有图形化界面，操作皆为（）方式，可配置能力差。",
                     correctAnswers: ["命令行"],
                     wrongAnswers: ["交互式", "输入式", "手动式"],
                 },
                 {
+                    id: 68,
                     question: "Kettle开发和生产环境需要独立部署，任务的（）不在本地。",
                     correctAnswers: ["更改"],
                     wrongAnswers: ["编写", "调试", "修改"],
                 },
                 {
+                    id: 69,
                     question: "Ketle的CDC机制是基于（）触发器等，以下选项是正确的。",
                     correctAnswers: ["时间戳"],
                     wrongAnswers: ["日志", "序列", "架构"],
                 },
                 {
+                    id: 70,
                     question: "DataPipeline的CDC机制是基于多种选择方式，以下方式不属于（）。",
                     correctAnswers: ["分配"],
                     wrongAnswers: ["日志", "时间戳", "自增序列"],
                 },
                 {
+                    id: 71,
                     question: "ETL数据整合的主流工具中不需要开发的为（）",
                     correctAnswers: ["DataPipeline"],
                     wrongAnswers: ["Kettle", "Oracle Goldengate", "lnformatica"],
                 },
                 {
+                    id: 72,
                     question: "Kettle依赖（）定位故障问题，属于后处理的方式，缺少过程预警。",
                     correctAnswers: ["日志"],
                     wrongAnswers: ["时间戳", "架构", "配置"],
                 },
                 {
+                    id: 73,
                     question: "Kettle的最大优势是其（）的特性。",
                     correctAnswers: ["开源"],
                     wrongAnswers: ["易安装", "易操作", "图形化"],
                 },
                 {
+                    id: 74,
                     question: "转换组件是针对数据记录进行处理的组件，是以（）为处理对象，使用某种处理方法的组件。",
                     correctAnswers: ["每个记录"],
                     wrongAnswers: ["每个字段", "每个分组", "每个文件"],
                 },
                 {
+                    id: 75,
                     question: "ETL中三个字母分别代表（），以下选项不正确的。",
                     correctAnswers: ["Transimit"],
                     wrongAnswers: ["Extract", "Transform", "Load"],
                 },
                 {
+                    id: 76,
                     question: "用来读取不同文本文件中的数据，大多是符合约定格式的TXT文件的组件名称为（）。",
                     correctAnswers: ["文本文件输入"],
                     wrongAnswers: ["表输入", "CSV文件输入", "XML输入"],
                 },
                 {
+                    id: 77,
                     question: "生成行组件输出一定数量的（），默认为空，以下选项是正确的。",
                     correctAnswers: ["行"],
                     wrongAnswers: ["列", "字段", "数字"],
                 },
                 {
+                    id: 78,
                     question: "以下选项中，不属于ETL任务执行的主要内容的为()",
                     correctAnswers: ["仅对成功的信息发出提示"],
                     wrongAnswers: ["任务流程的依赖关系", "调度算法和策略", "对成功或失败的信息发出提示"],
                 },
                 {
+                    id: 79,
                     question: "在ETL中，任务的调度算法采取（）的策略进行任务调度，以下选项是正确的。",
                     correctAnswers: ["条件驱动"],
                     wrongAnswers: ["信息抽取", "数据转换", "数据加工"],
                 },
                 {
+                    id: 80,
                     question: "ETL是通过建立（）进行数据整合和处理的，以下选项不正确的。",
                     correctAnswers: ["任务依赖关系"],
                     wrongAnswers: ["任务流程", "设置时间调度", "调用相应的转换任务"],
                 },
                 {
+                    id: 81,
                     question: "网络爬虫是一种按照一定规则，自动地抓取网页信息的（）",
                     correctAnswers: ["程序"],
                     wrongAnswers: ["装置", "网址", "数据文件"]
                 },
                 {
+                    id: 82,
                     question: "数据埋点是一种良好的（）部署数据采集方式。",
                     correctAnswers: ["私有化"],
                     wrongAnswers: ["公有化", "公开化", "自助式"]
                 },
                 {
+                    id: 83,
                     question: "数据整合建立转换工程是在（）中最先进行操作的。",
                     correctAnswers: ["Kettle"],
                     wrongAnswers: ["DataPipeline", "Oracle Goldengate", "Informatica"]
                 },
                 {
+                    id: 84,
                     question: "以下不属于数据整合解决方案的是（）。",
                     correctAnswers: ["数据爬虫"],
                     wrongAnswers: ["ETL工具", "数据仓库", "数据虚拟化"]
                 },
                 {
+                    id: 85,
                     question: "在转换工程过程中，主要进行的操作是对转换工作进行设置，以下选项描述不正确的（）。",
                     correctAnswers: ["函数"],
                     wrongAnswers: ["设置转换工程的名称", "命名参数", "日志"]
                 },
                 {
+                    id: 86,
                     question: "转换主要是针对（）的各种处理，一个转换可以包含多个组件。",
                     correctAnswers: ["数据"],
                     wrongAnswers: ["组件", "记录", "文本"]
                 },
                 {
+                    id: 87,
                     question: "用于抽取数据库的数据组件不包括（）。",
                     correctAnswers: ["Python"],
                     wrongAnswers: ["Oracle", "MS SQLServer", "IBMDB2"]
                 },
                 {
+                    id: 88,
                     question: "以下选项不属于衡量数据质量的指标的是（）。",
                     correctAnswers: ["局部性"],
                     wrongAnswers: ["关联度", "时效性", "可信性"]
                 },
                 {
+                    id: 89,
                     question: "以下选项不是标注数据采集的采集样例（）。",
                     correctAnswers: ["指令采集"],
                     wrongAnswers: ["人体姿势采集", "方言采集", "停车位采集"]
                 },
                 {
+                    id: 90,
                     question: "数据预处理是一种（）技术。",
                     correctAnswers: ["数据挖掘"],
                     wrongAnswers: ["数据清洗", "数据分类", "数据整理"]
                 },
                 {
+                    id: 91,
                     question: "以下选项不是数据预处理的方式是（）。",
                     correctAnswers: ["数据分类"],
                     wrongAnswers: ["数据清洗", "数据集成", "数据归约"]
                 },
                 {
+                    id: 92,
                     question: "在各种数据清洗异常中，（）是指表示实体的具体数据的值和格式的错误。",
                     correctAnswers: ["语法类异常"],
                     wrongAnswers: ["语义类异常", "覆盖率异常", "数据中出现的矛盾"]
                 },
                 {
+                    id: 93,
                     question: "不属于语法类异常的是（）",
                     correctAnswers: ["覆盖率异常"],
                     wrongAnswers: ["语法错误", "值域格式错误", "不规则取值"]
                 },
                 {
+                    id: 94,
                     question: "在数据预处理过程中，对缺失值的处理方法不正确的是（）。",
                     correctAnswers: ["删除当前字段"],
                     wrongAnswers: ["同类均值插补", "极大似然估计", "均值插补"]
                 },
                 {
+                    id: 95,
                     question: "数据的属性可以是（）或定量的数据。",
                     correctAnswers: ["定性"],
                     wrongAnswers: ["定价", "规定", "处理"]
                 },
                 {
+                    id: 96,
                     question: "删除含有缺失值的记录的方法（）。",
                     correctAnswers: ["简单删除法"],
                     wrongAnswers: ["加和法", "平均法", "乘积法"]
                 },
                 {
+                    id: 97,
                     question: "噪声数据处理过程中，（）是通过考察数据的周围值来光滑有序的数据值。",
                     correctAnswers: ["分箱"],
                     wrongAnswers: ["回归", "离群点分析", "函数拟合"]
                 },
                 {
+                    id: 98,
                     question: "数据特征归约的原则是在保留数据判别能力的同时（）特征向量的维度。",
                     correctAnswers: ["减少"],
                     wrongAnswers: ["增加", "记录", "去除"]
                 },
                 {
+                    id: 99,
                     question: "特征归约算法的输入是一组（）。",
                     correctAnswers: ["特征值"],
                     wrongAnswers: ["变量值", "记录值", "规约值"]
                 },
                 {
+                    id: 100,
                     question: "特征归约一般步骤不包括（）。",
                     correctAnswers: ["集成过程"],
                     wrongAnswers: ["搜索过程", "评估过程", "分类过程"]
                 },
                 {
+                    id: 101,
                     question: "样本归约是指从数据集中选出一个有代表性的样本（）。",
                     correctAnswers: ["子集"],
                     wrongAnswers: ["并集", "交集", "合集"]
                 },
                 {
+                    id: 102,
                     question: "确定样本子集的大小不需要考虑（）。",
                     correctAnswers: ["模型选型"],
                     wrongAnswers: ["计算成本", "估计量精度", "数据质量"]
                 },
                 {
+                    id: 103,
                     question: "数据归约是指在尽可能保持数据原貌的前提下，最大限度地精简数据量，（）就是特征值离散化技术。",
                     correctAnswers: ["特征值规约"],
                     wrongAnswers: ["特征规约", "字段规约", "样本规约"]
                 },
                 {
+                    id: 104,
                     question: "无参的特征值归约不包含（）",
                     correctAnswers: ["条形图"],
                     wrongAnswers: ["直方图", "选样", "聚类"]
                 },
                 {
+                    id: 105,
                     question: "在数据变化过程中，（）是指去除数据中的噪声，可采用分箱的方式进行数据平滑。",
                     correctAnswers: ["数据平滑"],
                     wrongAnswers: ["数据聚类", "数据泛化", "属性构造"]
                 },
                 {
+                    id: 106,
                     question: "数据变换是将数据从一种表示形式变换为适用于（）的另一种形式的过程。",
                     correctAnswers: ["数据挖掘"],
                     wrongAnswers: ["数据泛化", "数据规范", "数据提取"]
                 },
                 {
+                    id: 107,
                     question: "剪枝是决策树学习算法对付（）的主要手段。",
                     correctAnswers: ["过拟合"],
                     wrongAnswers: ["欠拟合", "噪声", "缺失值"]
                 },
                 {
+                    id: 108,
                     question: "预剪枝使得决策树很多分支没有展开，这不仅降低了过拟合风险，还显著减少了决策树的（）开销。",
                     correctAnswers: ["训练时间"],
                     wrongAnswers: ["划分时间", "归类时间", "抽样时间"]
                 },
                 {
+                    id: 109,
                     question: "以下选项不属于大数据技术设计的特征的是（）。",
                     correctAnswers: ["结构复杂"],
                     wrongAnswers: ["负载均衡", "分散处理", "副本存储"]
                 },
                 {
+                    id: 110,
                     question: "在大数据线下采集过程中，通过使用（）来测试物品的温度、温度和电压来获取数据。",
                     correctAnswers: ["传感器"],
                     wrongAnswers: ["磁卡片", "网络媒体", "日志"]
                 },
                 {
+                    id: 111,
                     question: "线下采集指通过（）、磁卡片、FRID等装置或技术，获取用户的线下行为数据。",
                     correctAnswers: ["传感器"],
                     wrongAnswers: ["遥感", "自动机", "计算器"]
                 },
                 {
+                    id: 112,
                     question: "以下选项不属于数据采集系统覆盖范围（）。",
                     correctAnswers: ["数据处理"],
                     wrongAnswers: ["数据生产", "数据采集", "数据收集"]
                 },
                 {
+                    id: 113,
                     question: "在大数据处理过程中，目前主流的数据处理模式是（）处理模式和流处理模式。",
                     correctAnswers: ["批"],
                     wrongAnswers: ["分段", "触发", "中控"]
                 },
                 {
+                    id: 114,
                     question: "数据采集系统通常包括数据生成、（）、数据处理、数据存储四个部分。",
                     correctAnswers: ["数据采集"],
                     wrongAnswers: ["数据开发", "数据分析", "数据建模"]
                 },
                 {
+                    id: 115,
                     question: "数据采集又称数据抽取，分为（）抽取和增量抽取。",
                     correctAnswers: ["全量"],
                     wrongAnswers: ["部分", "筛选", "偏好"]
                 },
                 {
+                    id: 116,
                     question: "数据采集系统通常不包括以下部分（）。",
                     correctAnswers: ["数据分析"],
                     wrongAnswers: ["数据生产", "数据采集", "数据处理"]
                 },
                 {
+                    id: 117,
                     question: "以下选项中不属于混合精度训练时避免精度损失的方法是（）。",
                     correctAnswers: ["压缩矩阵"],
                     wrongAnswers: ["保留权重的单精度副本", "损失定标", "改进的精度算法"]
                 },
                 {
+                    id: 118,
                     question: "半精度浮点数在内存中占用（）个字节进行存储。",
                     correctAnswers: ["2"],
                     wrongAnswers: ["1", "4", "8"]
                 },
                 {
+                    id: 119,
                     question: "业务流程优化的目的是（）。",
                     correctAnswers: ["保持企业的竞争优势"],
                     wrongAnswers: ["通过不断发展、完善、优化业务", "对现有工作流程的梳理和完善", "对原来的业务流程做彻底的重新设计"]
                 },
                 {
+                    id: 120,
                     question: "业务流程优化是指从根本上对原来的业务流程做彻底地重新设计，把直线职能型的结构转变成（）流程网络结构。",
                     correctAnswers: ["平行"],
                     wrongAnswers: ["交叉", "汇聚", "业务"]
                 },
                 {
+                    id: 121,
                     question: "流程优化是一项（），通过不断发展、完善、优化业务流程保持企业的竞争优势。",
                     correctAnswers: ["策略"],
                     wrongAnswers: ["规则", "业务", "制度"]
                 },
                 {
+                    id: 122,
                     question: "以下不属于流程优化的主要途径（）。",
                     correctAnswers: ["需求变更"],
                     wrongAnswers: ["设备更新", "材料替代", "时序调整"]
                 },
                 {
+                    id: 123,
                     question: "以下不属于流程优化策略的是（）。",
                     correctAnswers: ["评价"],
                     wrongAnswers: ["绩效", "过程", "战略"]
                 },
                 {
+                    id: 124,
                     question: "以下选项不属于业务流程优化的预期收益（）",
                     correctAnswers: ["减少流程环节，提升效率"],
                     wrongAnswers: ["核心业务、管理流程清晰、简洁，工作效率提高", "工作方法优化，提高了工作质量与效率", "流程顺畅，无效劳动减少成本降低"]
                 },
                 {
+                    id: 125,
                     question: "数据标注的基本流程不包含（）。",
                     correctAnswers: ["数据分析"],
                     wrongAnswers: ["数据采集", "数据清洗", "数据标注"]
                 },
                 {
+                    id: 126,
                     question: "（）是整个数据采集标注基本流程的首要环节。",
                     correctAnswers: ["数据采集"],
                     wrongAnswers: ["数据标注", "数据清洗", "数据分类"]
                 },
                 {
+                    id: 127,
                     question: "以下选项为常用的数据质检方法，（）方法是多人做同一个子任务，通过数据标注工具的功能自动或人工辅助选择出最优的标准结果。",
                     correctAnswers: ["多人验证"],
                     wrongAnswers: ["埋题验证", "标注人员状态验证", "机器验证"]
                 },
                 {
+                    id: 128,
                     question: "以下选项不是数据质检的方法（）",
                     correctAnswers: ["异常值检测"],
                     wrongAnswers: ["多人验证", "埋题验证", "标注人员验证"]
                 },
                 {
+                    id: 129,
                     question: "文本数据标注作为最常见的数据标注分类之一，是指将文字、（）在内的文本行内容进行标注，使得计算机能够识别",
                     correctAnswers: ["符号"],
                     wrongAnswers: ["语音", "动画", "属性"]
                 },
                 {
+                    id: 130,
                     question: "对于数据分类维度的表述，以下选项不正确的（）",
                     correctAnswers: ["时间"],
                     wrongAnswers: ["待标注数据类型", "标注方式", "行业"]
                 },
                 {
+                    id: 131,
                     question: "以下标注方式不属于图像标注的是（）。",
                     correctAnswers: ["情感识别"],
                     wrongAnswers: ["点云标注", "视频追踪", "多边形标注"]
                 },
                 {
+                    id: 132,
                     question: "（）必须在归档的标签候选集内。",
                     correctAnswers: ["数据标签"],
                     wrongAnswers: ["数据归约", "数据标注", "人工标注"]
                 },
                 {
+                    id: 133,
                     question: "数据标注的构成形式不包括（）。",
                     correctAnswers: ["机器标注"],
                     wrongAnswers: ["结构化标注", "非结构化标注", "半结构化标注"]
                 },
                 {
+                    id: 134,
                     question: "以下不属于数据分类的标注者类型的是（）。",
                     correctAnswers: ["音频标注"],
                     wrongAnswers: ["机器标注", "业余标注", "专业标注"]
                 },
                 {
+                    id: 135,
                     question: "下列选项属于人工标注的特点是（）。",
                     correctAnswers: ["标注质量高"],
                     wrongAnswers: ["标注速度快", "标注成本低", "标注灵活性强"]
                 },
                 {
+                    id: 136,
                     question: "以下选项不属于常见的数据标注方式（）",
                     correctAnswers: ["数据质检"],
                     wrongAnswers: ["点标注", "线标注", "3D点云标注"]
                 },
                 {
+                    id: 137,
                     question: "下列选项中，关于数据标注叙述错误的是（）",
                     correctAnswers: ["不需要进行数据清洗即可进入数据标注环节"],
                     wrongAnswers: ["分类标注就是我们常见的打标签", "区域标注要求十分精确", "一些对于特征要求细致的应用中常常需要描点标注"]
                 },
                 {
+                    id: 138,
                     question: "在数据标注运行模式中，以下选项是负责提出需求（）。",
                     correctAnswers: ["项目负责人"],
                     wrongAnswers: ["客户端", "需求端", "标注端"]
                 },
                 {
+                    id: 139,
                     question: "数据标注的运行模式不包含（）。",
                     correctAnswers: ["客户端"],
                     wrongAnswers: ["需求端", "项目负责人", "标注端"]
                 },
                 {
+                    id: 140,
                     question: "以下选项不属于数据标注的特点（）。",
                     correctAnswers: ["数据标注算法模型多"],
                     wrongAnswers: ["数据标注内容的颗粒度小", "数据标注需求量大", "数据标注需求迭代快"]
                 },
                 {
+                    id: 141,
                     question: "目前，提高数据标注效率的最好方式是对待标注数据进行（）",
                     correctAnswers: ["预处理"],
                     wrongAnswers: ["数据分析", "数据建模", "数据建仓"]
                 },
                 {
+                    id: 142,
                     question: "以下选项不属于产生多种数据采集方式与处理方式的原因的是（）。",
                     correctAnswers: ["数据具有保密性"],
                     wrongAnswers: ["数据来源丰富", "数据质量要求高", "存储与分析的数据量大"]
                 },
                 {
+                    id: 143,
                     question: "目前日志数据采集系统不常用的是（）。",
                     correctAnswers: ["流式处理"],
                     wrongAnswers: ["采集技术", "数据分析技术", "数据采集系统架构"]
                 },
                 {
+                    id: 144,
                     question: "在对数据进行标准化时，需要考虑数据特征，因为不同特征之间往往具有不同的（），会造成数值间分布差异较大。",
                     correctAnswers: ["量纲"],
                     wrongAnswers: ["分布", "单位", "标准"]
                 },
                 {
+                    id: 145,
                     question: "不常见的数据变换方法是以下（）",
                     correctAnswers: ["函数转换"],
                     wrongAnswers: ["标准化", "离散化", "独热编码"]
                 },
                 {
+                    id: 146,
                     question: "数据预处理方法不包括以下（）。",
                     correctAnswers: ["数据建模"],
                     wrongAnswers: ["数据清洗", "数据合并", "数据变换"]
                 },
                 {
+                    id: 147,
                     question: "异常值是指样本中的个别值，其数值明显偏离所属样本的（）",
                     correctAnswers: ["观测值"],
                     wrongAnswers: ["测量值", "重复值", "更新值"]
                 },
                 {
+                    id: 148,
                     question: "属于数据清洗的步骤（）。",
                     correctAnswers: ["以上都是"],
                     wrongAnswers: ["删除原始数据中无关数据", "删除原始数据中重复数据", "平滑噪声数据"]
                 },
                 {
+                    id: 149,
                     question: "当进行数据预处理时有些数据值是被遗漏的，那么应该采用（）方法。",
                     correctAnswers: ["数据插补"],
                     wrongAnswers: ["删除", "数据变化", "数据标注"]
                 },
                 {
+                    id: 150,
                     question: "以下选项是常用的数据插补方法（）。",
                     correctAnswers: ["以上都是"],
                     wrongAnswers: ["均值/中位数/众数插补", "使用固定值", "最近临插补"]
                 },
                 {
+                    id: 151,
                     question: "如果训练过程中所使用的数据集存在大量（）将会导致机器学习训练不充分。",
                     correctAnswers: ["噪声"],
                     wrongAnswers: ["维度", "数据量", "字段"]
                 },
                 {
+                    id: 152,
                     question: "在质量检验阶段，参与质量检验的人员包括",
                     correctAnswers: ["质量检验员"],
                     wrongAnswers: ["前台员工", "技术工人", "企业行政人员"]
                 },
                 {
+                    id: 153,
                     question: "图像标注的本质是（）到语言表示化的过程。",
                     correctAnswers: ["视觉"],
                     wrongAnswers: ["色彩", "空间", "文件"]
                 },
                 {
+                    id: 154,
                     question: "在语音标注的质量检验中，质检员时刻关注（）发音的时间轴与标注区域的音标是否相符。",
                     correctAnswers: ["语音数据"],
                     wrongAnswers: ["文本数据", "图像数据", "多媒体数据"]
                 },
                 {
+                    id: 155,
                     question: "语音标注是标注员不断对语音信息进行（）。",
                     correctAnswers: ["翻译"],
                     wrongAnswers: ["分割", "瞄点", "合井"]
                 },
                 {
+                    id: 156,
                     question: "不是语音标注需要了解的常规操作是（）。",
                     correctAnswers: ["合并"],
                     wrongAnswers: ["采样", "采样精度", "声道"]
                 },
                 {
+                    id: 157,
                     question: "数据标注行业注重以下方面（）",
                     correctAnswers: ["高效"],
                     wrongAnswers: ["快捷", "简单", "实时"]
                 },
                 {
+                    id: 158,
                     question: "数据标注就是使用计算机，按照（）的执行规范对各种各样的原始数据进行标注。",
                     correctAnswers: ["客户"],
                     wrongAnswers: ["数据标注员", "项目负责人", "采集人员"]
                 },
                 {
+                    id: 159,
                     question: "以下选项不属于细胞标注的规则（）",
                     correctAnswers: ["细胞叠加时只需要标注一个"],
                     wrongAnswers: ["为每个细胞添加标签", "处理图片边缘的细胞体", "叠加的细胞一定要分清每个细胞的轮廓"]
                 },
                 {
+                    id: 160,
                     question: "（）可采用方差选择法进行特征选择。",
                     correctAnswers: ["过滤式选择"],
                     wrongAnswers: ["子集搜索与评价", "包裹式选择", "嵌入式选择"]
                 },
                 {
+                    id: 161,
                     question: "特征工程不包括以下步骤（）",
                     correctAnswers: ["特征描点"],
                     wrongAnswers: ["特征选择", "特征降维", "特征构造"]
                 },
                 {
+                    id: 162,
                     question: "以下选项描述了行之有效的数据分析复杂性降低手段（）。",
                     correctAnswers: ["降维处理"],
                     wrongAnswers: ["更新操作", "剔除余", "稀疏编码"]
                 },
                 {
+                    id: 163,
                     question: "常见的线性映射方法是（）。",
                     correctAnswers: ["主成分分析"],
                     wrongAnswers: ["聚类分析", "归类分析", "KNN"]
                 },
                 {
+                    id: 164,
                     question: "聚合特征构造主要通过多个特征（）聚合实现。",
                     correctAnswers: ["分组"],
                     wrongAnswers: ["过滤", "嵌入", "降维"]
                 },
                 {
+                    id: 165,
                     question: "（）特征构造方法旨在减少数据集的维度。",
                     correctAnswers: ["降维特征构造"],
                     wrongAnswers: ["聚合特征构造", "包裹时特征构造", "转换特征构造"]
                 },
                 {
+                    id: 166,
                     question: "以下选项是数据标注质量的衡量尺（）。",
                     correctAnswers: ["数据标注规则"],
                     wrongAnswers: ["数据归约", "数据清洗", "数据提取"]
                 },
                 {
+                    id: 167,
                     question: "（）是将原始数据进行处理和转换，以满足特定需求或达到特定目的的过程。",
                     correctAnswers: ["数据转换"],
                     wrongAnswers: ["数据归约", "数据清洗", "数据分析"]
                 },
                 {
+                    id: 168,
                     question: "数据变换包括以下选项（）",
                     correctAnswers: ["以上都是"],
                     wrongAnswers: ["数据平滑", "数据聚集", "数据泛化"]
                 },
                 {
+                    id: 169,
                     question: "在进行数据清洗的过程中，（）方法是指将含有缺失属性值的对象直接删除，从而得到一个完备的信息表。",
                     correctAnswers: ["忽略元组"],
                     wrongAnswers: ["数据补齐", "平均值填充", "不处理"]
                 },
                 {
+                    id: 170,
                     question: "大量带有缺失值的数据记录存在明显的数据（）或特征。",
                     correctAnswers: ["分布规律"],
                     wrongAnswers: ["类别", "汇总", "构造"]
                 },
                 {
+                    id: 171,
                     question: "（）是指在测量一个变量时可能出现的测量值相对于真实值的偏差或错误。",
                     correctAnswers: ["噪声"],
                     wrongAnswers: ["编码", "异常", "清洗"]
                 },
                 {
+                    id: 172,
                     question: "分箱的方法不包括以下选项（）。",
                     correctAnswers: ["删除记录"],
                     wrongAnswers: ["等深分箱法", "最小熵", "用户自定义区间"]
                 },
                 {
+                    id: 173,
                     question: "希望最小化存储空间并且只考虑相同文件内容选择（）方法。",
                     correctAnswers: ["文件级去重"],
                     wrongAnswers: ["数据块级去重", "分类去重", "标记去重"]
                 },
                 {
+                    id: 174,
                     question: "自动驾驶属于（）的应用领域。",
                     correctAnswers: ["区域标注"],
                     wrongAnswers: ["语音标注", "文本标注", "分类标注"]
                 },
                 {
+                    id: 175,
                     question: "对采集到的数据进行（）等操作，方便后续数据处理算法识别。",
                     correctAnswers: ["以上都有"],
                     wrongAnswers: ["归类、整理", "标记", "编辑、纠错"]
                 },
                 {
+                    id: 176,
                     question: "语音标注是指将听到的（）进行转写，并适当打上标签。",
                     correctAnswers: ["音频"],
                     wrongAnswers: ["文本", "数字", "信号"]
                 },
                 {
+                    id: 177,
                     question: "不是常用的语音处理工具（）",
                     correctAnswers: ["Matlab"],
                     wrongAnswers: ["GoldWare", "Logic", "Adobe Audition"]
                 },
                 {
+                    id: 178,
                     question: "实体命名的实体一般不包括（）。",
                     correctAnswers: ["动词"],
                     wrongAnswers: ["人名", "地名", "组织名"]
                 },
                 {
+                    id: 179,
                     question: "文本标注的现实应用场景不包括文本的（）。",
                     correctAnswers: ["因果标注"],
                     wrongAnswers: ["实体标注", "情感标注", "相似性判断标注"]
                 },
                 {
+                    id: 180,
                     question: "（）是最简单、最常用的数据标注类型，主要包括矩形拉框、打点标注和点云拉框等。",
                     correctAnswers: ["图像标注"],
                     wrongAnswers: ["语音标注", "文本标注", "视频标注"]
                 },
                 {
+                    id: 181,
                     question: "图像处理的流程是指对图像进行（）等模块分析。",
                     correctAnswers: ["以上都有"],
                     wrongAnswers: ["采集、显示", "存储、处理", "通信"]
                 },
                 {
+                    id: 182,
                     question: "（）是由图像连续播放组成的数据标注类型。",
                     correctAnswers: ["视频标注"],
                     wrongAnswers: ["语音标注", "文本标注", "图像标注"]
                 },
                 {
+                    id: 183,
                     question: "下列不是视频常用编辑软件的是（）",
                     correctAnswers: ["Photoshop"],
                     wrongAnswers: ["爱剪辑", "快剪辑", "AdobePremiere"]
                 },
                 {
+                    id: 184,
                     question: "视频标注源视频做结构化处理，不包括（）。",
                     correctAnswers: ["图像分切"],
                     wrongAnswers: ["镜头检测", "分割", "关键帧提取"]
                 },
                 {
+                    id: 185,
                     question: "数据标注在医疗行业涉及的应用场景不包括（）",
                     correctAnswers: ["人员识别"],
                     wrongAnswers: ["手术工具识别", "处方识别", "医疗影像标注"]
                 },
                 {
+                    id: 186,
                     question: "文本数据标注质量评估的算法不包括（）。",
                     correctAnswers: ["COR算法"],
                     wrongAnswers: ["BLEU算法", "ROUGE算法", "METEOR算法"]
                 },
                 {
+                    id: 187,
                     question: "文本数据标注在生活中的应用比较广泛，包括（）",
                     correctAnswers: ["名片自动识别"],
                     wrongAnswers: ["音频识别", "信号识别", "视频识别"]
                 },
                 {
+                    id: 188,
                     question: "（）是指通过算法模型识别转录后的文本内容并将其与对应的音频进行逻辑关联。",
                     correctAnswers: ["语音标注"],
                     wrongAnswers: ["文本标注", "图像标注", "视频标注"]
                 },
                 {
+                    id: 189,
                     question: "语音数据标注是通过（）识别转录后的文本内容，并将其与对应的音频进行逻辑关联。",
                     correctAnswers: ["算法模型"],
                     wrongAnswers: ["自然语言处理", "音频切割", "实时翻译"]
                 },
                 {
+                    id: 190,
                     question: "不是语音数据标注工具（）",
                     correctAnswers: ["SER"],
                     wrongAnswers: ["CIA", "Praat", "ModelArts"]
                 },
                 {
+                    id: 191,
                     question: "常用的数据标注工具的标注结果导出格式不包括",
                     correctAnswers: ["DAT"],
                     wrongAnswers: ["CSV", "XML", "JSON"]
                 },
                 {
+                    id: 192,
                     question: "下面（）是常见的数据标注结果文件后缀名。",
                     correctAnswers: ["xml"],
                     wrongAnswers: ["csV", "avi", "jpg"]
                 },
                 {
+                    id: 193,
                     question: "下面对CSV格式的文件叙述不正确的是（）。",
                     correctAnswers: ["以逗号或空格为分隔符"],
                     wrongAnswers: ["每条记录占一行", "若字段中包含逗号，则该字段必须用双引号括起来", "若字段中包含双引号，则该字段必须用双引号括起来"]
                 },
                 {
+                    id: 194,
                     question: "判断数据标注的质量主要体现在标注数量和（）",
                     correctAnswers: ["标注内容质量"],
                     wrongAnswers: ["标注时间", "标注形式", "标注成本"]
                 },
                 {
+                    id: 195,
                     question: "不能以（）指标来衡量数据质量。",
                     correctAnswers: ["覆盖性"],
                     wrongAnswers: ["时效性", "范围", "可信性"]
                 },
                 {
+                    id: 196,
                     question: "（）包含技术上的实现方式或结构上的优化调整，通常可以根据代码改动范围来确定需要测试的范围。",
                     correctAnswers: ["开发技术文档"],
                     wrongAnswers: ["用户反馈", "产品需求文档", "技术选代"]
                 },
                 {
+                    id: 197,
                     question: "测试计划不能描述测试活动（）的文档。",
                     correctAnswers: ["费用"],
                     wrongAnswers: ["范围", "方法", "进度"]
                 },
                 {
+                    id: 198,
                     question: "测试报告主要分为（）和总结测试报告。",
                     correctAnswers: ["版本测试报告"],
                     wrongAnswers: ["需求测试报告", "开发测试报告", "阶段测试报告"]
                 },
                 {
+                    id: 199,
                     question: "测试环境分为硬件环境，软件版本，（）。",
                     correctAnswers: ["系统拓扑图"],
                     wrongAnswers: ["开发环境", "需求报告", "CPU型号"]
                 },
 
                 {
+                    id: 200,
                     question: "测试集的独立性是为了防止由于测试数据集（）导致的测试结果的失真风险。",
                     correctAnswers: ["相互干扰"],
                     wrongAnswers: ["数据失真", "数据冗余", "不相干"]
                 },
                 {
+                    id: 201,
                     question: "以下内容不属于测试报告的是（）。",
                     correctAnswers: ["问题概要"],
                     wrongAnswers: ["测试方法", "测试工具", "结论性能汇总"]
                 },
                 {
+                    id: 202,
                     question: "（）可以降低软件质量风险，使程序员能够更专心于解决程序的算法和效率。",
                     correctAnswers: ["软件测试"],
                     wrongAnswers: ["拟合算法", "风险评估", "优化模型"]
                 },
                 {
+                    id: 203,
                     question: "以下不属于软件测试流程的有（）。",
                     correctAnswers: ["用户反馈"],
                     wrongAnswers: ["需求分析", "实时测试", "提交缺陷报告"]
                 },
                 {
+                    id: 204,
                     question: "在工作中测试组织结构一般不涉及的人员是（）。",
                     correctAnswers: ["项目经理"],
                     wrongAnswers: ["测试经理", "项目测试经理", "测试分析员"]
                 },
                 {
+                    id: 205,
                     question: "ROC曲线是通过绘制模型的方式来评估（）。",
                     correctAnswers: ["分类模型"],
                     wrongAnswers: ["聚类模型", "逻辑模型", "拟合模型"]
                 },
                 {
+                    id: 206,
                     question: "以下不属于回归算法模型评价指标的是（）。",
                     correctAnswers: ["均值"],
                     wrongAnswers: ["可解释方差", "R方值", "平均绝对误差"]
                 },
                 {
+                    id: 207,
                     question: "以下不属于检测算法的是（）。",
                     correctAnswers: ["点检测法"],
                     wrongAnswers: ["聚类分析法", "分类算法", "背景建模法"]
                 },
                 {
+                    id: 208,
                     question: "（）是分类模型正确分类的样本数与样本总数的比值。",
                     correctAnswers: ["准确率"],
                     wrongAnswers: ["精准率", "召回率", "误差率"]
                 },
                 {
+                    id: 209,
                     question: "精准率是模型正确分类的正例样本数与总的（）样本总数。",
                     correctAnswers: ["正例"],
                     wrongAnswers: ["反例", "中例", "个例"]
                 },
                 {
+                    id: 210,
                     question: "以下不属于二分类评价指标的是（）。",
                     correctAnswers: ["R Square"],
                     wrongAnswers: ["准确率", "召回率", "精确率"]
                 },
                 {
+                    id: 211,
                     question: "（）将样本按照一定比例划分为训练集与检验集两个集合，两个集合中样本随机分配且不重叠。",
                     correctAnswers: ["保留法"],
                     wrongAnswers: ["蒙特卡洛交叉验证", "K折交叉验证", "留一法"]
                 },
                 {
+                    id: 212,
                     question: "蒙特卡洛交叉验证将数据随机划分为训练集于检验集，使用检验集检验训练的模型效果，多次重复过程取（）作为模型好坏的评价标准。",
                     correctAnswers: ["平均值"],
                     wrongAnswers: ["方差", "比例", "标准差"]
                 },
                 {
+                    id: 213,
                     question: "以下不属于算法测试分类效果评价方法的是（）。",
                     correctAnswers: ["AUC"],
                     wrongAnswers: ["蒙特卡洛交叉验证", "k折交叉验证", "保留法"]
                 },
                 {
+                    id: 214,
                     question: "最好使用（）来初始化ReLU激活函数。",
                     correctAnswers: ["He"],
                     wrongAnswers: ["Xaview", "tanh", "Sigmoid"]
                 },
                 {
+                    id: 215,
                     question: "以下不属于激活函数的是（）。",
                     correctAnswers: ["Softmax"],
                     wrongAnswers: ["sigmoid函数", "tanh函数", "SoftSign"]
                 },
                 {
+                    id: 216,
                     question: "以下选项不属于算法的正确性（）。",
                     correctAnswers: ["算法程序对于精心设计、极其刁难的测试数据无法满足要求的输出结果"],
                     wrongAnswers: ["算法程序没有语法错误", "算法程序能够根据正确的输入的值得到满足要求的输出结果", "算法程序能够根据错误的输出的值满足规格说明的输出结果"]
                 },
                 {
+                    id: 217,
                     question: "算法的健壮性是指当输入的据非法时，算法应当恰当地做出反应或进行相应处理，处理方法为（）。",
                     correctAnswers: ["返回一个表示错误或错误性质的值"],
                     wrongAnswers: ["按照错误输入计算输出结果", "中断程序的运行", "自动修复算法数据"]
                 },
                 {
+                    id: 218,
                     question: "设计算法的原则不包括（）。",
                     correctAnswers: ["高度优化"],
                     wrongAnswers: ["正确性", "健壮性", "高效率"]
                 },
                 {
+                    id: 219,
                     question: "算法的每一步骤都能有效的执行，并得到确定的结果，称为算法的（）。",
                     correctAnswers: ["确定性"],
                     wrongAnswers: ["无穷性", "正确性", "可行性"]
                 },
                 {
+                    id: 220,
                     question: "算法的特征不包括（）。",
                     correctAnswers: ["无穷性"],
                     wrongAnswers: ["确定性", "输入性", "输出性"]
                 },
                 {
+                    id: 221,
                     question: "算法有一个初始输入，它给出最原始的条件，并且有一个最终的算法输出，它给出算法的目标，同时每个算法需有一个（）。",
                     correctAnswers: ["算法名"],
                     wrongAnswers: ["多义性", "多条执行路径", "无效结果"]
                 },
                 {
+                    id: 222,
                     question: "（）是对算法最基本、最重要的要求。",
                     correctAnswers: ["正确性"],
                     wrongAnswers: ["健壮性", "高效性", "可读性"]
                 },
                 {
+                    id: 223,
                     question: "算法正确性包括（）。",
                     correctAnswers: ["证明关于输入与输出之间关系的命题是正确的"],
                     wrongAnswers: ["证明最终的结果是确定的", "证明算法是有界的", "证明算法是可读的"]
                 },
                 {
+                    id: 224,
                     question: "（）是设计和制定测试过程的基础，一个好的测试用例会使测试工作的效果事半功倍，并且能尽早发现一些隐藏的软件缺陷。",
                     correctAnswers: ["测试用例"],
                     wrongAnswers: ["测试报告", "测试计划", "测试分析"]
                 },
                 {
+                    id: 225,
                     question: "在软件版本更新后，只需修正少部分的测试用例即可开展测试工作，降低工作强度，缩短项目周期。称为测试用例的（）。",
                     correctAnswers: ["可维护性"],
                     wrongAnswers: ["有效性", "盲目性", "周期性"]
                 },
                 {
+                    id: 226,
                     question: "以下不属于测试用例的作用特性（）。",
                     correctAnswers: ["耦合性"],
                     wrongAnswers: ["避免测试的盲目性", "可维护性", "可管理性"]
                 },
                 {
+                    id: 227,
                     question: "（）是指解题方案的准确而完整的描述，是一系列解决问题的清晰指令，代表着用系统的方法描述解决问题的策略机制。",
                     correctAnswers: ["算法"],
                     wrongAnswers: ["进程", "语句", "程序"]
                 },
                 {
+                    id: 228,
                     question: "算法的（）特征是指算法必须能在执行有穷个步骤之后终止。",
                     correctAnswers: ["有穷性"],
                     wrongAnswers: ["确切性", "终止性", "可行性"]
                 },
                 {
+                    id: 229,
                     question: "算法优化不针对算法的（）性能进行优化。",
                     correctAnswers: ["可读性"],
                     wrongAnswers: ["空间复杂度", "正确性", "健壮性"]
                 },
                 {
+                    id: 230,
                     question: "渐进时间复杂度是算法（）的度量。",
                     correctAnswers: ["效率"],
                     wrongAnswers: ["精度", "大小", "容量"]
                 },
                 {
+                    id: 231,
                     question: "聚类分析的度量指标用于对聚类结果进行评判，分为外部指标和（）。",
                     correctAnswers: ["内部指标"],
                     wrongAnswers: ["隐藏指标", "空间指标", "时间指标"]
                 },
                 {
+                    id: 232,
                     question: "聚类分析指将物理或抽象对象的（）为由类似的对象组成的多个类的分析过程。",
                     correctAnswers: ["集合分组"],
                     wrongAnswers: ["内部规律总结", "表面现象归纳", "模型具现"]
                 },
                 {
+                    id: 233,
                     question: "算法度量的外部指标不包括（）。",
                     correctAnswers: ["紧密度"],
                     wrongAnswers: ["Rand统计量", "Jaccard系数", "F值"]
                 },
                 {
+                    id: 234,
                     question: "文本可视化可以将文本中的（）展示出来。",
                     correctAnswers: ["隐藏信息"],
                     wrongAnswers: ["表面数据", "作者意图", "所有细节"]
                 },
                 {
+                    id: 235,
                     question: "Chart.js是一款基于（）实现的轻量级工具。",
                     correctAnswers: ["Javascript"],
                     wrongAnswers: ["Python", "C++", "Matlab"]
                 },
                 {
+                    id: 236,
                     question: "（）是一款文字云产生器，使用者将一串文字输入后，通过这个工具，产生不同样式的文字风格。",
                     correctAnswers: ["Wordle"],
                     wrongAnswers: ["Raw", "Orange", "Facets"]
                 },
                 {
+                    id: 237,
                     question: "以下不属于算法可视化常用工具的有（）。",
                     correctAnswers: ["Axure"],
                     wrongAnswers: ["WPS表格", "Tableau", "Python"]
                 },
                 {
+                    id: 238,
                     question: "直方图由一系列高度不等的纵向线段表示（）的情况。",
                     correctAnswers: ["数据分布"],
                     wrongAnswers: ["部分占总体比例", "区域与总体的关系", "数据分散"]
                 },
                 {
+                    id: 239,
                     question: "常用的关系可视化图不包括（）。",
                     correctAnswers: ["直方图"],
                     wrongAnswers: ["散点图", "热图", "气泡图"]
                 },
                 {
+                    id: 240,
                     question: "某算法的时间复杂度O(Cn^2)，表面该算法的（）。",
                     correctAnswers: ["执行时间与n^2成正比"],
                     wrongAnswers: ["问题规模是n^2", "执行时间等于于n^2", "问题规模与n^2成正比"]
                 },
                 {
+                    id: 241,
                     question: "算法复杂度指算法在编写成可执行程序后，运行时所需要的资源，这里的资源包括（）。",
                     correctAnswers: ["时间资源"],
                     wrongAnswers: ["CPU资源", "空间资源", "GPU资源"]
                 },
                 {
+                    id: 242,
                     question: "（）是指不借助任何外部参考，只用参与聚类的样本评判聚类结果的好坏。",
                     correctAnswers: ["内部指标"],
                     wrongAnswers: ["外部指标", "时间指标", "空间指标"]
                 },
                 {
+                    id: 243,
                     question: "算法度量的内部指标不包括（）。",
                     correctAnswers: ["Rand统计量"],
                     wrongAnswers: ["欧式距离", "切比雪夫距离", "邓恩指数"]
                 },
                 {
+                    id: 244,
                     question: "网络爬虫是一种按照一定的规则，自动地抓取万维网信息的程序或者脚本。其基本以（）语言为主。",
                     correctAnswers: ["Python"],
                     wrongAnswers: ["JAVA", "C++", "Matlab"]
                 },
                 {
+                    id: 245,
                     question: "引导用户自发参与是指在产品中设计相应的日志记录或（），引导用户主动将数据结果反馈给系统。",
                     correctAnswers: ["操作步骤"],
                     wrongAnswers: ["程序结果", "系统崩溃", "全部进程"]
                 },
                 {
+                    id: 246,
                     question: "机器学习中，用于训练的数据需要解决的问题不包括（）。",
                     correctAnswers: ["来源"],
                     wrongAnswers: ["存储", "表示", "规模"]
                 },
                 {
+                    id: 247,
                     question: "批次是模型训练时（）中使用的样本集合的数量。",
                     correctAnswers: ["一次迭代"],
                     wrongAnswers: ["多次迭代", "一次递归", "二次递归"]
                 },
                 {
+                    id: 248,
                     question: "分类算法中训练误差代表此分类方法对于现有训练样本集的（）。",
                     correctAnswers: ["拟合程度"],
                     wrongAnswers: ["收敛程度", "发散程度", "递归程度"]
                 },
                 {
+                    id: 249,
                     question: "过度拟合训练数据导致模型的（）随着模型与训练数据的拟合程度增高而下降。",
                     correctAnswers: ["泛化能力"],
                     wrongAnswers: ["脱敏能力", "递归程度", "梯度下降指标"]
                 },
                 {
+                    id: 250,
                     question: "分类算法可能产生的误差有（）。",
                     correctAnswers: ["泛化误差"],
                     wrongAnswers: ["抽样误差", "随机误差", "系统误差"]
                 },
                 {
+                    id: 251,
                     question: "一共检测了30个模型，有两类A，假设检测到了A类15个，但这15张图中A类真实存在的数目是10个。这时候A类的精确率为（）。",
                     correctAnswers: ["66.70%"],
                     wrongAnswers: ["50%", "35%", "33.30%"]
                 },
                 {
+                    id: 252,
                     question: "用于聚类的神经网络算法的评价指标不包括（）。",
                     correctAnswers: ["F1"],
                     wrongAnswers: ["RMSSTD", "SRP", "R Square"]
                 },
                 {
+                    id: 253,
                     question: "如果学习率设置的太小，参数更新速度太慢，导致无法快速的找到好的下降方向，随着（）增大模型损失基本不变，需要消耗更多的训练资源来保证获取到参数的最优值。",
                     correctAnswers: ["迭代次数"],
                     wrongAnswers: ["递归次数", "回归次数", "拟合次数"]
                 },
                 {
+                    id: 254,
                     question: "学习率调整的方法不包括（）。",
                     correctAnswers: ["对数级衰减"],
                     wrongAnswers: ["基于经验的手动调整", "均匀分布降低策略", "指数级衰减"]
                 },
                 {
+                    id: 255,
                     question: "（）通过一定规则扩充数据，增加训练样本数量，并且平衡各类别中样本的比例，有助于减少过拟合问题。",
                     correctAnswers: ["数据增强"],
                     wrongAnswers: ["Dropout", "Bagging", "批正则化"]
                 },
                 {
+                    id: 256,
                     question: "以下方法中可以防止过拟合的是（）。",
                     correctAnswers: ["以上都是"],
                     wrongAnswers: ["参数范数惩罚", "数据增强", "Dropout"]
                 },
                 {
+                    id: 257,
                     question: "随机搜索是给每个超参数定义一个边缘分布，从指定的分布中（）的超参数进行组合。",
                     correctAnswers: ["随机选取固定数量"],
                     wrongAnswers: ["指定选取随机数量", "随机选取随机数量", "指定选取固定数量"]
                 },
                 {
+                    id: 258,
                     question: "网络搜索在所划分网格内，（）的点所对应的分类准确率都非常低。",
                     correctAnswers: ["大部分"],
                     wrongAnswers: ["少部分", "全局", "随机范围"]
                 },
                 {
+                    id: 259,
                     question: "不属于常见的超参数优化方法的是（）。",
                     correctAnswers: ["梯度下降"],
                     wrongAnswers: ["网格搜索", "随机搜索", "贝叶斯优化"]
                 },
                 {
+                    id: 260,
                     question: "算法数据的分析方法中（）可以最醒目地表达各个物理量间的变化关系。",
                     correctAnswers: ["作图法"],
                     wrongAnswers: ["列表法", "预测法", "特征描述法"]
                 },
                 {
+                    id: 261,
                     question: "不能用于数据分析的作图工具的是（）。",
                     correctAnswers: ["Axure"],
                     wrongAnswers: ["SPSS", "WPS表格", "Python"]
                 },
                 {
+                    id: 262,
                     question: "训练误差损失函数的期望是模型关于（）的期望损失。",
                     correctAnswers: ["联合分布"],
                     wrongAnswers: ["条件分布", "边缘分布", "概率分布"]
                 },
                 {
+                    id: 263,
                     question: "K折交叉验证将数据切分为K个互不相交的大小相同数据集，用（）个子集训练。",
                     correctAnswers: ["k-1"],
                     wrongAnswers: ["k", "k-2", "1"]
                 },
                 {
+                    id: 264,
                     question: "k折交叉验证中，一些验证表明，当k取（）时，在计算代价和性能之间能达到好的平衡。",
                     correctAnswers: ["10"],
                     wrongAnswers: ["5", "50", "100"]
                 },
                 {
+                    id: 265,
                     question: "K折交叉验证的用途有（）。",
                     correctAnswers: ["模型评估"],
                     wrongAnswers: ["模型训练", "算法选择", "模型预测"]
                 },
                 {
+                    id: 266,
                     question: "（）在概率论和统计学中用于衡量两个变量的总体误差。",
                     correctAnswers: ["协方差"],
                     wrongAnswers: ["众数", "平均值", "极值"]
                 },
                 {
+                    id: 267,
                     question: "如果两个变量a，b，（）那么两个变量之间的协方差就是负值。",
                     correctAnswers: ["其中a大于自身的期望值"],
                     wrongAnswers: ["其中b等于自身的期望值", "其中b大于自身的期望值", "其中a等于自身的期望值"]
                 },
                 {
+                    id: 268,
                     question: "标准误差，如果误差统计分布是正态分布，那么随机误差落在±σ以内的概率为（）。",
                     correctAnswers: ["68%"],
                     wrongAnswers: ["50%", "100%", "25%"]
                 },
                 {
+                    id: 269,
                     question: "标准误差是预测值与真实值偏差的平方与观测次数n比值的（）。",
                     correctAnswers: ["平方根"],
                     wrongAnswers: ["总和", "平方", "三次方根"]
                 },
                 {
+                    id: 270,
                     question: "在参数估计中，要求通过样本的统计量来估计总体参数，评价统计量的标准之一是使它与总体参数的离差越小越好。这种评价标准称为（）。",
                     correctAnswers: ["有效性"],
                     wrongAnswers: ["无偏性", "一致性", "充分性"]
                 },
                 {
+                    id: 271,
                     question: "以下不属于参数估计方法的是（）。",
                     correctAnswers: ["角估计"],
                     wrongAnswers: ["贝叶斯估计", "最小二乘法", "极大似然估计"]
                 },
                 {
+                    id: 272,
                     question: "多元回归的评价指标不包括（）。",
                     correctAnswers: ["R^2"],
                     wrongAnswers: ["非标准化系数", "标准化系数", "t检验及其显著性水平 (sig)"]
                 },
                 {
+                    id: 273,
                     question: "逻辑回归主要解决（）问题。",
                     correctAnswers: ["分类"],
                     wrongAnswers: ["聚类", "优化", "评价"]
                 },
                 {
+                    id: 274,
                     question: "逻辑回归是用概率的方式，预测出属于某一分类的概率值，如果概率值超过（），则属于某一分类。",
                     correctAnswers: ["50%"],
                     wrongAnswers: ["40%", "60%", "75%"]
                 },
                 {
+                    id: 275,
                     question: "下面关于逻辑回归的说法错误的是（）。",
                     correctAnswers: ["逻辑回归主要解决聚类问题"],
                     wrongAnswers: ["逻辑回归是一种预测分析", "逻辑回归和线性回归的不同之处是它的目标变量有多个类别", "逻辑回归是用概率的方式预测出属于某一分类的概率值"]
                 },
                 {
+                    id: 276,
                     question: "以下为统计分析中最常用的方法是（）。",
                     correctAnswers: ["对比分析法"],
                     wrongAnswers: ["分组分析法", "预测分析法", "漏斗分析法"]
                 },
                 {
+                    id: 277,
                     question: "对比分析法通过指标的对比来反应事物（）上的差异和变化。",
                     correctAnswers: ["数量"],
                     wrongAnswers: ["质量", "比重", "容量"]
                 },
                 {
+                    id: 278,
                     question: "对比分析法不能对（）做出判断和评价。",
                     correctAnswers: ["未来数据"],
                     wrongAnswers: ["规模大小", "水平高低", "速度快慢"]
                 },
                 {
+                    id: 279,
                     question: "预测分析法主要用于未知数据的判断和（）。",
                     correctAnswers: ["预测"],
                     wrongAnswers: ["对比", "测试", "转化"]
                 },
                 {
+                    id: 280,
                     question: "某产品依据过往三年的历史销售数据，想要分析出未来六个月的销售额，最合适的数据分析法是（）。",
                     correctAnswers: ["预测分析法"],
                     wrongAnswers: ["对比分析法", "AB测试分析法", "分组分析法"]
                 },
                 {
+                    id: 281,
                     question: "以下属于预测分析法中的回归预测的是（）。",
                     correctAnswers: ["线性回归"],
                     wrongAnswers: ["逻辑回归", "k均值", "关联规则"]
                 },
                 {
+                    id: 282,
                     question: "漏斗分析法能够科学反映的用户行为状态，以及观察出从行为起点到终点中各阶段用户的（）情况。",
                     correctAnswers: ["转化率"],
                     wrongAnswers: ["存活率", "使用率", "安装率"]
                 },
                 {
+                    id: 283,
                     question: "漏斗分析法不涉及以下要素（）。",
                     correctAnswers: ["研究对象"],
                     wrongAnswers: ["时间", "节点", "转化率"]
                 },
                 {
+                    id: 284,
                     question: "AB测试分析法侧重于对比AB两组结构（）的样本。",
                     correctAnswers: ["相似"],
                     wrongAnswers: ["相同", "差异较大", "完全不同"]
                 },
                 {
+                    id: 285,
                     question: "统计学的实质就是根据样本的（）来推断总体的情况。",
                     correctAnswers: ["特征"],
                     wrongAnswers: ["共性", "个数", "分组"]
                 },
                 {
+                    id: 286,
                     question: "从总体中随机抽出部分样品，并根据样本推断出总体的平均水平，这种检验方法是（）。",
                     correctAnswers: ["均值检验"],
                     wrongAnswers: ["相关系数检验", "卡方检验", "正态性检验"]
                 },
                 {
+                    id: 287,
                     question: "通过（）推断样本的两个属性是否相关。",
                     correctAnswers: ["Pearson相关性检验"],
                     wrongAnswers: ["均值检验", "t检验", "Shapiro正态性检验"]
                 },
                 {
+                    id: 288,
                     question: "卡方检验用于两个（）变量之间。",
                     correctAnswers: ["离散型"],
                     wrongAnswers: ["连续型", "流程型", "分段型"]
                 },
                 {
+                    id: 289,
                     question: "Pearson相关性检验用于验证两个变量之间的（）。",
                     correctAnswers: ["独立性"],
                     wrongAnswers: ["相关性", "离散型", "连续性"]
                 },
                 {
+                    id: 290,
                     question: "以下事件可以用卡方检验与Pearson相关性检验（）。",
                     correctAnswers: ["汽车速度与刹车距离"],
                     wrongAnswers: ["检验某品牌充电宝是否满足宣传的5000毫安容量的说法", "分析某学生的各科成绩，判断是否偏科严重", "乘客的年龄数据是否服从正态分布"]
                 },
                 {
+                    id: 291,
                     question: "（）适合描述单位时间内随机事件发生的次数的概率分布。",
                     correctAnswers: ["泊松分布"],
                     wrongAnswers: ["卡方分布", "高斯分布", "二项分布"]
                 },
                 {
+                    id: 292,
                     question: "正态分布曲线一种（）。",
                     correctAnswers: ["概率分布"],
                     wrongAnswers: ["指数分布", "频数分布", "空间分布"]
                 },
                 {
+                    id: 293,
                     question: "正态曲线下，横轴上，从均数到正无穷的面积为（）。",
                     correctAnswers: ["50%"],
                     wrongAnswers: ["95%", "97.50%", "不确定"]
                 },
                 {
+                    id: 294,
                     question: "以下选项不属于正态曲线的特征（）。",
                     correctAnswers: ["曲线与x轴有两个交点"],
                     wrongAnswers: ["集中性", "对称性", "均匀变动性"]
                 },
                 {
+                    id: 295,
                     question: "盒中有a个红球，b个黑球，今随机地从中取出一球，观察其颜色后放回，并加上同色球c个，再从盒中第二次抽取一球，第二次抽出的球是黑球的概率为（）。",
                     correctAnswers: ["b/(a+b)"],
                     wrongAnswers: ["(b+c)/(a+b+c)", "b/(a+b+c)", "a/(a+b)"]
                 },
                 {
+                    id: 296,
                     question: "设某工厂有两个车间生产同型号家用电器，第一车间的次品率为0.15，第二车间的次品率为0.12，两个车间的成品都混合堆放在一个仓库，假设第1，2车间生产的成品比例为2:3，今有一客户从成品仓库中随机提一台产品，该产品合格的概率为（）。",
                     correctAnswers: ["0.868"],
                     wrongAnswers: ["0.88", "0.4", "0.6"]
                 },
                 {
+                    id: 297,
                     question: "平均数是反映数据（）的一项指标。",
                     correctAnswers: ["集中趋势"],
                     wrongAnswers: ["分散程度", "出现概率", "未来走向"]
                 },
 
                 {
+                    id: 298,
                     question: "概率论中（）用来度量随机变量和其数学期望（B即均值）之间的偏离程度。",
                     correctAnswers: ["方差"],
                     wrongAnswers: ["中位数", "平均值", "极值"]
                 },
                 {
+                    id: 299,
                     question: "统计中的方差（A样本方差）是每个样本值与全体样本值的平均数之差的（）的平均数。",
                     correctAnswers: ["平方值"],
                     wrongAnswers: ["三次方", "二次根号", "二倍"]
                 },
                 {
+                    id: 300,
                     question: "方差是衡量（）两个数据相差的度量值。",
                     correctAnswers: ["源数据和期望值"],
                     wrongAnswers: ["源数据和中位数", "源数据和极大值", "源数据和标准差"]
                 },
                 {
+                    id: 301,
                     question: "特征提取中，（）是通过坐标轴转换，寻找数据分布的最优子空间，从而达到降维、去相关的目的。",
                     correctAnswers: ["PCA主成分分析"],
                     wrongAnswers: ["LDA线性判别分析", "ICA独立成分分析", "特征识别"]
                 },
                 {
+                    id: 302,
                     question: "特征工程中，以下选项是特征构建时常使用的方法（）。",
                     correctAnswers: ["属性分割"],
                     wrongAnswers: ["数据拟合", "数据脱敏", "数据平均"]
                 },
                 {
+                    id: 303,
                     question: "如果要要统计数据的平均水平，最适合的统计分析法是（）。",
                     correctAnswers: ["描述性统计分析"],
                     wrongAnswers: ["探索性统计分析", "推断性统计分析", "预测性统计分析"]
                 },
                 {
+                    id: 304,
                     question: "以下选项不属于数据离散程度分析中的指标（）。",
                     correctAnswers: ["中位数"],
                     wrongAnswers: ["标准差", "极差", "变异系数"]
                 },
                 {
+                    id: 305,
                     question: "描述性统计分析不包括数据的（）。",
                     correctAnswers: ["假设检验"],
                     wrongAnswers: ["频数分析", "集中趋势分析", "离散程度分析"]
                 },
                 {
+                    id: 306,
                     question: "研究某些变量之间是否存在一定的相关性需要采用以下方法（）。",
                     correctAnswers: ["探索性统计分析"],
                     wrongAnswers: ["描述性统计分析", "推断性统计分析", "预测性统计分析"]
                 },
                 {
+                    id: 307,
                     question: "以下案例不适合使用探索性统计分析（）。",
                     correctAnswers: ["9月份网站流量的基本数据"],
                     wrongAnswers: ["汽车的速度与刹车距离的关系", "某电商的交易量在电脑端和手机端之间的比例变化", "泰坦尼克号男女乘客在一等舱内的票价是否存在差异"]
                 },
                 {
+                    id: 308,
                     question: "（）是总体中所有个体在某个变量上观测值的频次分布。",
                     correctAnswers: ["总体分布"],
                     wrongAnswers: ["个体分布", "样本分布", "抽样分布"]
                 },
                 {
+                    id: 309,
                     question: "抽样分布中的（）用来测量使用某个样本统计量来估计总体参数时的抽样误差。",
                     correctAnswers: ["标准差"],
                     wrongAnswers: ["极差", "数学期望", "众数"]
                 },
                 {
+                    id: 310,
                     question: "以下选项不属于点估计的评判标准（）。",
                     correctAnswers: ["预知性"],
                     wrongAnswers: ["无偏性", "一致性", "有效性"]
                 },
                 {
+                    id: 311,
                     question: "条形图是用（）的，条形的高度或长短来表示数据多少的图形。",
                     correctAnswers: ["宽度相同"],
                     wrongAnswers: ["完全相同", "标注相同", "宽度不同"]
                 },
                 {
+                    id: 312,
                     question: "描绘条形图的三个要素不包括（）。",
                     correctAnswers: ["组颜色"],
                     wrongAnswers: ["组数", "组宽度", "组限"]
                 },
                 {
+                    id: 313,
                     question: "使用Tableau时，如果需要绘制不同省销售额对应的条形图，需要（）。",
                     correctAnswers: ["将'销售额'字段拖到'列'功能区"],
                     wrongAnswers: ["将'国家'和'列'字段都拖到'行'功能区", "将'国家'字段拖到'列'功能区", "将'销售额'字段拖到'行'功能区"]
                 },
                 {
+                    id: 314,
                     question: "面积图中线和轴之间的区域用（）标记。",
                     correctAnswers: ["颜色"],
                     wrongAnswers: ["折线", "直线", "柱形"]
                 },
                 {
+                    id: 315,
                     question: "通过面积图可以对数值的（）进行直观的反映。",
                     correctAnswers: ["变化趋势"],
                     wrongAnswers: ["平均值", "占比", "总量"]
                 },
                 {
+                    id: 316,
                     question: "（）可以显示部分与整体的关系。",
                     correctAnswers: ["百分比堆积面积图"],
                     wrongAnswers: ["折线图", "柱形图", "气泡图"]
                 },
                 {
+                    id: 317,
                     question: "饼图显示一个（）中各项的大小与各项总和的比例。",
                     correctAnswers: ["数据系列"],
                     wrongAnswers: ["数据图案", "数据颜色", "数据点"]
                 },
                 {
+                    id: 318,
                     question: "不属于饼图的使用要求的是（）。",
                     correctAnswers: ["类别数目无限制"],
                     wrongAnswers: ["仅有一个要绘制的数据系列", "要绘制的数值几乎没有零值", "各类别分别代表整个饼图的一部分"]
                 },
                 {
+                    id: 319,
                     question: "（）可以绘制生成多种多样的数据可视化图表，帮助用户找出数字背后隐藏的秘密，进行业务决策。",
                     correctAnswers: ["Tableau"],
                     wrongAnswers: ["Winrar", "PDF", "TXT"]
                 },
                 {
+                    id: 320,
                     question: "不属于数据可视化图表的是（）。",
                     correctAnswers: ["数据表格"],
                     wrongAnswers: ["条形图", "柱形图", "面积图"]
                 },
                 {
+                    id: 321,
                     question: "不属于描述性统计分析的作用的是（）。",
                     correctAnswers: ["置信度区间"],
                     wrongAnswers: ["频数分析", "趋势分析", "数据分布"]
                 },
                 {
+                    id: 322,
                     question: "（）又称用户界面或使用者界面，是人与计算机之间传递、交换信息的媒介和对话接口，是计算机系统的重要组成部分。",
                     correctAnswers: ["人机界面"],
                     wrongAnswers: ["显示器画面", "人机接口", "机器界面"]
                 },
                 {
+                    id: 323,
                     question: "人机结合面是（）中的中心环节。",
                     correctAnswers: ["人机系统"],
                     wrongAnswers: ["人机接口", "计算机系统", "交互系统"]
                 },
                 {
+                    id: 324,
                     question: "不属于人机交互中的过程的是（）。",
                     correctAnswers: ["控制交互对象"],
                     wrongAnswers: ["识别交互对象", "理解交互对象", "把握对象情态"]
                 },
                 {
+                    id: 325,
                     question: "人机界面设计时，根据终端用户对未来系统的假想设计用户模型，最终使之与系统实现后得到的（）相吻合，用户才能对系统感到满意并能有效的使用它。",
                     correctAnswers: ["系统映像"],
                     wrongAnswers: ["系统内部特征", "系统假想", "系统规律"]
                 },
                 {
+                    id: 326,
                     question: "任务分析中，（）技术可把任务不断划分为子任务，直至对每个任务的要求都十分清楚。",
                     correctAnswers: ["逐步求精"],
                     wrongAnswers: ["面向过程", "面向对象", "面向任务"]
                 },
                 {
+                    id: 327,
                     question: "人机交互界面的设计要包含用户对系统的理解，称之为（），这是为了系统的可用性或者用户友好性。",
                     correctAnswers: ["心智模型"],
                     wrongAnswers: ["系统模型", "系统假想", "人机模型"]
                 },
                 {
+                    id: 328,
                     question: "（）是指人与计算机之间使用某种对话语言，以一定的交互方式，为完成确定任务的人与计算机之间的信息交换过程。",
                     correctAnswers: ["人机交互"],
                     wrongAnswers: ["系统界面", "人机界面", "交互设计"]
                 },
                 {
+                    id: 329,
                     question: "以下选项不属于人机交互的研究内容（）。",
                     correctAnswers: ["硬件设备研究"],
                     wrongAnswers: ["可用性分析与评估", "多通道交互技术", "Web设计"]
                 },
                 {
+                    id: 330,
                     question: "（）是用户与操作系统之间进行数据传递和互动操控的工具，用户可以通过一定的操作实现对电子设备的控制，同时电子设备会将用户操作的结果通过显示屏进行反馈。",
                     correctAnswers: ["图形用户界面"],
                     wrongAnswers: ["人机界面", "图形处理器", "图形显示屏"]
                 },
                 {
+                    id: 331,
                     question: "用户界面的（）主要是指呈现给使用者的通用操作序列、术语和信息的措辞，界面元素的布局、颜色搭配方案和排版样式等都要保持一致。",
                     correctAnswers: ["一致性"],
                     wrongAnswers: ["逻辑性", "习惯性", "统一性"]
                 },
                 {
+                    id: 332,
                     question: "界面布局应当体现用户操作时的一般顺序和（）。",
                     correctAnswers: ["被使用到的频繁程度"],
                     wrongAnswers: ["软件颜色顺序", "软件大小顺序", "软件排列顺序"]
                 },
                 {
+                    id: 333,
                     question: "交互设计的（）原则表示设计要有充分准确的操作提示。",
                     correctAnswers: ["启发性"],
                     wrongAnswers: ["一致性", "反馈性", "可视性"]
                 },
                 {
+                    id: 334,
                     question: "交互设计的限制性指在（）显示用户操作，以防误操作。",
                     correctAnswers: ["特定时刻"],
                     wrongAnswers: ["任意页面", "特定页面", "任意时刻"]
                 },
                 {
+                    id: 335,
                     question: "以下选项中不属于交互设计的设计原则的是（）。",
                     correctAnswers: ["追求创新"],
                     wrongAnswers: ["可视性原则", "限制原则", "映射原则"]
                 },
                 {
+                    id: 336,
                     question: "交互设计的设计阶段，设计方法采用面向场景，面向事件驱动和（）。",
                     correctAnswers: ["面向对象"],
                     wrongAnswers: ["面向界面", "面向人机", "面向过程"]
                 },
                 {
+                    id: 337,
                     question: "不属于交互设计阶段的是（）。",
                     correctAnswers: ["人员招聘阶段"],
                     wrongAnswers: ["设计阶段", "配合开发人员阶段", "验证阶段"]
                 },
                 {
+                    id: 338,
                     question: "有效性指的是用户在执行任务时，（）是否有效。",
                     correctAnswers: ["系统支持用户的方法"],
                     wrongAnswers: ["用户学习的方式", "用户规避风险的方式", "避免发生不快的方式"]
                 },
                 {
+                    id: 339,
                     question: "安全性关系到保护用户以避免（）的情形。",
                     correctAnswers: ["发生令人不快"],
                     wrongAnswers: ["用户回想使用方法", "用户学习系统过于简单", "系统有效支持用户"]
                 },
                 {
+                    id: 340,
                     question: "（）目标是交互设计的核心。",
                     correctAnswers: ["可用性"],
                     wrongAnswers: ["有趣性", "美观性", "启发性"]
                 },
                 {
+                    id: 341,
                     question: "以下选项不是用户体验设计的目标（）。",
                     correctAnswers: ["高客户费力度"],
                     wrongAnswers: ["高客户满意度", "高净推荐值", "低客户费力度"]
                 },
                 {
+                    id: 342,
                     question: "人们不太关心交互系统中的品质（）。",
                     correctAnswers: ["可定制"],
                     wrongAnswers: ["有趣", "有用", "富有启发性"]
                 },
                 {
+                    id: 343,
                     question: "设计原则中，（）指的是控制及其效果之间的对应关系。",
                     correctAnswers: ["映射"],
                     wrongAnswers: ["逻辑", "关联", "反馈"]
                 },
                 {
+                    id: 344,
                     question: "不属于Norman（A1999）划分的限制类别的是（）。",
                     correctAnswers: ["系统限制"],
                     wrongAnswers: ["物理限制", "逻辑限制", "文化限制"]
                 },
                 {
+                    id: 345,
                     question: "不可以通过（）方式来操作虚拟对象。",
                     correctAnswers: ["思想"],
                     wrongAnswers: ["移动", "选择", "关闭"]
                 },
                 {
+                    id: 346,
                     question: "设计的首要任务就是开发明确、具体的（）。",
                     correctAnswers: ["概念模型"],
                     wrongAnswers: ["用户界面", "系统工具", "交互框架"]
                 },
                 {
+                    id: 347,
                     question: "为了保证概念模型能够为用户所理解，我们需要在开发过程中（）产品。",
                     correctAnswers: ["反复测试"],
                     wrongAnswers: ["分层下发", "安全使用", "提前应用"]
                 },
                 {
+                    id: 348,
                     question: "不属于充实概念模型的方法的是（）。",
                     correctAnswers: ["实践测试"],
                     wrongAnswers: ["草拟构思", "使用情节串联法", "描述可能的场景"]
                 },
                 {
+                    id: 349,
                     question: "设计是一个要求创造性的实践活动，其目的是要（），以帮助用户实现其目标。",
                     correctAnswers: ["开发产品"],
                     wrongAnswers: ["设计基本模型", "完善活动规则", "提高成功概率"]
                 },
                 {
+                    id: 350,
                     question: "我们要以（）来指导产品开发。",
                     correctAnswers: ["用户需求"],
                     wrongAnswers: ["原有模型", "惯性思维", "科研技术"]
                 },
                 {
+                    id: 351,
                     question: "评价设计的最佳方法就是（）。",
                     correctAnswers: ["让用户与产品交互"],
                     wrongAnswers: ["安全性分析", "易记性分析", "开发人员测试"]
                 },
                 {
+                    id: 352,
                     question: "在项目开始时，我们就应标识出特定的可用性和（），并做明确说明。",
                     correctAnswers: ["用户体验目标"],
                     wrongAnswers: ["开发人员需求", "可靠行", "易学性"]
                 },
                 {
+                    id: 353,
                     question: "不属于交互设计过程的关键特征的是（）。",
                     correctAnswers: ["以开发为中心"],
                     wrongAnswers: ["以用户为中心", "特定的可用性标准", "迭代"]
                 },
                 {
+                    id: 354,
                     question: "交互设计大多数项目都是以（）开始的。",
                     correctAnswers: ["标识需要和需求"],
                     wrongAnswers: ["（重）设计", "评估", "构建交互式面板"]
                 },
                 {
+                    id: 355,
                     question: "星形生命周期模型体现了一个非常灵活的，以（）为核心的开发过程。",
                     correctAnswers: ["需求规范"],
                     wrongAnswers: ["实现", "评估", "制作模型"]
                 },
                 {
+                    id: 356,
                     question: "可用性工程生命周期模型体现了更为结构化的开发方法，它源自（）。",
                     correctAnswers: ["可用性工程"],
                     wrongAnswers: ["安全性工程", "可靠性工程", "可行性工程"]
                 },
                 {
+                    id: 357,
                     question: "人机交互中的生命周期模型有以下选项（）。",
                     correctAnswers: ["星形生命周期模型"],
                     wrongAnswers: ["瀑布模型", "椭圆生命周期模型", "螺旋模型"]
                 },
                 {
+                    id: 358,
                     question: "情节串联图由一系列草图组成，说明（）的过程。",
                     correctAnswers: ["使用产品执行任务"],
                     wrongAnswers: ["开发产品", "测试产品", "评估产品"]
                 },
                 {
+                    id: 359,
                     question: "高保真原型的评测员容易专注于（）。",
                     correctAnswers: ["表面问题"],
                     wrongAnswers: ["本质问题", "内在问题", "规律问题"]
                 },
                 {
+                    id: 360,
                     question: "高保真原型适用于向其他人讲解设计和（）。",
                     correctAnswers: ["反馈结果问题"],
                     wrongAnswers: ["开发技术问题", "需求生成问题", "测试技术问题"]
                 },
                 {
+                    id: 361,
                     question: "（）是语音识别系统的重要组成部分，用于描述声学基元产生特征序列的过程。",
                     correctAnswers: ["声学模型"],
                     wrongAnswers: ["声音波形", "语言模型", "语言序列"]
                 },
                 {
+                    id: 362,
                     question: "目前基于HMM的声建模型算法主要分为（）。",
                     correctAnswers: ["GMM-HMM"],
                     wrongAnswers: ["GNN-HMM", "DMM-HMM", "GNM-HMM"]
                 },
                 {
+                    id: 363,
                     question: "语言模型是描述人类语言习惯的一种方式，体现了（）之间组成结构的内在规律。",
                     correctAnswers: ["词与词"],
                     wrongAnswers: ["发音与短剧", "发音与发音", "词与发音"]
                 },
                 {
+                    id: 364,
                     question: "平滑技术是解决数据稀疏问题的重要方法，不属于平滑方法的是（）。",
                     correctAnswers: ["递归法"],
                     wrongAnswers: ["加1法", "线性减值法", "删除插值法"]
                 },
                 {
+                    id: 365,
                     question: "（）的目标是将人类的语音中的词汇内容转换为计算机可读的输入，例如按键、二进制编码或者字符序列。",
                     correctAnswers: ["语音识别技术"],
                     wrongAnswers: ["按键转换技术", "词汇识别技术", "语音编码技术"]
                 },
                 {
+                    id: 366,
                     question: "模拟的语音信号进行采样得到波形数据之后，首先要输入到特征提取模块，提取出合适的声学（）供后续声学模型训练使用。",
                     correctAnswers: ["特征参数"],
                     wrongAnswers: ["波形", "模块", "数字信号"]
                 },
                 {
+                    id: 367,
                     question: "某公司要设计一种个人教学助理，其最佳的人机交互界面应该以（）作为传输介质的交互方法。",
                     correctAnswers: ["语音"],
                     wrongAnswers: ["图片", "大量文字", "表格"]
                 },
                 {
+                    id: 368,
                     question: "以下属于语音识别系统发展方向的是（）。",
                     correctAnswers: ["小型化、便携式语音产品的应用"],
                     wrongAnswers: ["大型计算机", "卫星电话", "水下记录仪"]
                 },
                 {
+                    id: 369,
                     question: "（）是描述声学信号特性的重要参数，只有提取到能描述信号本质的信息才可能将这些信息应用于高效的模式识别处理，如分类、回归等。",
                     correctAnswers: ["声学特征"],
                     wrongAnswers: ["信号波形", "语言界面", "声音模型"]
                 },
                 {
+                    id: 370,
                     question: "声学特征的提取既是对原始波形信号进行压缩的过程，同时也是对信号进行（）的过程。",
                     correctAnswers: ["解卷积"],
                     wrongAnswers: ["卷积", "递归", "拟合"]
                 },
                 {
+                    id: 371,
                     question: "以下不属于语音识别中传统语音特征提取方法的是（）。",
                     correctAnswers: ["冗余系数"],
                     wrongAnswers: ["线性预测系数", "倒谱系数", "梅尔频率倒谱系数"]
                 },
                 {
+                    id: 372,
                     question: "以下选项不是随机模型法涉及到的技术（）。",
                     correctAnswers: ["标准化技术"],
                     wrongAnswers: ["动态时间规整", "隐马尔科夫模型理论", "矢量量化技术"]
                 },
                 {
+                    id: 373,
                     question: "以下不属于语音识别技术常用的方法的是（）。",
                     correctAnswers: ["基于行为学的方法"],
                     wrongAnswers: ["基于语言学和声学的方法", "神经网络的方法", "随机模型法"]
                 },
                 {
+                    id: 374,
                     question: "解码技术是语音识别系统的核心技术之一，给定语音特征观察序列，通过在一个由语言模型和声学模型所构造的搜索空间中寻找（）的状态序列。",
                     correctAnswers: ["匹配度最高"],
                     wrongAnswers: ["空间占用最小", "特征最明显", "寻找度最快"]
                 },
                 {
+                    id: 375,
                     question: "解码器最常用的搜索策略为（）。",
                     correctAnswers: ["广度优先搜索"],
                     wrongAnswers: ["期望优先搜索", "时间优先搜索", "概率优先搜索"]
                 },
                 {
+                    id: 376,
                     question: "（）是需求活动和评估活动的重要组成部分。",
                     correctAnswers: ["数据搜集"],
                     wrongAnswers: ["模型制作", "开发过程", "系统映射"]
                 },
                 {
+                    id: 377,
                     question: "在需求活动中，（）适用于了解少数人的意见。",
                     correctAnswers: ["一对一访谈"],
                     wrongAnswers: ["专门小组", "专题讨论", "问卷调查法"]
                 },
                 {
+                    id: 378,
                     question: "问卷调查的适用情形是（）。",
                     correctAnswers: ["回答特定问题"],
                     wrongAnswers: ["深入研究问题", "搜集多方观点", "理解用户活动的环境"]
                 },
                 {
+                    id: 379,
                     question: "（）适用的情形是深入研究问题。",
                     correctAnswers: ["访谈"],
                     wrongAnswers: ["专题讨论", "自然观察", "研究文档"]
                 },
                 {
+                    id: 380,
                     question: "以下数据搜集技术的数据类型只含有定性数据（）。",
                     correctAnswers: ["自然观察"],
                     wrongAnswers: ["问卷调查", "访谈", "专题讨论"]
                 },
                 {
+                    id: 381,
                     question: "数据搜集的重点是标识（）的需要。",
                     correctAnswers: ["当事人"],
                     wrongAnswers: ["开发组", "测试人员", "评估人员"]
                 },
                 {
+                    id: 382,
                     question: "数据标注团队中的职称等级不包括（）。",
                     correctAnswers: ["教授"],
                     wrongAnswers: ["素材收集员", "高级专家", "讲师"]
                 },
                 {
+                    id: 383,
                     question: "完整的数据标注培训体系不包括（）。",
                     correctAnswers: ["设立体罚制度"],
                     wrongAnswers: ["建立严格的培训流程", "有完善的职称等级制度", "设立激励制度"]
                 },
                 {
+                    id: 384,
                     question: "一切培训的目的可分（）和能力培训。",
                     correctAnswers: ["心态培训"],
                     wrongAnswers: ["可靠培训", "职责培训", "方向培训"]
                 },
                 {
+                    id: 385,
                     question: "以下选项不属于企业培训的是（）。",
                     correctAnswers: ["理念培训"],
                     wrongAnswers: ["公开课", "企业内训", "企业咨询"]
                 },
                 {
+                    id: 386,
                     question: "对于零基础数据标注员，在质量提升计划中，数据完成（）条，重点跟进质检，强化培训一次。",
                     correctAnswers: ["3条"],
                     wrongAnswers: ["1条", "2条", "4条"]
                 },
                 {
+                    id: 387,
                     question: "在数据标注员质量提升计划中，强化周期为半天的是（）。",
                     correctAnswers: ["具有1个月以上标注经验的数据标注员"],
                     wrongAnswers: ["零基础标注经验的数据标注员", "具有2周以上标注经验的数据标注员", "具有3周以上标注经验的数据标注员"]
                 },
                 {
+                    id: 388,
                     question: "对于零基础质检员，需要（）试质检期。",
                     correctAnswers: ["2天"],
                     wrongAnswers: ["1天", "3天", "4天"]
                 },
                 {
+                    id: 389,
                     question: "具有（）质检经验的质检员可以成为数据标注员导师。",
                     correctAnswers: ["1个月以上"],
                     wrongAnswers: ["2周以上", "2个月以上", "半年以上"]
                 },
                 {
+                    id: 390,
                     question: "质量提升计划周期为技巧提升的质检员需要（）质检经验。",
                     correctAnswers: ["2个月以上"],
                     wrongAnswers: ["1周以上", "2周以上", "1个月以上"]
                 },
                 {
+                    id: 391,
                     question: "（）是实践教学各个环节所构成的系统，包括实践教学的内容、实践教学的形式以及实践教学师资、基地、教材等构成的教学系统。",
                     correctAnswers: ["实践教学体系"],
                     wrongAnswers: ["实践考核体系", "实践教学", "实践原则"]
                 },
                 {
+                    id: 392,
                     question: "以下不属于实践教学构建的基本原则的是（）。",
                     correctAnswers: ["局部优化的原则"],
                     wrongAnswers: ["相对独立的原则", "注重应用的原则", "产学结合的原则"]
                 },
                 {
+                    id: 393,
                     question: "数据采集流程管理时，项目确立阶段，任命项目经理与（），并申请工程号。",
                     correctAnswers: ["数据收集人"],
                     wrongAnswers: ["部门经理", "各部门员工", "数据分析师"]
                 },
                 {
+                    id: 394,
                     question: "现场采集数据阶段，需要定期到现场进行数据下载检验并（）。",
                     correctAnswers: ["填写下载日志"],
                     wrongAnswers: ["数据归档", "数据分析", "数据总结"]
                 },
                 {
+                    id: 395,
                     question: "（）是指数据在处理、加工之前对数据进行的一系列操作。",
                     correctAnswers: ["数据预处理"],
                     wrongAnswers: ["数据加工", "数据先验", "数据提前加工"]
                 },
                 {
+                    id: 396,
                     question: "数据清洗是指利用现有的数据挖掘手段和方法清洗（），将其转化为满足数据质量要求或应用要求的数据的过程。",
                     correctAnswers: ["脏数据"],
                     wrongAnswers: ["有效数据", "模糊数据", "干扰数据"]
                 },
                 {
+                    id: 397,
                     question: "在数据处理中，以下操作不能加强数据的安全（）。",
                     correctAnswers: ["密码格式单一"],
                     wrongAnswers: ["数据保密", "双向强身份认证", "磁盘阵列"]
                 },
                 {
+                    id: 398,
                     question: "一般情况下，数据是通过表格和（）的方式来呈现的。",
                     correctAnswers: ["图形"],
                     wrongAnswers: ["图片", "文字", "符号"]
                 },
                 {
+                    id: 399,
                     question: "不属于数据分析的作用的是（）。",
                     correctAnswers: ["描述分析"],
                     wrongAnswers: ["现状分析", "原因分析", "预测分析"]
                 },
                 {
+                    id: 400,
                     question: "以下不属于Storm的应用领域的选项是（）。",
                     correctAnswers: ["开发干兆网络技术"],
                     wrongAnswers: ["实时分析", "在线机器学习", "不停顿的计算"]
                 },
                 {
+                    id: 401,
                     question: "Hadoop是一个能够对大量数据进行分布式处理的软件框架。以下不属于其优点的是（）。",
                     correctAnswers: ["高预测性"],
                     wrongAnswers: ["高可靠性", "高扩展性", "高效性"]
                 },
                 {
+                    id: 402,
                     question: "数据标注组需要根据（）类型进行管理。",
                     correctAnswers: ["标注方法"],
                     wrongAnswers: ["数据存储", "工作环境", "结果预测"]
                 },
                 {
+                    id: 403,
                     question: "（）需要对数据从预处理阶段到最终交付期间所有经手的办公人员都进行记录。当发生数据泄漏后，可以清楚的了解到办公人员接触过该数据，并负责环节，这样可以快速锁定调查范围，追查数据泄漏源以及追究责任。",
                     correctAnswers: ["溯源体系"],
                     wrongAnswers: ["追究体系", "排查体系", "数据预处理"]
                 },
                 {
+                    id: 404,
                     question: "以下属于数据清洗组业务模式的是（）。",
                     correctAnswers: ["原始数据的质量检验工作"],
                     wrongAnswers: ["中间数据的过滤工作", "最终数据的归纳工作", "错误数据的修正工作"]
                 },
                 {
+                    id: 405,
                     question: "中央处理器、（）、输入设备和输出设备是组成计算机硬件的四大功能部件。",
                     correctAnswers: ["存储器"],
                     wrongAnswers: ["寄存器", "路由器", "主板"]
                 },
                 {
+                    id: 406,
                     question: "在Windows操作系统中，下列关于文档窗口的描述，正确的是（）。",
                     correctAnswers: ["可以同时打开多个文档窗口，但其中只有一个是活动窗口"],
                     wrongAnswers: ["只能打开一个文档窗口", "可以同时打开多个文档窗口，被打开的窗口都是活动窗口", "可以同时打开多个文档窗口，但在屏幕上只能看见一个文档窗口"]
                 },
                 {
+                    id: 407,
                     question: "计算机网络最突出的优点是（）。",
                     correctAnswers: ["资源共享"],
                     wrongAnswers: ["运算速度快", "运算精度高", "存储容量大"]
                 },
                 {
+                    id: 408,
                     question: "数据操作中，（）不属于连接种类。",
                     correctAnswers: ["中间连接"],
                     wrongAnswers: ["左外连接", "内连接", "交叉连接"]
                 },
                 {
+                    id: 409,
                     question: "对一台计算机来说（）的档次就基本上决定了整个计算机的档次。",
                     correctAnswers: ["CPU"],
                     wrongAnswers: ["内存", "主机", "硬盘"]
                 },
                 {
+                    id: 410,
                     question: "一个字节由（）位二进制信息组成。",
                     correctAnswers: ["8"],
                     wrongAnswers: ["2", "4", "16"]
                 },
                 {
+                    id: 411,
                     question: "硬盘中信息记录介质被称为（）。",
                     correctAnswers: ["盘片"],
                     wrongAnswers: ["磁道", "扇区", "磁盘"]
                 },
                 {
+                    id: 412,
                     question: "1946年世界上有了第一台电子数字计算机，奠定了至今仍然在使用的计算机（）。",
                     correctAnswers: ["体系结构"],
                     wrongAnswers: ["外型结构", "总线结构", "存取结构"]
                 },
                 {
+                    id: 413,
                     question: "当不知道数据所带标签时，可以使用（）技术促使带同类标签的数据与带其他标签的数据相分离。",
                     correctAnswers: ["聚类"],
                     wrongAnswers: ["分类", "关联分析", "隐马尔可夫链"]
                 },
                 {
+                    id: 414,
                     question: "以下关于云计算、大数据和物联网之间的关系，论述错误的是（）。",
                     correctAnswers: ["云计算侧重于数据分析"],
                     wrongAnswers: ["物联网可以借助于云计算实现海量数据的存储", "物联网可以借助于大数据实现海量数据的分析", "云计算、大数据和物联网三者紧密相关，相辅相成"]
                 },
                 {
+                    id: 415,
                     question: "把一个已经打开的文件以新的名字存盘，起备份旧文件的作用，应选（）命令。",
                     correctAnswers: ["另存为"],
                     wrongAnswers: ["自动保存", "保存", "全部保存"]
                 },
                 {
+                    id: 416,
                     question: "关于互联网即时通讯办公室软件说法错误的是（）。",
                     correctAnswers: ["不可以进行员工考勤"],
                     wrongAnswers: ["是中国领先的企业级即时通讯运营平台", "致力于为政府、企业、组织用户提供网络化运营管理服务", "基于即时通讯技术开发而成"]
                 },
                 {
+                    id: 417,
                     question: "对于已感染了病毒的U盘，最彻底的清除病毒的方法是（）。",
                     correctAnswers: ["对U盘进行格式化"],
                     wrongAnswers: ["用酒精将U盘消毒", "放在高压锅里煮", "将感染病毒的程序删除"]
                 },
                 {
+                    id: 418,
                     question: "浏览器中常提到的URL是指（）。",
                     correctAnswers: ["统一资源定位器"],
                     wrongAnswers: ["超文本标记语言", "万维网", "文件传输协议"]
                 },
                 {
+                    id: 419,
                     question: "以下选项中，关于搜索引擎页面设计说法正确的是（）。",
                     correctAnswers: ["首页和目录首页尽量要把重要的内容路径标题展示出来"],
                     wrongAnswers: ["页面一定要放图片", "页面的主题内容越多越好", "页面的文字越多越好"]
                 },
                 {
+                    id: 420,
                     question: "POP指的是电子邮件系统中的（）。",
                     correctAnswers: ["邮件读取协议"],
                     wrongAnswers: ["用户代理", "邮件服务器", "邮件发送协议"]
                 },
                 {
+                    id: 421,
                     question: "以下对HTTP请求方法描述不正确的是（）。",
                     correctAnswers: ["PUT方法会将包含的元素放在所提供的URI下"],
                     wrongAnswers: ["POST请求永远不会被缓存，且对数据长度没有限制", "我们可以从浏览器历史记录中查找到GET请求", "我们无法从浏览器历史记录中查找到POST请求"]
                 },
                 {
+                    id: 422,
                     question: "当物体每秒振动最少20次最多2万次，所发出的声音人耳能听到，这个范围的信号被称为（）。",
                     correctAnswers: ["音频"],
                     wrongAnswers: ["压音信号", "次声波", "超声波"]
                 },
                 {
+                    id: 423,
                     question: "按照CCITT制定的媒体分类标准，属于感觉媒体表现形式的是（）。",
                     correctAnswers: ["显示屏"],
                     wrongAnswers: ["打印机", "软盘", "味觉"]
                 },
                 {
+                    id: 424,
                     question: "在MPC外部设备中，U盘属于（）。",
                     correctAnswers: ["存储设备"],
                     wrongAnswers: ["输入设备", "播放设备", "人机交互设备"]
                 },
                 {
+                    id: 425,
                     question: "多媒体CD光盘上记录信息的轨迹叫光道，信息存储在（）的光道上。",
                     correctAnswers: ["一条渐开的螺旋形"],
                     wrongAnswers: ["一条圆形", "多条同心环形", "多条螺旋形"]
                 },
                 {
+                    id: 426,
                     question: "下列情况中，用人单位可以单方解除劳动合同的是（）。",
                     correctAnswers: ["严重失职、营私舞弊，对用人单位利益造成重大损失"],
                     wrongAnswers: ["患病，在规定的医疗期", "女职工在孕期、产期、哺乳期", "职工患职业病丧失部分劳动能力"]
                 },
                 {
+                    id: 427,
                     question: "在劳动安全卫生法律制度中，劳动者享有的权利不包括（）。",
                     correctAnswers: ["随时撤离权"],
                     wrongAnswers: ["危险因素和应急措施的知情权", "拒绝权", "监督权"]
                 },
                 {
+                    id: 428,
                     question: "抵御电子邮箱入侵措施中,不正确的是（）。",
                     correctAnswers: ["自己做服务器"],
                     wrongAnswers: ["不用生日做密码", "不要使用少于5位的密码", "不要使用纯数字"]
                 },
                 {
+                    id: 429,
                     question: "软件著作权中的（）是指有偿许可他人临时使用软件的权利。",
                     correctAnswers: ["出租权"],
                     wrongAnswers: ["发行权", "复制权", "修改权"]
                 },
                 {
+                    id: 430,
                     question: "以下选项中，属于非结构化数据的是（）。",
                     correctAnswers: ["服务器日志"],
                     wrongAnswers: ["科学仪器报告中的数据", "气象系统数据", "财务系统数据"]
                 },
                 {
+                    id: 431,
                     question: "以下选项中，关于特征工程的评估步骤描述错误的是（）。",
                     correctAnswers: ["无需对性能的改变进行描述"],
                     wrongAnswers: ["在应用之前得到机器学习模型的基准性能", "应用一种或多种特征工程", "对于每种特征工程，获取一个性能指标"]
                 },
                 {
+                    id: 432,
                     question: "我们常将数据分为四个等级，其中（）为我们提供了很多进一步探索的方法。",
                     correctAnswers: ["定序等级"],
                     wrongAnswers: ["定类等级", "定距等级", "定比等级"]
                 },
                 {
+                    id: 433,
                     question: "以下选项中，关于网络爬虫说法错误的是（）。",
                     correctAnswers: ["网络爬虫的系统框架中不包括控制器"],
                     wrongAnswers: ["网络爬虫是一个自动提取网页的程序", "聚焦网络爬虫和通用网络爬虫相比，增加了链接评价模块", "网页的抓取策略可以分为深度优先、广度优先和最佳优先三种"]
                 },
                 {
+                    id: 434,
                     question: "强制访问控制称为（）。",
                     correctAnswers: ["MAC"],
                     wrongAnswers: ["DAC", "RBAC", "RABC"]
                 },
                 {
+                    id: 435,
                     question: "请求的方式GET和POST的描述不正确的是（）。",
                     correctAnswers: ["GET比POST安全"],
                     wrongAnswers: ["GET请求的URL传参有长度限制，而POST请求没有长度限制", "GET使用URL或Cookie传参，而POST将数据放在BODY中", "GET是从服务器上获得数据，而POST则是向服务器传递数据的"]
                 },
                 {
+                    id: 436,
                     question: "顾客的购买行为或Web浏览模式造成数据不一致的原因属于（）。",
                     correctAnswers: ["时效性"],
                     wrongAnswers: ["相关性", "可信性", "可解释性"]
                 },
                 {
+                    id: 437,
                     question: "处理缺省值的方法中，（）最费时，并且当数据集很大时该方法可能行不通。",
                     correctAnswers: ["人工填写缺失值"],
                     wrongAnswers: ["忽略元组", "使用全局常量进行填充", "使用属性的中心度量进行填充"]
                 },
                 {
+                    id: 438,
                     question: "下列关于图像噪声说法错误的是（）。",
                     correctAnswers: ["噪声的产生于图像无关"],
                     wrongAnswers: ["图像的噪声是在获取、存储、处理和传输过程中产生的", "噪声在图像中的分布具有随机性", "噪声具有叠加性"]
                 },
                 {
+                    id: 439,
                     question: "4个评委对于10个选手进行评分，最低为1分，最高为10分，现在分析研究4个评委的打分一致性情况，可以选择（）。",
                     correctAnswers: ["Kendall W协调系数检验"],
                     wrongAnswers: ["Kappa系数检验", "ICC组内相关系数检验", "格兰杰因果检验"]
                 },
                 {
+                    id: 440,
                     question: "主成分分析中各因子的关系是（）。",
                     correctAnswers: ["相互独立"],
                     wrongAnswers: ["线性相关", "非线性相关", "正相关"]
                 },
                 {
+                    id: 441,
                     question: "（）强调通过特征转换得到一组特征。",
                     correctAnswers: ["属性分割"],
                     wrongAnswers: ["特征选择", "特征提取", "属性结合"]
                 },
                 {
+                    id: 442,
                     question: "（）需要利用大规模的已标注语料对模型进行参数训练，包括隐马尔可夫模型。",
                     correctAnswers: ["有监督的学习方法"],
                     wrongAnswers: ["半监督的学习方法", "无监督的学习方法", "混合方法"]
                 },
                 {
+                    id: 443,
                     question: "哈希算法中，取关键字或关键字的某个线性函数值为散列地址称为（）。",
                     correctAnswers: ["直接定址法"],
                     wrongAnswers: ["除留余数法", "数字分析法", "平方取中法"]
                 },
                 {
+                    id: 444,
                     question: "在数据交换过程中，（）是指由给定的属性构造新的属性并添加到属性集中。",
                     correctAnswers: ["属性构造"],
                     wrongAnswers: ["光滑", "聚集", "规范化"]
                 },
                 {
+                    id: 445,
                     question: "（）是指类似流程图的结构，其每个内部结点表示一个属性上的测试。",
                     correctAnswers: ["决策树归纳"],
                     wrongAnswers: ["逐步向上选择", "逐步向后删除", "向前选择和向后删除"]
                 },
                 {
+                    id: 446,
                     question: "传统的数据采集方法的缺点不包括（）。",
                     correctAnswers: ["成本低"],
                     wrongAnswers: ["数据来源单一", "能够存储的数据量小", "采集方式单一"]
                 },
                 {
+                    id: 447,
                     question: "下列选项中，不属于基于触发器的数据抽取方式的优点的是（）。",
                     correctAnswers: ["不会对源数据库构成威胁"],
                     wrongAnswers: ["数据抽取的性能高", "ETL加载规则简单", "不需要修改业务系统表"]
                 },
                 {
+                    id: 448,
                     question: "以下选项不属于原数据存在的问题（）。",
                     correctAnswers: ["数据表示形式单一"],
                     wrongAnswers: ["数据质量差", "数据信息错误多", "文档格式杂"]
                 },
                 {
+                    id: 449,
                     question: "基于统计特征的关键词提取方法不包含（）。",
                     correctAnswers: ["基于词的情感信息的特征量化"],
                     wrongAnswers: ["基于权重的特征化", "基于词的文档位置的特征量化", "基于词的关联信息的特征量化"]
                 },
                 {
+                    id: 450,
                     question: "（）主要是检查数据是否按照规定时间报送。",
                     correctAnswers: ["及时性审核"],
                     wrongAnswers: ["准确性审核", "适用性审核", "一致性审核"]
                 },
                 {
+                    id: 451,
                     question: "提取抛硬币正面朝上的次数时，属于对（）提取。",
                     correctAnswers: ["计数变量"],
                     wrongAnswers: ["二分类变量", "连续型数据", "时间事件变量"]
                 },
                 {
+                    id: 452,
                     question: "（）的整体和部分之间在生命周期上没有什么必然的联系。",
                     correctAnswers: ["聚合"],
                     wrongAnswers: ["依赖", "集成", "分组"]
                 },
                 {
+                    id: 453,
                     question: "数据清洗变得至关重要的原因不包括（）。",
                     correctAnswers: ["数据量级过大"],
                     wrongAnswers: ["数据存在冗余", "数据使用的术语和标准不同", "数据格式不统一"]
                 },
                 {
+                    id: 454,
                     question: "研究大树的纵剖面所见的每个细胞和细胞关系的演变属于（）。",
                     correctAnswers: ["历时语料库"],
                     wrongAnswers: ["平衡语料库", "平行语料库", "共时语料库"]
                 },
                 {
+                    id: 455,
                     question: "在WPS中，函数ABS的功能是（）。",
                     correctAnswers: ["取绝对值"],
                     wrongAnswers: ["取整", "四舍五入", "把公式产生的错误值显示为空"]
                 },
                 {
+                    id: 456,
                     question: "下列选项中，关于yield生成器说法错误的是（）。",
                     correctAnswers: ["相比一次列出所有内容更耗时"],
                     wrongAnswers: ["包含yield语句的函数是一个生成器", "生成器冻结后不在执行未完成的语句", "通过for循环输出值"]
                 },
                 {
+                    id: 457,
                     question: "正则表达式的非打印字符不包括（）。",
                     correctAnswers: ["?"],
                     wrongAnswers: ["\\f", "\\n", "\\s"]
                 },
                 {
+                    id: 458,
                     question: "在网页数据清洗过程中，决策树模型属于（）。",
                     correctAnswers: ["基于分类器的网页抽取算法"],
                     wrongAnswers: ["基于网页模板自动生成的网页抽取算法", "基于启发式规则网页清洗算法", "基于无监督学习的网页抽取算法"]
                 },
                 {
+                    id: 459,
                     question: "下列选项中，关于中文分词叙述错误的是（）。",
                     correctAnswers: ["中文分词不存在分词规范、歧义切分、新词识别等挑战"],
                     wrongAnswers: ["中文分词是在中文句子中的词与词之间加上边界标记", "中文分词由句子到词和由字到词两种方法组成", "分词中的语言模型是由语音、词汇、语法构成的交流模型"]
                 },
                 {
+                    id: 460,
                     question: "下列选项中，关于TF-IDF方法叙述错误的是（）。",
                     correctAnswers: ["很难定位文章的关键字"],
                     wrongAnswers: ["用于资讯检索与文本挖掘的常用加权技术", "可以用来评估一个词对于一个文档集或语料库中某个文档的重要程度", "可用于情感分析"]
                 },
                 {
+                    id: 461,
                     question: "在WPS表格中，新建工作簿的快捷键为（）。",
                     correctAnswers: ["Ctrl+N"],
                     wrongAnswers: ["Ctrl+O", "Ctrl+S", "Ctrl+W"]
                 },
                 {
+                    id: 462,
                     question: "WPS表格中单元格的数据类型不包括（）。",
                     correctAnswers: ["文件"],
                     wrongAnswers: ["文本", "数值", "日期"]
                 },
                 {
+                    id: 463,
                     question: "在WPS表格中，随机排序的操作过程为（）。",
                     correctAnswers: ["添加一个辅助列，输入RAND函数"],
                     wrongAnswers: ["将排序依据设置为单元格颜色，然后选择哪种颜色显示在顶端", "打开排序窗口后，点击添加条件，设置更多的规则即可", "排序前，选中一部分数据，排序时不要扩展区域"]
                 },
                 {
+                    id: 464,
                     question: "WPS表格使用（）汇总方法时，汇总不会自动修改的，用于一次性使用。",
                     correctAnswers: ["使用合并计算按钮"],
                     wrongAnswers: ["使用SUMIF函数", "使用数据透视表", "使用思维导图按钮"]
                 },
                 {
+                    id: 465,
                     question: "WPS表格中，复制操作的快捷键是（）。",
                     correctAnswers: ["Ctrl+C"],
                     wrongAnswers: ["Ctrl+D", "Ctrl+V", "Ctrl+X"]
                 },
                 {
+                    id: 466,
                     question: "下列选项中，用于WPS表格中四舍五入的函数是（）。",
                     correctAnswers: ["ROUND"],
                     wrongAnswers: ["RAND", "VLOOKUP", "IFERROR"]
                 },
                 {
+                    id: 467,
                     question: "WPS表格中，INDIRECT函数表示（）。",
                     correctAnswers: ["引用单元格内容"],
                     wrongAnswers: ["显示当前表格所在路径", "录入当前日期", "计算日期间隔天数"]
                 },
                 {
+                    id: 468,
                     question: "下列选项中，属于层次聚类算法的是（）。",
                     correctAnswers: ["合并法"],
                     wrongAnswers: ["划分聚类", "谱聚类", "统计方法COBWEB"]
                 },
                 {
+                    id: 469,
                     question: "聚类分析过程中，首先要执行的是（）。",
                     correctAnswers: ["选择合适的变量"],
                     wrongAnswers: ["寻找异常点", "计算距离", "选择聚类函数"]
                 },
                 {
+                    id: 470,
                     question: "描述性统计分析的常用指标中，（）体现了数据的离散程度。",
                     correctAnswers: ["方差"],
                     wrongAnswers: ["偏度", "峰度", "中位数"]
                 },
                 {
+                    id: 471,
                     question: "皮尔逊相关系数描述的是线性相关关系，当绝对值为1表示（）。",
                     correctAnswers: ["完全线性相关"],
                     wrongAnswers: ["无线性关系", "正相关", "负相关"]
                 },
                 {
+                    id: 472,
                     question: "探索性分析可视化过程中，（）对于各类别出现次数进行可视化。",
                     correctAnswers: ["柱形图"],
                     wrongAnswers: ["饼图", "箱线图", "散点图"]
                 },
                 {
+                    id: 473,
                     question: "多元回归模型中，（）指的是某一自变量对因变量Y的贡献程度或影响程度。",
                     correctAnswers: ["偏回归平方和"],
                     wrongAnswers: ["方差分析", "决定系数", "复相关系数"]
                 },
                 {
+                    id: 474,
                     question: "卡方检验中四格表的周边合计不变时，如果实际频数有变化，则理论频数（）。",
                     correctAnswers: ["不变"],
                     wrongAnswers: ["增大", "减小", "不确定"]
                 },
                 {
+                    id: 475,
                     question: "（）是基于变异分解的思想进行的。",
                     correctAnswers: ["方差分析"],
                     wrongAnswers: ["方差齐性检验", "线性回归方程整体的显著性检验", "线性回归方程整体分析"]
                 },
                 {
+                    id: 476,
                     question: "T检验中，（）主要用于检验样本中配对数据的差异性。",
                     correctAnswers: ["配对T检验"],
                     wrongAnswers: ["独立样本的T检验", "单一样本的T检验", "回归系数的显著性检验"]
                 },
                 {
+                    id: 477,
                     question: "（）是n个变量值乘积的n次方根。",
                     correctAnswers: ["几何平均数"],
                     wrongAnswers: ["算术平均数", "调和平均数", "位置平均数"]
                 },
                 {
+                    id: 478,
                     question: "（）只考虑了数据中的最大值和最小值，而忽略了全部观察值之间的差异。",
                     correctAnswers: ["极差"],
                     wrongAnswers: ["标准差", "方差", "平均差"]
                 },
                 {
+                    id: 479,
                     question: "在随机试验中，可能出现也可能不出现，而在大量重复试验中具有某种规律性的事件叫做（）。",
                     correctAnswers: ["不确定事件"],
                     wrongAnswers: ["确定事件", "不可能事件", "必然事件"]
                 },
                 {
+                    id: 480,
                     question: "（）是指一个变量的数量变化由另一个变量的数量变化所唯一确定。",
                     correctAnswers: ["完全相关"],
                     wrongAnswers: ["不完全相关", "不相关", "正相关"]
                 },
                 {
+                    id: 481,
                     question: "（）是指概率密度分布曲线在平均值处峰值高低的特征数。直观。",
                     correctAnswers: ["峰度"],
                     wrongAnswers: ["密度", "方差", "均方差"]
                 },
                 {
+                    id: 482,
                     question: "数据种类多，按性质划分，居民地、河流和道路等数据属于（）。",
                     correctAnswers: ["定性数据"],
                     wrongAnswers: ["定位数据", "定量数据", "定时数据"]
                 },
                 {
+                    id: 483,
                     question: "数据种类多，按表现形式划，各种统计或量测数据属于（）。",
                     correctAnswers: ["数字数据"],
                     wrongAnswers: ["模拟数据", "定性数据", "定量数据"]
                 },
                 {
+                    id: 484,
                     question: "下列选项中，关于层次聚类算法说法错误的是（）。",
                     correctAnswers: ["不可以聚类成其他形状"],
                     wrongAnswers: ["距离和规则的相似度容易定义", "不需要预先制定聚类数", "可以发现类的层次关系"]
                 },
                 {
+                    id: 485,
                     question: "（）的聚类方法特点是可以发现球形互斥的族。",
                     correctAnswers: ["基于划分式"],
                     wrongAnswers: ["基于密度式", "基于层次式", "基于网格式"]
                 },
                 {
+                    id: 486,
                     question: "聚类分析在实际应用中的优点不包括（）。",
                     correctAnswers: ["算法不易受数据噪声影响"],
                     wrongAnswers: ["算法成熟可靠", "比较容易用商业和业务的逻辑来理解和解释", "算法具有简介高效的特点"]
                 },
                 {
+                    id: 487,
                     question: "关于聚类算法应用说法错误的是（）。",
                     correctAnswers: ["聚类算法还仅仅停留在理论研究"],
                     wrongAnswers: ["聚类分析的一个重要用途就是针对目标群体进行多指标的群体划分", "利用聚类算法可以在运营活动中为细分群体采取个性化服务", "利用聚类算法可以提升运营的效率和商业效果"]
                 },
                 {
+                    id: 488,
                     question: "以下选项中，属于聚类模型的是（）。",
                     correctAnswers: ["K均值"],
                     wrongAnswers: ["决策树", "随机森林", "支持向量机"]
                 },
                 {
+                    id: 489,
                     question: "分类的评价指标不包括（）。",
                     correctAnswers: ["拟合优度"],
                     wrongAnswers: ["精度", "混淆矩阵", "AUC"]
                 },
                 {
+                    id: 490,
                     question: "数据分类的原则中，在类目的设置上留有适当的余地指的是（）原则。",
                     correctAnswers: ["可扩充性"],
                     wrongAnswers: ["稳定性", "系统性", "兼容性"]
                 },
                 {
+                    id: 491,
                     question: "数据分类的原则中，（）原则保证不同分类体系间的协调一致和转换。",
                     correctAnswers: ["兼容性"],
                     wrongAnswers: ["稳定性", "系统性", "综合实用性"]
                 },
                 {
+                    id: 492,
                     question: "数据可以分为多种不同类型，人的受教育程度就属于（）。",
                     correctAnswers: ["定序数据"],
                     wrongAnswers: ["定类数据", "定距数据", "定比数据"]
                 },
                 {
+                    id: 493,
                     question: "数据可以分为多种不同类型，最高等级为（）。",
                     correctAnswers: ["定比数据"],
                     wrongAnswers: ["定类数据", "定序数据", "定距数据"]
                 },
                 {
+                    id: 494,
                     question: "下列选项中，关于通信信号说法错误的是（）。",
                     correctAnswers: ["半双工方式只允许数据按照一个固定的方向传送"],
                     wrongAnswers: ["串行通信又称为点对点通信", "串行通信是指利用一条传输线将数据一位位地顺序传送", "并行通信是指利用多条传输线将一个数据的各位同时传送"]
                 },
                 {
+                    id: 495,
                     question: "计算机编码方案中，（）只用正的或负的电平表示数据。",
                     correctAnswers: ["单极性码"],
                     wrongAnswers: ["极性码", "归零码", "不归零码"]
                 },
                 {
+                    id: 496,
                     question: "下列选项中，关于JSON文件格式说法错误的是（）。",
                     correctAnswers: ["JSON依赖于语言"],
                     wrongAnswers: ["JSON指的是JavaScript对象表示法", "JSON是轻量级的文本文本交换格式", "JSON具有自我描述性，更易理解"]
                 },
                 {
+                    id: 497,
                     question: "下列选项中，关于CSV文件定义规则说法错误的是（）。",
                     correctAnswers: ["开头是留空的"],
                     wrongAnswers: ["以行为单位", "含或不含列名，含列名则居文件第一行", "一行数据不跨行，无空行"]
                 },
                 {
+                    id: 498,
                     question: "数据质量是保证数据应用的基础，它的评估标准四个方面不包括（）。",
                     correctAnswers: ["冗余性"],
                     wrongAnswers: ["完整性", "一致性", "准确性"]
                 },
                 {
+                    id: 499,
                     question: "以下选项中，关于数据一致性说法错误的是（）。",
                     correctAnswers: ["数据的一致性对于数据分析本身要求并不高"],
                     wrongAnswers: ["数据质量的一致性主要体现在数据记录的规范和数据是否符合逻辑", "一致性的规范指的是数据存在它特定的格式", "一致性的逻辑指的是多项数据间存在着固定的逻辑关系"]
                 },
                 {
+                    id: 500,
                     question: "声音的四个基本特征不包括（）。",
                     correctAnswers: ["音调"],
                     wrongAnswers: ["音色", "音长", "音高"]
                 },
                 {
+                    id: 501,
                     question: "以下选项中，关于声学的基础概念叙述错误的是（）。",
                     correctAnswers: ["波长与发声物体的震动频率成正比"],
                     wrongAnswers: ["声速与传播声音的介质和温度有关", "振幅是指振动物体离开平衡位置的最大距离", "振幅是可变化的"]
                 },
                 {
+                    id: 502,
                     question: "文本标注实时检验方法的优点不包括（）。",
                     correctAnswers: ["对人员的配备及管理要求较低"],
                     wrongAnswers: ["能及时发现问题并解决问题", "能够有效减少标注过程中重复错误的重出现", "能够保证整体标注任务的流畅性"]
                 },
                 {
+                    id: 503,
                     question: "以下选项中，关于视频与图像数据标注的差异说法错误的是（）。",
                     correctAnswers: ["与视频标注相比，图像标注的难度更高"],
                     wrongAnswers: ["视频的数据结构比图像更复杂", "视频的洞察力更强", "视频还可以利用先前帧中的信息来识别可能被部分遮挡的对象"]
                 },
                 {
+                    id: 504,
                     question: "语音识别常用的评估标准中，（）计算方法是句子识别错误的个数，除以总的句子个数。",
                     correctAnswers: ["句错率"],
                     wrongAnswers: ["字错率", "字正确率", "句正确率"]
                 },
                 {
+                    id: 505,
                     question: "语音标注质量评估WER算法的缺点是（）。",
                     correctAnswers: ["数据量大的时候性能较差"],
                     wrongAnswers: ["句错率较高", "对句子的整体性评估优于SER", "可以分数字、英文、中文等情况进行分别标注"]
                 },
                 {
+                    id: 506,
                     question: "文本数据标注质量评估算法CIDEr的优点是（）。",
                     correctAnswers: ["从文本标注质量评估的相关性上升到质量评估的相关性"],
                     wrongAnswers: ["方便、快捷、结果有较大的参考价值", "参考标注越多，待评估数据的相关性越高", "评估时考虑了同义词匹配，提高了评估的准确率"]
                 },
                 {
+                    id: 507,
                     question: "文本数据标注质量评估算法BLEU的缺点是（）。",
                     correctAnswers: ["测评精度易受常用词干扰"],
                     wrongAnswers: ["无法评价标注数据的流畅度", "长度限制", "对所有匹配上的词都同等对待，会导致部分词的重要性削弱"]
                 },
                 {
+                    id: 508,
                     question: "图像数据标注质量评估算法EM的缺点是（）。",
                     correctAnswers: ["数据缺失比例比较大时，收敛速度缓慢"],
                     wrongAnswers: ["没有考虑每个标注任务、标注者的不同可靠性", "需要对标注专家的异质性强加先验", "测评精度易受常用词干扰"]
                 },
                 {
+                    id: 509,
                     question: "图像数据标注质量评估算法RY的缺点是（）。",
                     correctAnswers: ["需要对标注专家的异质性强加先验"],
                     wrongAnswers: ["数据缺失比例比较大时，收敛速度缓慢", "没有考虑每个标注任务、标注者的不同可靠性", "测评精度易受常用词干扰"]
                 },
                 {
+                    id: 510,
                     question: "语音数据标注的分类方法的缺点是（）。",
                     correctAnswers: ["算法无法直接理解语音内容，需要进行文本转录"],
                     wrongAnswers: ["人工识别过程复杂", "相对复杂、耗时", "没有考虑每个标注任务、标注者的不同可靠性"]
                 },
                 {
+                    id: 511,
                     question: "以下选项中，不属于常见的文本数据标注的是（）。",
                     correctAnswers: ["描点标注"],
                     wrongAnswers: ["情感标注", "实体标注", "词性标注"]
                 },
                 {
+                    id: 512,
                     question: "以下选项中，关于质量管理体系的特点说法错误的是（）。",
                     correctAnswers: ["质量管理体系不需要考虑利益"],
                     wrongAnswers: ["是深入细致的质量文件的基础", "代表现代企业思考如何真正发挥质量的作用和如何最优化地作出质量决策的一种观点", "质量体系是使公司内更为广泛的质量活动能够得以切实管理的基础"]
                 },
                 {
+                    id: 513,
                     question: "根据（）的不同，数据标注可以分为结构化标注、非结构化标注和半结构化标注。",
                     correctAnswers: ["数据标注的对象"],
                     wrongAnswers: ["数据标注的构成形式", "数据标注者类型", "数据标注的方式"]
                 },
                 {
+                    id: 514,
                     question: "以下选项中，关于实时检验方法优点说法错误的是（）。",
                     correctAnswers: ["对于人员的配备及管理要求较低"],
                     wrongAnswers: ["能够及时发现问题并解决问题", "能够有效减少标注过程中重复错误的重出现", "能够保证整体标注任务的流畅性"]
                 },
                 {
+                    id: 515,
                     question: "数据标注质量单检验方法中的单位产品是指（）。",
                     correctAnswers: ["可单独描述和考察的事物"],
                     wrongAnswers: ["关于规定的一个或一组要求，或者仅将单位产品划分为合格或不合格", "按照标注对批进行的第一次检验", "聚集在一起的一定数量的某种产品、材料或服务"]
                 },
                 {
+                    id: 516,
                     question: "以下选项中，关于抽样检验和全样检验的区别说法错误的是（）。",
                     correctAnswers: ["经过全检认为合格的一批产品中，可能存在不合格品"],
                     wrongAnswers: ["抽样是根据样本中的产品的检验结果来推断整批产品的质量", "经过抽样检验认为合格的一批产品中，还可能含有一些不合格品", "全样检验需对整批产品逐个进行检验"]
                 },
                 {
+                    id: 517,
                     question: "以下选项中，关于全样检验流程说法错误的是（）。",
                     correctAnswers: ["对于不合格的数据标注，需要返工给质检员"],
                     wrongAnswers: ["全样检验是质检员对全部已完成的数据集进行全样检验", "通过全样检验合格的数据标注存放在已合格数据集中等待交付", "对于不合格的数据标注，需要标注员进行返工改正确标注"]
                 },
                 {
+                    id: 518,
                     question: "以下抽样方法中，不属于系统抽样的是（）。",
                     correctAnswers: ["抽签法"],
                     wrongAnswers: ["间隔定时法", "间隔定量法", "分部比例法"]
                 },
                 {
+                    id: 519,
                     question: "各层样本数的确定方法不包括（）。",
                     correctAnswers: ["调查法"],
                     wrongAnswers: ["分层定比", "奈曼法", "非比例分配法"]
                 },
                 {
+                    id: 520,
                     question: "信息系统的安全等级性质中（）是指信息在传输过程中，不被非法授权修改和破坏，保证数据的一致性。",
                     correctAnswers: ["完整性"],
                     wrongAnswers: ["机密性", "可用性", "用户合法性"]
                 },
                 {
+                    id: 521,
                     question: "以下选项中，对于敏感数据的处理方式错误的是（）。",
                     correctAnswers: ["明文保存用户密码"],
                     wrongAnswers: ["使用对称加密算法保存用户密码", "配合单向散列算法保存用户密码", "独立使用加密服务来做数据加解密"]
                 },
                 {
+                    id: 522,
                     question: "以下选项中，关于《中华人民共和国数据安全法》说法错误的是（）。",
                     correctAnswers: ["对于数据交易进行限制"],
                     wrongAnswers: ["维护数据安全，应当坚持总体国家安全观", "中央国家安全领导机构负责国家数据安全工作的决策和议事协调", "开展数据处理活动，应当遵守法律、法规，尊重社会公德和伦理"]
                 },
                 {
+                    id: 523,
                     question: "数据标注流程中，标注检验的目的是（）。",
                     correctAnswers: ["提高数据输出的准确率"],
                     wrongAnswers: ["去掉重复的、无关的数据", "获取公开的数据集与专业数据集", "对于异常值与缺失值进行查缺补漏"]
                 },
                 {
+                    id: 524,
                     question: "行人标注的难度不包括（）。",
                     correctAnswers: ["图片分辨率大"],
                     wrongAnswers: ["图片模糊看不清", "图片数量过多", "属性过多"]
                 },
                 {
+                    id: 525,
                     question: "骨骼关键点标注是指在图像中或视频中对人体关键点进行（）的过程。",
                     correctAnswers: ["定位和标记"],
                     wrongAnswers: ["识别和分类", "定位和分割", "分类与检测"]
                 },
                 {
+                    id: 526,
                     question: "骨骼关键点标注时，人物裙摆过大，对身体部位有遮挡，臀部的点需要推测标注，此时需要把‘可见性’设为（）。",
                     correctAnswers: ["不可见"],
                     wrongAnswers: ["不可推断", "不可标记", "不可使用"]
                 },
                 {
+                    id: 527,
                     question: "对于手部关键点，从大拇指到小拇指挨个按照从关节到（）的顺序进行标注。",
                     correctAnswers: ["指尖"],
                     wrongAnswers: ["手腕的中心点", "虎口处", "手肘"]
                 },
                 {
+                    id: 528,
                     question: "手部图片由于遮挡导致点不能完全显示，遮挡超过（）的部分不予标注。",
                     correctAnswers: ["80%"],
                     wrongAnswers: ["10%", "50%", "90%"]
                 },
                 {
+                    id: 529,
                     question: "在人脸图片上标注点距离人脸实际的点（）6像素时，标注的图片不准确。",
                     correctAnswers: ["超过"],
                     wrongAnswers: ["小于", "等于", "没有影响"]
                 },
                 {
+                    id: 530,
                     question: "标注工程师在用人脸8点工具标注人脸时，如果不能看到（）的图片，但可以看到眼球的图片，则标注在眼球正中间。",
                     correctAnswers: ["瞳孔"],
                     wrongAnswers: ["眼角", "眼线", "虹膜"]
                 },
                 {
+                    id: 531,
                     question: "（）是指在进行一人所属照片清洗标注时，标注工程师根据关键人物图片提供的性别、年龄等特征，在图库中进行高效清洗，进而快速删除与关键人物不符的照片。",
                     correctAnswers: ["剔除非关键人物"],
                     wrongAnswers: ["确定关键人物", "检查图片数据", "图片清洗"]
                 },
                 {
+                    id: 532,
                     question: "在进行一人所属照片清洗标注时，不可以将（）作为剔除非关键人物的特征信息。",
                     correctAnswers: ["籍贯"],
                     wrongAnswers: ["面部特征", "发型特征", "服饰特征"]
                 },
                 {
+                    id: 533,
                     question: "行人重识别标注的技术难点不包括（）。",
                     correctAnswers: ["高分辨率"],
                     wrongAnswers: ["轨迹碎片化", "光线变化", "角度偏差"]
                 },
                 {
+                    id: 534,
                     question: "以下选项中，关于行人重识别标注说法错误的是（）。",
                     correctAnswers: ["通过标清摄像头获取的视频数据质量相对较高"],
                     wrongAnswers: ["在人流量大的地方容易出现漏掉目标人物的情况", "光线变化会对标注工程师判断目标人物产生影响", "采集数据时间较长，目标人物变化大"]
                 },
                 {
+                    id: 535,
                     question: "（）就是从一段文本中首先找出实体，然后判断两者之间存在的实际关系。",
                     correctAnswers: ["关系标注"],
                     wrongAnswers: ["实体标注", "时间标注", "事件标注"]
                 },
                 {
+                    id: 536,
                     question: "精细分割标注中，（）模式用于查看边缘是否有少标注的情况。",
                     correctAnswers: ["原图模式"],
                     wrongAnswers: ["前景模式", "单物前景模式", "全景模式"]
                 },
                 {
+                    id: 537,
                     question: "属性标注中，按照自己习惯的顺序从上到下寻找图中物体，属于（）方法。",
                     correctAnswers: ["按序查找"],
                     wrongAnswers: ["按大类记忆", "按场景记忆法", "随机记忆"]
                 },
                 {
+                    id: 538,
                     question: "以下选项中，关于构成属性标注困难的原因中，（）属于图片中出现比较杂乱的场景。",
                     correctAnswers: ["办公桌面杂乱"],
                     wrongAnswers: ["行李箱算作衣物", "物体存在倒影", "像素值过低"]
                 },
                 {
+                    id: 539,
                     question: "在使用属性标注工具时，以下（）数据类型最适合进行属性标注。",
                     correctAnswers: ["非结构化数据"],
                     wrongAnswers: ["图像数据", "结构化数据", "音频数据"]
                 },
                 {
+                    id: 540,
                     question: "关于属性标注工具的性能，以下（）描述是正确的。",
                     correctAnswers: ["属性标注工具的性能取决于所使用的算法和模型"],
                     wrongAnswers: ["属性标注工具的性能不受数据规模的影响", "属性标注工具的性能通常低于人工标注", "属性标注工具的性能与人工标注相同"]
                 },
                 {
+                    id: 541,
                     question: "多边形标注能够标注（），在确定顶点后可以任意地改变方向。因此多边形标注能更加精准地反映标注对象的真实形状。",
                     correctAnswers: ["曲线和角度"],
                     wrongAnswers: ["色彩和分辨率", "大小和角度", "曲线和方向"]
                 },
                 {
+                    id: 542,
                     question: "（）是指在静态图片中，使用多边形框，标注出不规则的目标物体，相对于矩形框标注，该标注方法能够更精准地框定目标，同时对于不规则物体，也更具针对性。",
                     correctAnswers: ["多边形标注"],
                     wrongAnswers: ["点云标注", "3D立方体标注", "语义分割"]
                 },
                 {
+                    id: 543,
                     question: "标注工程师在用人脸8点工具标注人脸时，对于闭眼的图片，标注在（）。",
                     correctAnswers: ["眼缝正中间"],
                     wrongAnswers: ["瞳孔四周", "下眼皮", "上眼皮"]
                 },
                 {
+                    id: 544,
                     question: "标注工程师在用人脸8点工具标注人脸时，第6、7点对应的部位是（）。",
                     correctAnswers: ["左右眼角连线与脸部轮廓边缘的交点"],
                     wrongAnswers: ["眼白", "鼻梁", "下巴"]
                 },
                 {
+                    id: 545,
                     question: "在以下手势标注中，不需要拉框的是（）。",
                     correctAnswers: ["平放"],
                     wrongAnswers: ["抱拳", "合十", "交叉"]
                 },
                 {
+                    id: 546,
                     question: "手部关键点检测需要标注的是手部三维状态下的各（）。",
                     correctAnswers: ["中心点"],
                     wrongAnswers: ["随机点", "临近点", "四周围点"]
                 },
                 {
+                    id: 547,
                     question: "关键帧提取方法中，（）是通过随机抽取或在规定的时间间隔内随机抽取视频帧。",
                     correctAnswers: ["基于抽样的提取法"],
                     wrongAnswers: ["全图像序列提取法", "压缩视频提取法", "自定义k值聚类提取法"]
                 },
                 {
+                    id: 548,
                     question: "以下选项中，关于行人重识别合并标注工具中的照片清洗过程说法正确的是（）。",
                     correctAnswers: ["在完成合并后才会进入照片清洗界面"],
                     wrongAnswers: ["不需要对已经合并的轨迹进行检查", "照片清洗不可以进行图片删除", "照片清洗可以随时进行"]
                 },
                 {
+                    id: 549,
                     question: "视频人脸8点标注过程中，对于人脸正常无遮挡的情况下，操作正确的是（）。",
                     correctAnswers: ["正常标注8点"],
                     wrongAnswers: ["标注4点", "标注16点", "不对图像进行标注"]
                 },
                 {
+                    id: 550,
                     question: "在运用3D人脸朝向工具进行人脸识别时，进行（）的目的是消除噪声。",
                     correctAnswers: ["几何校正、中值滤波"],
                     wrongAnswers: ["人脸对准", "灰度值标准化", "人脸对比"]
                 },
                 {
+                    id: 551,
                     question: "精细分割标注中，单物前景模式用于（）。",
                     correctAnswers: ["查看相邻图层的边缘是否有不贴和的情况"],
                     wrongAnswers: ["查看边缘是否有少标注的情况", "查看边缘是否有多标注的情况", "查看边缘是否有错标的情况"]
                 },
                 {
+                    id: 552,
                     question: "语义分割评价指标中，平均交并比是指（）。",
                     correctAnswers: ["每一类像素正确分类的个数除以每一类像素的实际个数"],
                     wrongAnswers: ["每一类像素的精度的平均值", "求出每一类两块区域相交的部分取平均值", "每一类出现的频率作为权重"]
                 },
                 {
+                    id: 553,
                     question: "以下选项中，关于消息中间件Kafka说法错误的是（）。",
                     correctAnswers: ["提供了消息回溯功能"],
                     wrongAnswers: ["是一个高性能跨语言分布式发布和订阅消息队列系统", "只支持主要的MQ功能", "适合产生大量数据的互联网服务的数据收集业务"]
                 },
                 {
+                    id: 554,
                     question: "以下选项中，关于消息中间件ZeroMQ说法错误的是（）。",
                     correctAnswers: ["非持久化消息，对系统的存储空间要求极大"],
                     wrongAnswers: ["针对大吞吐量的需求场景十分有效", "可以构建复杂的队列", "只有消息重传机制，消息易丢失"]
                 },
                 {
+                    id: 555,
                     question: "分布式流平台Kafka的Consumer组件是指（）。",
                     correctAnswers: ["消息的消费者"],
                     wrongAnswers: ["缓存代理", "区分的消息类型", "消息的生产者"]
                 },
                 {
+                    id: 556,
                     question: "聚合运算支持的数据或事件类型中，表示抽样数据的关键字为（）。",
                     correctAnswers: ["Sampling"],
                     wrongAnswers: ["Key/Value", "Gauges", "Counter"]
                 },
                 {
+                    id: 557,
                     question: "下列选项中，关于维度的概念说法错误的是（）。",
                     correctAnswers: ["维度与主题是一对一关系"],
                     wrongAnswers: ["维度表包含维度值和维度属性", "维度值是和事实表关联的主键", "维度属性是此维度所属的分类"]
                 },
                 {
+                    id: 558,
                     question: "多维度聚合函数中，（）函数的功能是指指定维度聚合。",
                     correctAnswers: ["Grouping Sets"],
                     wrongAnswers: ["With Cube", "With Rollup", "GROUP BY"]
                 },
                 {
+                    id: 559,
                     question: "HBase作为实时数据关联的存储和查询引擎，其特点不包括（）。",
                     correctAnswers: ["非开源的"],
                     wrongAnswers: ["是面向列的", "是分布式的", "是一种NoSQL数据库"]
                 },
                 {
+                    id: 560,
                     question: "误差产生的原因不包括（）。",
                     correctAnswers: ["选用错误的数据收集方式产生的误差"],
                     wrongAnswers: ["测量中的误差", "运算和计算机表达中的不精确所引入的机器误差或者舍入误差", "数值方法和离散化带来的误差"]
                 },
                 {
+                    id: 561,
                     question: "造成偶然误差的原因不包括（）。",
                     correctAnswers: ["环境条件的改变"],
                     wrongAnswers: ["实验装置和测量机构在各次调整操作上的变动", "测量仪器指示数值的变动", "估计读数上的变动"]
                 },
                 {
+                    id: 562,
                     question: "绝对值很大的误差出现的概率近于零体现了随机误差具有（）规律。",
                     correctAnswers: ["有界性"],
                     wrongAnswers: ["大小性", "对称性", "抵偿性"]
                 },
                 {
+                    id: 563,
                     question: "基于距离的异常点检测技术的缺点不包括（）。",
                     correctAnswers: ["不适合低维数据"],
                     wrongAnswers: ["只能找出异常点，无法找出异常簇", "不适合大数据及在线应用", "参数K和阈值需要人工调参"]
                 },
                 {
+                    id: 564,
                     question: "一般情况下，故障显示灯呈现（）时，表示严重故障状态。",
                     correctAnswers: ["红色"],
                     wrongAnswers: ["绿色", "淡蓝色", "黄色"]
                 },
                 {
+                    id: 565,
                     question: "故障定位的手段中，（）是指将一部分网络设备隔离，利用设备正常的输入输出端口和测试器，系统地测试被隔离网络设备的所有服务特性。",
                     correctAnswers: ["试运行"],
                     wrongAnswers: ["诊断", "软件检查", "软件更新"]
                 },
                 {
+                    id: 566,
                     question: "基于决策树的故障诊断的评价指标是（）。",
                     correctAnswers: ["Kappa统计、显著性检验"],
                     wrongAnswers: ["均方误差、均方根误差", "支持度、置信度", "平均绝对误差、相对误差"]
                 },
                 {
+                    id: 567,
                     question: "以下选项中，关于数据整合说法错误的是（）。",
                     correctAnswers: ["数据规则不可以在数据加载、转换中实施"],
                     wrongAnswers: ["底层数据结构透明", "性能和扩展性高", "可重用性好"]
                 },
                 {
+                    id: 568,
                     question: "系统管理除包括管理具体系统相关的内容外，还包括配置管理、变更管理、（）。",
                     correctAnswers: ["文档管理"],
                     wrongAnswers: ["容器管理", "服务器指南", "存储管理"]
                 },
                 {
+                    id: 569,
                     question: "软件配置管理是贯穿于整个软件过程中的保护性活动，它被设计的用途不包括（）。",
                     correctAnswers: ["保证变化被完全发现"],
                     wrongAnswers: ["标识变化", "控制变化", "向其他人员报告变化"]
                 },
                 {
+                    id: 570,
                     question: "（）帮助进行快速而准确的影响度分析，从而可以更快速而有效地处理变更。",
                     correctAnswers: ["配置管理"],
                     wrongAnswers: ["配置关联", "组件设置", "项目设计"]
                 },
                 {
+                    id: 571,
                     question: "配置管理时配置数据库可以提供有关维护成本和维护合同、许可证等信息，这样做的意义是（）。",
                     correctAnswers: ["更精确地制定计划"],
                     wrongAnswers: ["识别非法病毒，防止非法复制", "支持可用性管理", "支持能力管理流程"]
                 },
                 {
+                    id: 572,
                     question: "配置管理流程中，（）是指为其他流程提供信息，并报告配置项使用的趋势和发展情况。",
                     correctAnswers: ["报告"],
                     wrongAnswers: ["规划", "识别", "控制"]
                 },
                 {
+                    id: 573,
                     question: "配置管理流程可以划分为六个步骤，最后一步的是（）。",
                     correctAnswers: ["报告"],
                     wrongAnswers: ["规划", "状态记录", "核实"]
                 },
                 {
+                    id: 574,
                     question: "文档管理包括运维报告文档、（）、运维管理文档和系统调试文档。",
                     correctAnswers: ["技术支持文档"],
                     wrongAnswers: ["主动问题管理文档", "问题控制文档", "错误控制文档"]
                 },
                 {
+                    id: 575,
                     question: "配置管理文档中，可用性管理报告不包括（）信息。",
                     correctAnswers: ["平均解决时间"],
                     wrongAnswers: ["故障的次数", "平均修复时间", "总体正常运作时间"]
                 },
                 {
+                    id: 576,
                     question: "数据分析方法方法中，（）是指将两个及两个以上的数据进行比较，分析它们的差异，从而揭示这些数据所代表的事物发展变化情况和规律性。",
                     correctAnswers: ["对比分析法"],
                     wrongAnswers: ["分组分析法", "预测分析法", "漏斗分析法"]
                 },
                 {
+                    id: 577,
                     question: "对比分析方法中，（）是指同一空间条件下，对不同时期数据的比较。",
                     correctAnswers: ["纵比"],
                     wrongAnswers: ["同比", "环比", "横比"]
                 },
                 {
+                    id: 578,
                     question: "组距式分组需要确定分组的关键要素中，（）是指每一组的上限与下限之间的距离。",
                     correctAnswers: ["组距"],
                     wrongAnswers: ["组数", "组限", "组中值"]
                 },
                 {
+                    id: 579,
                     question: "以下选项中，（）是运用各种定性和定量的分析理论与方法，对事物未来发展的趋势和水平进行判断和推测的一种活动。",
                     correctAnswers: ["预测分析法"],
                     wrongAnswers: ["对比分析法", "分组分析法", "漏斗分析法"]
@@ -6132,6 +6711,23 @@ class QuestionBank {
         const questions = this.getQuestionsByType(type);
         const shuffled = [...questions].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, count);
+    }
+
+    // 按顺序获取指定数量的题目（按id排序）
+    getSequentialQuestions(type, count) {
+        const questions = this.getQuestionsByType(type);
+        // 按id顺序排序
+        const sorted = [...questions].sort((a, b) => a.id - b.id);
+        return sorted.slice(0, count);
+    }
+
+    // 根据练习模式获取题目
+    getQuestionsByMode(type, count, isSequential = true) {
+        if (isSequential) {
+            return this.getSequentialQuestions(type, count);
+        } else {
+            return this.getRandomQuestions(type, count);
+        }
     }
 
 

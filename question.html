@@ -7,56 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="dark-theme.css">
+    <link rel="stylesheet" href="common-styles.css">
     <script src="webview-compat.js"></script>
     <script src="theme-manager.js"></script>
+    <script src="utils.js"></script>
     <script src="questionBank.js?v=20250906"></script>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        .option-hover {
-            transition: all 0.3s ease;
-        }
-        .option-hover:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .option-selected {
-            border-color: #3b82f6;
-            background-color: #eff6ff;
-        }
-        .option-correct {
-            border-color: #10b981;
-            background-color: #ecfdf5;
-        }
-        .option-wrong {
-            border-color: #ef4444;
-            background-color: #fef2f2;
-        }
-        .progress-bar {
-            transition: width 0.3s ease;
-        }
-        .popup-overlay {
-            background: rgba(0, 0, 0, 0.3);
-        }
-        .popup-content {
-            animation: slideUp 0.3s ease-out;
-        }
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        .countdown-circle {
-            stroke-dasharray: 283;
-            stroke-dashoffset: 283;
-            transition: stroke-dashoffset 1s linear;
-        }
+        /* 页面特定样式 */
     </style>
 </head>
 <body class="bg-gray-50">
@@ -267,9 +224,11 @@
         const urlParams = new URLSearchParams(window.location.search);
         const questionType = urlParams.get('type') || '单选题';
         const questionCount = parseInt(urlParams.get('count')) || 50;
+        const isContinueMode = urlParams.get('continue') === 'true';
         
         console.log('URL参数 - 题目类型:', questionType);
         console.log('URL参数 - 题目数量:', questionCount);
+        console.log('URL参数 - 继续模式:', isContinueMode);
         console.log('完整URL:', window.location.href);
         
         // 更新页面标题显示
@@ -285,46 +244,9 @@
         let currentQuestionIndex = 0;
         let totalQuestions = questionCount;
         
-        // 转换题目格式函数
+        // 使用统一的题目格式转换函数
         function convertQuestionFormat(question) {
-            // 只对单选题使用correctAnswers/wrongAnswers格式进行转换
-            // 多选题和判断题应该使用options/correct格式
-            if (question.correctAnswers && question.wrongAnswers && questionType === '单选题') {
-                // 创建选项数组，并记录每个选项是否为正确答案
-                const optionsWithCorrectness = [];
-                
-                // 添加正确答案
-                question.correctAnswers.forEach(answer => {
-                    optionsWithCorrectness.push({ text: answer, isCorrect: true });
-                });
-                
-                // 添加错误答案
-                question.wrongAnswers.forEach(answer => {
-                    optionsWithCorrectness.push({ text: answer, isCorrect: false });
-                });
-                
-                // 随机打乱选项顺序
-                for (let i = optionsWithCorrectness.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [optionsWithCorrectness[i], optionsWithCorrectness[j]] = [optionsWithCorrectness[j], optionsWithCorrectness[i]];
-                }
-                
-                // 提取选项文本和正确答案索引
-                const options = optionsWithCorrectness.map(item => item.text);
-                const correct = [];
-                optionsWithCorrectness.forEach((item, index) => {
-                    if (item.isCorrect) {
-                        correct.push(index);
-                    }
-                });
-                
-                return {
-                    ...question,
-                    options: options,
-                    correct: correct.length === 1 ? correct[0] : correct
-                };
-            }
-            return question;
+            return window.QuestionUtils.convertQuestionFormat(question, questionType);
         }
         
         // 等待题库加载完成后初始化题目
@@ -336,8 +258,21 @@
             if (window.questionBank) {
                 console.log('题库已加载，获取题目...');
                 console.log('questionBank对象:', window.questionBank);
-                questions = questionBank.getRandomQuestions(questionType, questionCount);
+                
+                // 获取练习设置
+                const practiceSettings = JSON.parse(WebViewCompat.storage.getItem('practiceSettings') || '{}');
+                const practiceMode = practiceSettings.mode || { sequential: true, random: false };
+                
+                console.log('练习设置:', practiceSettings);
+                console.log('练习模式:', practiceMode);
+                
+                // 根据练习模式获取题目
+                const isSequential = practiceMode.sequential && !practiceMode.random;
+                console.log('是否顺序练习:', isSequential);
+                
+                questions = questionBank.getQuestionsByMode(questionType, questionCount, isSequential);
                 console.log('获取到的题目数量:', questions.length);
+                console.log('题目获取模式:', isSequential ? '顺序' : '随机');
                 totalQuestions = questionCount;
             } else {
                 console.log('题库未加载，根据题目类型使用默认题目');
@@ -393,11 +328,178 @@
         let startTime = new Date(); // 记录练习开始时间
         let correctQuestions = []; // 记录答对的题目ID
         let wrongQuestions = []; // 记录答错的题目ID
+        let practiceId = null; // 练习会话ID
+        
+        // 进度保存函数
+        function saveProgress() {
+            if (!practiceId) return;
+            
+            const progressData = {
+                practiceId: practiceId,
+                questionType: questionType,
+                questionCount: questionCount,
+                currentQuestionIndex: currentQuestionIndex,
+                totalQuestions: totalQuestions,
+                correctCount: correctCount,
+                wrongCount: wrongCount,
+                timeLeft: timeLeft,
+                startTime: startTime.getTime(),
+                correctQuestions: correctQuestions,
+                wrongQuestions: wrongQuestions,
+                questions: questions, // 保存题目顺序
+                lastSaveTime: Date.now()
+            };
+            
+            // 根据题目类型确定存储键
+            const typeMap = {
+                '单选题': 'single',
+                '多选题': 'multiple',
+                '判断题': 'judge'
+            };
+            const englishType = typeMap[questionType] || 'single';
+            const progressKey = `practiceProgress_${englishType}`;
+            
+            WebViewCompat.storage.setItem(progressKey, JSON.stringify(progressData));
+            console.log('进度已保存:', progressData, '存储键:', progressKey);
+        }
+        
+        // 进度恢复函数
+        function restoreProgress() {
+            // 根据题目类型确定存储键
+            const typeMap = {
+                '单选题': 'single',
+                '多选题': 'multiple',
+                '判断题': 'judge'
+            };
+            const englishType = typeMap[questionType] || 'single';
+            const progressKey = `practiceProgress_${englishType}`;
+            
+            const savedProgress = WebViewCompat.storage.getItem(progressKey);
+            if (!savedProgress) return false;
+            
+            try {
+                const progressData = JSON.parse(savedProgress);
+                
+                // 检查是否是同一类型和数量的练习
+                if (progressData.questionType !== questionType || 
+                    progressData.questionCount !== questionCount) {
+                    return false;
+                }
+                
+                // 检查保存时间是否超过24小时
+                const timeDiff = Date.now() - progressData.lastSaveTime;
+                if (timeDiff > 24 * 60 * 60 * 1000) {
+                    WebViewCompat.storage.removeItem(progressKey);
+                    return false;
+                }
+                
+                // 恢复进度
+                practiceId = progressData.practiceId;
+                currentQuestionIndex = progressData.currentQuestionIndex;
+                totalQuestions = progressData.totalQuestions;
+                correctCount = progressData.correctCount;
+                wrongCount = progressData.wrongCount;
+                timeLeft = progressData.timeLeft;
+                startTime = new Date(progressData.startTime);
+                correctQuestions = progressData.correctQuestions || [];
+                wrongQuestions = progressData.wrongQuestions || [];
+                questions = progressData.questions || [];
+                
+                // 验证恢复的数据完整性
+                if (!questions || questions.length === 0) {
+                    console.error('恢复的题目数组为空，清除进度');
+                    WebViewCompat.storage.removeItem(progressKey);
+                    return false;
+                }
+                
+                // 确保当前题目索引在有效范围内
+                if (currentQuestionIndex >= questions.length) {
+                    console.error('恢复的题目索引超出范围:', currentQuestionIndex, '题目总数:', questions.length);
+                    currentQuestionIndex = Math.min(currentQuestionIndex, questions.length - 1);
+                }
+                
+                console.log('进度已恢复:', progressData, '存储键:', progressKey);
+                console.log('当前题目索引:', currentQuestionIndex, '题目总数:', questions.length);
+                return true;
+            } catch (error) {
+                console.error('恢复进度失败:', error);
+                WebViewCompat.storage.removeItem(progressKey);
+                return false;
+            }
+        }
+        
+        // 清除进度
+        function clearProgress() {
+            // 根据题目类型确定存储键
+            const typeMap = {
+                '单选题': 'single',
+                '多选题': 'multiple',
+                '判断题': 'judge'
+            };
+            const englishType = typeMap[questionType] || 'single';
+            const progressKey = `practiceProgress_${englishType}`;
+            
+            WebViewCompat.storage.removeItem(progressKey);
+            console.log('进度已清除，存储键:', progressKey);
+        }
         
         // 页面初始化
         window.onload = function() {
             // 延迟执行，确保所有脚本都已加载
             setTimeout(function() {
+                // 生成练习会话ID
+                practiceId = 'practice_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                
+                // 检查是否为继续练习模式
+                if (isContinueMode) {
+                    console.log('继续练习模式，尝试恢复进度...');
+                    const hasProgress = restoreProgress();
+                    
+                    if (hasProgress) {
+                        // 自动继续之前的练习，不显示弹窗
+                        console.log('成功恢复进度，当前题目索引:', currentQuestionIndex);
+                        
+                        // 更新总题目数显示
+                        document.getElementById('total-questions').textContent = totalQuestions;
+                        
+                        // 更新页面标题
+                        updatePageTitle();
+                        
+                        // 更新页面显示
+                        updateQuestionDisplay();
+                        startTimer();
+                        
+                        // 恢复进度后不需要再次保存，避免索引重复增加
+                        return;
+                    } else {
+                        console.log('无法恢复进度，开始新的练习');
+                    }
+                }
+                
+                // 检查是否有保存的进度（非继续模式下的自动检查）
+                if (!isContinueMode) {
+                    const hasProgress = restoreProgress();
+                    
+                    if (hasProgress) {
+                        // 自动继续之前的练习，不显示弹窗
+                        console.log('自动继续之前的练习，当前题目索引:', currentQuestionIndex);
+                        
+                        // 更新总题目数显示
+                        document.getElementById('total-questions').textContent = totalQuestions;
+                        
+                        // 更新页面标题
+                        updatePageTitle();
+                        
+                        // 更新页面显示
+                        updateQuestionDisplay();
+                        startTimer();
+                        
+                        // 恢复进度后不需要再次保存，避免索引重复增加
+                        return;
+                    }
+                }
+                
+                // 没有进度，开始新的练习
                 // 检查题库是否已加载，如果没有则等待更长时间
                 if (!window.questionBank) {
                     console.log('题库未加载，等待更长时间...');
@@ -416,6 +518,9 @@
                          // 更新页面显示
                          updateQuestionDisplay();
                          startTimer();
+                         
+                         // 保存初始进度
+                         saveProgress();
                      }, 500);
                 } else {
                      // 先初始化题目
@@ -433,12 +538,21 @@
                      // 更新页面显示
                      updateQuestionDisplay();
                      startTimer();
+                     
+                     // 保存初始进度
+                     saveProgress();
                  }
-            }, 100);
+             }, 100);
         };
         
         function updateQuestionDisplay() {
-            let question = questions[currentQuestionIndex % questions.length];
+            // 确保题目索引在有效范围内
+            if (currentQuestionIndex >= questions.length) {
+                console.error('题目索引超出范围:', currentQuestionIndex, '题目总数:', questions.length);
+                return;
+            }
+            
+            let question = questions[currentQuestionIndex];
             
             // 检查是否为correctAnswers/wrongAnswers格式，如果是则转换为options/correct格式
             if (question.correctAnswers && question.wrongAnswers) {
@@ -453,7 +567,7 @@
             // 更新当前题目显示
             const progressText = document.getElementById('progress-text');
             if (progressText) {
-                progressText.innerHTML = `第 ${currentQuestionIndex + 1} 题 / 共 <span id="total-questions">${totalQuestions}</span> 题`;
+                progressText.innerHTML = `第 ${currentQuestionIndex + 1} 题 / 共 <span id="total-questions-display">${totalQuestions}</span> 题`;
             }
             
             // 更新题目编号
@@ -620,19 +734,29 @@
                 });
             } else {
                 // 单选题和判断题显示逻辑
-                options.forEach((option, index) => {
-                    if (isJudgmentQuestion && question.correct.includes(index)) {
-                        // 判断题：correct是数组格式
-                        option.classList.add('bg-green-100', 'border-green-500');
-                    } else if (!isJudgmentQuestion && !isMultipleChoice && 
-                              (Array.isArray(question.correct) ? question.correct.includes(index) : index === question.correct)) {
-                        // 单选题：correct可能是数字或数组格式
-                        option.classList.add('bg-green-100', 'border-green-500');
+                if (isCorrect) {
+                    // 回答正确时，只给用户选择的选项添加绿框
+                    if (selectedElement) {
+                        selectedElement.classList.remove('bg-blue-100', 'border-blue-500', 'bg-white', 'border-gray-200');
+                        selectedElement.classList.add('bg-green-100', 'border-green-500');
                     }
-                });
-                
-                if (!isCorrect && selectedElement) {
-                    selectedElement.classList.add('bg-red-100', 'border-red-500');
+                } else {
+                    // 回答错误时，显示正确答案的绿框和用户选择的红框
+                    options.forEach((option, index) => {
+                        if (isJudgmentQuestion && question.correct.includes(index)) {
+                            // 判断题：correct是数组格式
+                            option.classList.add('bg-green-100', 'border-green-500');
+                        } else if (!isJudgmentQuestion && !isMultipleChoice && 
+                                  (Array.isArray(question.correct) ? question.correct.includes(index) : index === question.correct)) {
+                            // 单选题：correct可能是数字或数组格式
+                            option.classList.add('bg-green-100', 'border-green-500');
+                        }
+                    });
+                    
+                    // 用户选择的错误选项显示红框
+                    if (selectedElement) {
+                        selectedElement.classList.add('bg-red-100', 'border-red-500');
+                    }
                 }
             }
             
@@ -883,7 +1007,8 @@
             }
             
             if (currentQuestionIndex >= totalQuestions) {
-                // 练习完成
+                // 练习完成，清除进度
+                clearProgress();
                 clearInterval(timerInterval);
                 const accuracy = Math.round((correctCount / totalQuestions) * 100);
                 
@@ -943,7 +1068,7 @@
                 } else {
                     // 非Android WebView环境的兼容处理
                     setTimeout(() => {
-                        localStorage.setItem('lastUpdate', Date.now().toString());
+                        WebViewCompat.storage.setItem('lastUpdate', Date.now().toString());
                     }, 100);
                 }
                 
@@ -955,6 +1080,9 @@
                     el.style.pointerEvents = 'auto';
                 });
                 updateQuestionDisplay();
+                
+                // 在更新显示后保存当前进度
+                saveProgress();
             }
         }
         
@@ -981,6 +1109,11 @@
         }
         
         function goBack() {
+            // 退出前保存进度（如果练习未完成）
+            if (currentQuestionIndex < totalQuestions && practiceId) {
+                saveProgress();
+                WebViewCompat.dialog.alert('练习进度已保存，下次进入可以继续练习。');
+            }
             window.history.back();
         }
         
@@ -1016,11 +1149,7 @@
             const navItems = document.querySelectorAll('.nav-item');
             
             function navigateToPage(page) {
-                if (window.parent !== window) {
-                    window.parent.postMessage({ action: 'navigate', page: page }, '*');
-                } else {
-                    window.location.href = page + '.html';
-                }
+                window.NavigationUtils.navigateToPage(page);
             }
             
             navItems.forEach((item) => {
