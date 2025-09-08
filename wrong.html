@@ -697,22 +697,24 @@
                 return;
             }
             
-            // 检查进度模式，决定跳转页面
-            if (progress.mode === 'review') {
-                // 错题复习模式，跳转到review.html
-                const questionIds = progress.questions.map(q => q.id).join(',');
-                if (window.parent !== window) {
-                    window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=all&questions=${questionIds}` }, '*');
-                } else {
-                    window.location.href = `review.html?mode=all&questions=${questionIds}`;
-                }
+            // 错题练习模式，跳转到question.html并传递错题练习参数
+            const select = document.getElementById('questionTypeFilter');
+            const selectedType = select ? select.value : '单选题';
+            const typeMap = {
+                '单选题': 'single',
+                '多选题': 'multiple',
+                '判断题': 'judge'
+            };
+            const englishType = typeMap[selectedType];
+            
+            if (window.parent !== window) {
+                window.parent.postMessage({ 
+                    action: 'navigate', 
+                    page: 'question', 
+                    params: `?mode=wrong&type=${englishType}&continue=true` 
+                }, '*');
             } else {
-                // 普通练习模式，跳转到question.html
-                if (window.parent !== window) {
-                    window.parent.postMessage({ action: 'navigate', page: 'question', params: '?continue=true' }, '*');
-                } else {
-                    window.location.href = 'question.html?continue=true';
-                }
+                window.location.href = `question.html?mode=wrong&type=${englishType}&continue=true`;
             }
         }
         
