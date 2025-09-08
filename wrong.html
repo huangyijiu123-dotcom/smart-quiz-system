@@ -33,8 +33,10 @@
     <div class="bg-white min-h-screen">
         <!-- 头部导航 -->
         <div class="bg-white px-6 py-4 border-b border-gray-100">
-            <div class="flex items-center justify-center">
+            <div class="flex items-center justify-between">
+                <i class="fas fa-arrow-left text-gray-600 text-lg cursor-pointer"></i>
                 <h1 class="text-xl font-semibold text-gray-800">错题库</h1>
+                <div class="w-6"></div> <!-- 占位符保持居中 -->
             </div>
         </div>
 
@@ -306,16 +308,21 @@
         
         // 页面初始化
         document.addEventListener('DOMContentLoaded', function() {
-            // 初始化主题
-            if (window.themeManager) {
-                window.themeManager.init();
+            try {
+                // 初始化主题
+                if (window.themeManager) {
+                    window.themeManager.init();
+                }
+                
+                loadWrongQuestions();
+                updateStatistics();
+                renderWrongQuestions();
+                updateInterfaceState();
+                bindEvents();
+            } catch (error) {
+                console.error('页面初始化失败:', error);
+                alert('页面初始化失败: ' + error.message);
             }
-            
-            loadWrongQuestions();
-            updateStatistics();
-            renderWrongQuestions();
-            updateInterfaceState();
-            bindEvents();
         });
         
         // 加载错题数据（过滤已移出的错题）
@@ -394,44 +401,59 @@
         
         // 创建错题元素
         function createQuestionElement(question, index) {
-            const div = document.createElement('div');
-            div.className = 'card-hover bg-white rounded-2xl p-4 border border-gray-200 cursor-pointer';
-            div.onclick = () => reviewQuestion(question.id);
-            
-            const difficultyClass = {
-                '简单': 'difficulty-easy',
-                '中等': 'difficulty-medium',
-                '困难': 'difficulty-hard'
-            }[question.difficulty];
-            
-            const typeColor = {
-                '单选题': 'bg-blue-100 text-blue-600',
-                '多选题': 'bg-green-100 text-green-600',
-                '判断题': 'bg-orange-100 text-orange-600'
-            }[question.type];
-            
-            div.innerHTML = `
-                <div class="flex items-start space-x-3">
-                    <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <span class="text-red-600 font-semibold text-sm">${index}</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-gray-800 font-medium text-sm mb-2">
-                            ${question.question}
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs ${typeColor} px-2 py-1 rounded-full">${question.type}</span>
-                                <span class="text-xs ${difficultyClass} text-white px-2 py-1 rounded-full">${question.difficulty}</span>
-                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">错误${question.wrongCount}次</span>
+            try {
+                const div = document.createElement('div');
+                div.className = 'card-hover bg-white rounded-2xl p-4 border border-gray-200 cursor-pointer';
+                div.onclick = () => {
+                    try {
+                        reviewQuestion(question.id);
+                    } catch (error) {
+                        console.error('点击错题元素失败:', error);
+                        alert('点击错题失败: ' + error.message);
+                    }
+                };
+                
+                const difficultyClass = {
+                    '简单': 'difficulty-easy',
+                    '中等': 'difficulty-medium',
+                    '困难': 'difficulty-hard'
+                }[question.difficulty];
+                
+                const typeColor = {
+                    '单选题': 'bg-blue-100 text-blue-600',
+                    '多选题': 'bg-green-100 text-green-600',
+                    '判断题': 'bg-orange-100 text-orange-600'
+                }[question.type];
+                
+                div.innerHTML = `
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-red-600 font-semibold text-sm">${index}</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-800 font-medium text-sm mb-2">
+                                ${question.question}
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs ${typeColor} px-2 py-1 rounded-full">${question.type}</span>
+                                    <span class="text-xs ${difficultyClass} text-white px-2 py-1 rounded-full">${question.difficulty}</span>
+                                    <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">错误${question.wrongCount}次</span>
+                                </div>
+                                <span class="text-xs text-gray-500">${question.lastWrongTime}</span>
                             </div>
-                            <span class="text-xs text-gray-500">${question.lastWrongTime}</span>
                         </div>
                     </div>
-                </div>
-            `;
-            
-            return div;
+                `;
+                
+                return div;
+            } catch (error) {
+                console.error('创建错题元素失败:', error);
+                const errorElement = document.createElement('div');
+                errorElement.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded';
+                errorElement.textContent = '创建错题元素失败: ' + error.message;
+                return errorElement;
+            }
         }
         
         // 切换空状态
@@ -560,10 +582,16 @@
         
         // 复习单个错题
         function reviewQuestion(questionId) {
-            if (window.parent !== window) {
-                window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=single&questionId=${questionId}` }, '*');
-            } else {
-                window.location.href = `review.html?mode=single&questionId=${questionId}`;
+            try {
+                console.log('点击错题，ID:', questionId);
+                if (window.parent !== window) {
+                    window.parent.postMessage({ action: 'navigate', page: 'review', params: `?mode=single&questionId=${questionId}` }, '*');
+                } else {
+                    window.location.href = `review.html?mode=single&questionId=${questionId}`;
+                }
+            } catch (error) {
+                console.error('复习错题失败:', error);
+                alert('复习错题失败: ' + error.message);
             }
         }
         
@@ -685,6 +713,49 @@
                 } else {
                     window.location.href = 'question.html?continue=true';
                 }
+            }
+        }
+        
+        // 开始新练习
+        function startNewPractice() {
+            const select = document.getElementById('questionTypeFilter');
+            const selectedType = select ? select.value : '单选题';
+            
+            // 获取当前筛选的错题
+            let questionsToUse = [];
+            if (selectedType === 'all') {
+                questionsToUse = allWrongQuestions.filter(q => q.status !== '已掌握');
+            } else {
+                questionsToUse = allWrongQuestions.filter(q => q.type === selectedType && q.status !== '已掌握');
+            }
+            
+            if (questionsToUse.length === 0) {
+                WebViewCompat.dialog.alert('没有可练习的错题');
+                return;
+            }
+            
+            // 清除旧的练习进度
+            const typeMap = {
+                '单选题': 'single',
+                '多选题': 'multiple',
+                '判断题': 'judge',
+                'all': 'all'
+            };
+            
+            const englishType = typeMap[selectedType] || 'single';
+            const progressKey = `wrongPracticeProgress_${englishType}`;
+            WebViewCompat.storage.removeItem(progressKey);
+            
+            // 跳转到练习页面
+            const questionIds = questionsToUse.map(q => q.id).join(',');
+            if (window.parent !== window) {
+                window.parent.postMessage({ 
+                    action: 'navigate', 
+                    page: 'question', 
+                    params: `?mode=wrong&type=${englishType}&questions=${questionIds}` 
+                }, '*');
+            } else {
+                window.location.href = `question.html?mode=wrong&type=${englishType}&questions=${questionIds}`;
             }
         }
         
@@ -812,18 +883,37 @@
         // 绑定事件
         function bindEvents() {
             // 返回按钮
-            document.querySelector('.fas.fa-arrow-left').onclick = () => window.history.back();
+            const backBtn = document.querySelector('.fas.fa-arrow-left');
+            if (backBtn) {
+                backBtn.onclick = () => {
+                    // 优先使用 WebView 通信
+                    if (window.parent !== window) {
+                        window.parent.postMessage({ action: 'navigate', page: 'index' }, '*');
+                    } else {
+                        // 直接跳转到首页
+                        window.location.href = 'index.html';
+                    }
+                };
+            }
             
             // 筛选按钮
-            document.querySelector('.fas.fa-filter').onclick = showFilterMenu;
+            const filterBtn = document.querySelector('.fas.fa-filter');
+            if (filterBtn) {
+                filterBtn.onclick = showFilterMenu;
+            }
             
             // 搜索按钮
-            document.querySelector('.fas.fa-search').onclick = showSearchDialog;
+            const searchBtn = document.querySelector('.fas.fa-search');
+            if (searchBtn) {
+                searchBtn.onclick = showSearchDialog;
+            }
             
             // 快捷操作按钮
             const actionButtons = document.querySelectorAll('.grid.grid-cols-2 button');
-            actionButtons[0].onclick = startReview;
-            actionButtons[1].onclick = randomPractice;
+            if (actionButtons.length >= 2) {
+                actionButtons[0].onclick = startReview;
+                actionButtons[1].onclick = randomPractice;
+            }
             
             // 分类卡片点击
             const categoryCards = document.querySelectorAll('.space-y-3 .card-hover');
@@ -834,7 +924,10 @@
             }
             
             // 查看全部
-            document.querySelector('.text-sm.text-blue-600').onclick = () => filterQuestions('all');
+            const viewAllBtn = document.querySelector('.text-sm.text-blue-600');
+            if (viewAllBtn) {
+                viewAllBtn.onclick = () => filterQuestions('all');
+            }
             
             // 空状态按钮
             const emptyStateButton = document.querySelector('#emptyState button');
@@ -845,6 +938,33 @@
                     } else {
                         window.location.href = 'select.html';
                     }
+                };
+            }
+            
+            // 继续练习按钮
+            const continueBtn = document.querySelector('#continue-practice-section button');
+            if (continueBtn) {
+                continueBtn.onclick = continuePractice;
+            }
+            
+            // 开始新练习按钮
+            const newPracticeBtn = document.querySelector('#new-practice-section button');
+            if (newPracticeBtn) {
+                newPracticeBtn.onclick = startNewPractice;
+            }
+            
+            // 清除进度按钮
+            const clearProgressBtn = document.querySelector('#continue-practice-section .text-red-500');
+            if (clearProgressBtn) {
+                clearProgressBtn.onclick = clearPracticeProgress;
+            }
+            
+            // 题型筛选下拉框
+            const questionTypeFilter = document.getElementById('questionTypeFilter');
+            if (questionTypeFilter) {
+                questionTypeFilter.onchange = () => {
+                    onQuestionTypeChange();
+                    updateInterfaceState();
                 };
             }
             
