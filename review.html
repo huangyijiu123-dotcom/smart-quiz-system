@@ -374,6 +374,55 @@
             // 更新题目内容
             document.querySelector('h3.text-lg').textContent = question.question;
             
+            // 随机打乱选项顺序（判断题除外）
+            if (question.type !== '判断题' && question.options && question.options.length > 0) {
+                // 创建选项和正确答案的映射关系
+                const optionsWithCorrectness = [];
+                
+                if (question.type === '单选题') {
+                    // 单选题：correct是单个索引
+                    question.options.forEach((option, index) => {
+                        optionsWithCorrectness.push({
+                            text: option,
+                            isCorrect: index === question.correct,
+                            originalIndex: index  // 保存原始索引
+                        });
+                    });
+                } else {
+                    // 多选题：correct是索引数组
+                    question.options.forEach((option, index) => {
+                        optionsWithCorrectness.push({
+                            text: option,
+                            isCorrect: Array.isArray(question.correct) && question.correct.includes(index),
+                            originalIndex: index  // 保存原始索引
+                        });
+                    });
+                }
+                
+                // 随机打乱选项顺序
+                for (let i = optionsWithCorrectness.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [optionsWithCorrectness[i], optionsWithCorrectness[j]] = [optionsWithCorrectness[j], optionsWithCorrectness[i]];
+                }
+                
+                // 保存打乱后的选项顺序映射（用于显示选项时的字母标识）
+                question.optionMapping = optionsWithCorrectness.map(item => item.originalIndex);
+                
+                // 更新选项和正确答案
+                question.options = optionsWithCorrectness.map(item => item.text);
+                
+                if (question.type === '单选题') {
+                    // 更新单选题的正确答案索引
+                    question.correct = optionsWithCorrectness.findIndex(item => item.isCorrect);
+                } else {
+                    // 更新多选题的正确答案索引数组
+                    question.correct = optionsWithCorrectness.reduce((indexes, item, index) => {
+                        if (item.isCorrect) indexes.push(index);
+                        return indexes;
+                    }, []);
+                }
+            }
+            
             // 更新选项
             const options = document.querySelectorAll('.option-hover');
             
@@ -397,7 +446,12 @@
                 options.forEach((option, index) => {
                     if (index < question.options.length) {
                         option.style.display = 'block';
-                        const letter = String.fromCharCode(65 + index); // A, B, C, D, E, F
+                        // 使用映射关系或原始索引来确定字母标识
+                        let displayIndex = index;
+                        if (question.optionMapping) {
+                            displayIndex = question.optionMapping[index];
+                        }
+                        const letter = String.fromCharCode(65 + displayIndex); // A, B, C, D, E, F
                         option.querySelector('span.font-semibold').textContent = letter;
                         option.querySelector('span.text-gray-800').textContent = question.options[index];
                         
@@ -729,6 +783,67 @@
             const submitBtn = document.getElementById('submitMultiple');
             if (submitBtn) {
                 submitBtn.style.display = 'none';
+            }
+            
+            // 每次切换题目时重新打乱当前题目的选项顺序
+            if (currentQuestionIndex < totalQuestions) {
+                let question = questions[currentQuestionIndex];
+                
+                // 如果题目使用correctAnswers/wrongAnswers格式，转换为options/correct格式
+                if (question.correctAnswers && question.wrongAnswers) {
+                    question = convertQuestionFormat(question);
+                    // 更新原数组中的题目数据
+                    questions[currentQuestionIndex] = question;
+                }
+                
+                // 随机打乱选项顺序（判断题除外）
+                if (question.type !== '判断题' && question.options && question.options.length > 0) {
+                    // 创建选项和正确答案的映射关系
+                    const optionsWithCorrectness = [];
+                    
+                    if (question.type === '单选题') {
+                        // 单选题：correct是单个索引
+                        question.options.forEach((option, index) => {
+                            optionsWithCorrectness.push({
+                                text: option,
+                                isCorrect: index === question.correct,
+                                originalIndex: index  // 保存原始索引
+                            });
+                        });
+                    } else {
+                        // 多选题：correct是索引数组
+                        question.options.forEach((option, index) => {
+                            optionsWithCorrectness.push({
+                                text: option,
+                                isCorrect: Array.isArray(question.correct) && question.correct.includes(index),
+                                originalIndex: index  // 保存原始索引
+                            });
+                        });
+                    }
+                    
+                    // 随机打乱选项顺序
+                    for (let i = optionsWithCorrectness.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [optionsWithCorrectness[i], optionsWithCorrectness[j]] = [optionsWithCorrectness[j], optionsWithCorrectness[i]];
+                    }
+                    
+                    // 保存打乱后的选项顺序映射（用于显示选项时的字母标识）
+                    question.optionMapping = optionsWithCorrectness.map(item => item.originalIndex);
+                    
+                    // 更新选项和正确答案
+                    question.options = optionsWithCorrectness.map(item => item.text);
+                    
+                    if (question.type === '单选题') {
+                        // 更新单选题的正确答案索引
+                        question.correct = optionsWithCorrectness.findIndex(item => item.isCorrect);
+                    } else {
+                        // 更新多选题的正确答案索引数组
+                        question.correct = optionsWithCorrectness.reduce((indexes, item, index) => {
+                            if (item.isCorrect) indexes.push(index);
+                            return indexes;
+                        }, []);
+                    }
+                }
             }
             
             if (currentQuestionIndex >= totalQuestions) {

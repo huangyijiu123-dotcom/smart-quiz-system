@@ -74,7 +74,7 @@
         <div class="px-6 pb-6">
             <div class="space-y-3">
                 <!-- 选项A -->
-                <div class="option-hover bg-white rounded-2xl p-4 border-2 border-gray-200 cursor-pointer" onclick="selectOption(this, 'A', false)">
+                <div class="option-hover bg-white rounded-2xl p-4 border-2 border-gray-200 cursor-pointer" onclick="selectOption(this, 'A', true)">
                     <div class="flex items-center space-x-4">
                         <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
                             <span class="font-semibold text-gray-600">A</span>
@@ -149,57 +149,55 @@
     </div>
 
     <!-- 答案弹窗 -->
-    <div id="answerPopup" class="fixed inset-0 popup-overlay hidden z-50" onclick="closePopup()">
-        <div class="flex items-end justify-center min-h-screen">
-            <div class="popup-content bg-white rounded-t-3xl w-full max-w-md mx-4 mb-0" onclick="event.stopPropagation()">
-                <!-- 弹窗头部 -->
-                <div class="flex items-center justify-between p-6 border-b border-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <div id="resultIcon" class="w-10 h-10 rounded-full flex items-center justify-center">
-                            <i class="fas fa-check text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 id="resultTitle" class="font-semibold text-lg">回答正确！</h3>
-                            <p class="text-sm text-gray-500">继续保持</p>
-                        </div>
+    <div id="answerPopup" class="fixed inset-0 flex items-center justify-center z-[9999]" style="display: none;">
+        <div class="absolute inset-0 bg-black bg-opacity-60" onclick="closePopup()"></div>
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md mx-4 z-10 overflow-hidden transform transition-all" onclick="event.stopPropagation()">
+            <!-- 弹窗头部 -->
+            <div id="popupHeader" class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div id="resultIcon" class="w-10 h-10 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check text-xl"></i>
                     </div>
-                    
-                    <!-- 倒计时圆环 -->
-                    <div class="relative w-12 h-12">
-                        <svg class="w-12 h-12 transform -rotate-90" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45" stroke="#e5e7eb" stroke-width="8" fill="none"></circle>
-                            <circle id="countdownCircle" cx="50" cy="50" r="45" stroke="#3b82f6" stroke-width="8" fill="none" class="countdown-circle"></circle>
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span id="countdownText" class="text-sm font-semibold text-blue-600">3</span>
+                    <div>
+                        <h3 id="resultTitle" class="font-semibold text-lg dark:text-white">回答正确！</h3>
+                        <p id="resultSubtitle" class="text-sm text-gray-500 dark:text-gray-400">继续保持</p>
+                    </div>
+                </div>
+                
+                <!-- 倒计时 -->
+                <div id="countdownContainer" class="relative w-12 h-12">
+                    <svg class="w-12 h-12 transform -rotate-90" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" stroke="#e5e7eb" stroke-width="8" fill="none"></circle>
+                        <circle id="countdownCircle" cx="50" cy="50" r="45" stroke="#3b82f6" stroke-width="8" fill="none" class="countdown-circle"></circle>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span id="countdownText" class="text-sm font-semibold text-blue-600 dark:text-blue-400">3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 弹窗内容 -->
+            <div class="p-6">
+                <div id="correctAnswer" class="hidden mb-6">
+                    <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-2">正确答案：</h4>
+                    <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-6 h-6 bg-green-500 dark:bg-green-600 rounded-full flex items-center justify-center">
+                                <span id="correctLetter" class="text-white font-semibold text-sm">A</span>
+                            </div>
+                            <span id="correctText" class="text-green-800 dark:text-green-400 font-medium">push()</span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- 弹窗内容 -->
-                <div class="p-6">
-                    <div id="correctAnswer" class="hidden">
-                        <h4 class="font-medium text-gray-800 mb-2">正确答案：</h4>
-                        <div class="bg-green-50 border border-green-200 rounded-xl p-4">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                                    <span class="text-white font-semibold text-sm">A</span>
-                                </div>
-                                <span class="text-green-800 font-medium">push()</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                    
-                    <div class="mt-6 flex space-x-3">
-                        <button class="flex-1 bg-gray-100 text-gray-600 font-medium py-3 rounded-xl" onclick="closePopup()">
-                            知道了
-                        </button>
-                        <button class="flex-1 bg-blue-600 text-white font-medium py-3 rounded-xl" onclick="nextQuestion()">
-                            下一题
-                        </button>
-                    </div>
+                <!-- 按钮区域 -->
+                <div class="flex space-x-3">
+                    <button class="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 font-medium py-3 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" onclick="closePopup()">
+                        知道了
+                    </button>
+                    <button class="flex-1 bg-blue-600 text-white font-medium py-3 rounded-xl hover:bg-blue-700 transition-colors" onclick="nextQuestion()">
+                        下一题
+                    </button>
                 </div>
             </div>
         </div>
@@ -237,11 +235,29 @@
         function updatePageTitle() {
             const titleElement = document.getElementById('question-type-title');
             if (titleElement) {
-                if (practiceMode === 'wrong') {
-                    titleElement.textContent = questionType + '错题练习';
-                } else {
-                    titleElement.textContent = questionType + '练习';
+                // 处理题型显示
+                let displayType = questionType;
+                // 添加对映射后题型的处理
+                if (questionType === 'single') {
+                    displayType = '单选题';
+                } else if (questionType === 'multiple') {
+                    displayType = '多选题';
+                } else if (questionType === 'judge') {
+                    displayType = '判断题';
                 }
+                
+                if (practiceMode === 'wrong') {
+                    titleElement.textContent = displayType + '错题练习';
+                } else {
+                    titleElement.textContent = displayType + '练习';
+                }
+                
+                console.log('更新页面标题为:', titleElement.textContent, '原始题型:', questionType);
+                // 添加调试信息
+                console.log('URL参数详情:', window.location.search);
+                console.log('题型参数:', questionType);
+                console.log('练习模式:', practiceMode);
+                console.log('是否继续模式:', isContinueMode);
             }
         }
         
@@ -265,28 +281,76 @@
             if (practiceMode === 'wrong') {
                 console.log('错题练习模式，从错题库获取题目...');
                 
-                // 从localStorage获取错题数据
-                const wrongQuestionsList = JSON.parse(WebViewCompat.storage.getItem('wrongQuestions') || '[]');
-                console.log('错题库数据:', wrongQuestionsList);
-                
-                // 根据题目类型筛选错题
-                const filteredWrongQuestions = wrongQuestionsList.filter(q => {
-                    // 判断题目类型
-                    if (questionType === '判断题') {
-                        return q.options && q.options.length === 2 && 
-                               q.options.includes('正确') && q.options.includes('错误');
-                    } else if (questionType === '多选题') {
-                        return Array.isArray(q.correct) && q.correct.length > 1;
-                    } else {
-                        // 单选题：correct可能是数字或长度为1的数组
-                        return !Array.isArray(q.correct) || (Array.isArray(q.correct) && q.correct.length === 1);
-                    }
-                });
-                
-                console.log('筛选后的错题数量:', filteredWrongQuestions.length);
-                
-                if (filteredWrongQuestions.length > 0) {
+                // 检查URL参数中是否有指定的题目ID列表
+                const questionsParam = urlParams.get('questions');
+                if (questionsParam) {
+                    console.log('使用URL参数中指定的题目ID:', questionsParam);
+                    // 将ID转换为数字，但保留原始字符串以便同时匹配字符串ID和数字ID
+                    const questionIds = questionsParam.split(',');
+                    const questionIdsNum = questionIds.map(id => parseInt(id));
+                    
+                    // 从localStorage获取错题数据
+                    const wrongQuestionsList = JSON.parse(WebViewCompat.storage.getItem('wrongQuestions') || '[]');
+                    console.log('错题库数据:', wrongQuestionsList);
+                    
+                    // 根据ID获取指定的错题（同时匹配字符串ID和数字ID）
+                    // 保持题目顺序与ID列表顺序一致
+                    questions = [];
+                    questionIds.forEach(id => {
+                        const question = wrongQuestionsList.find(q => String(q.id) === id || q.id === parseInt(id));
+                        if (question) {
+                            questions.push(question);
+                        }
+                    });
+                    console.log('根据ID筛选的题目数量:', questions.length);
+                    console.log('筛选到的题目:', questions);
+                } else {
+                    // 没有指定题目ID，使用原有的筛选逻辑
+                    const wrongQuestionsList = JSON.parse(WebViewCompat.storage.getItem('wrongQuestions') || '[]');
+                    console.log('错题库数据:', JSON.stringify(wrongQuestionsList));
+                    // 打印每个错题的详细信息，便于调试
+                    wrongQuestionsList.forEach((q, index) => {
+                        console.log(`错题${index+1}:`, 
+                            '题目:', q.question.substring(0, 20) + '...', 
+                            '类型:', q.type, 
+                            '正确答案:', q.correct, 
+                            '是否数组:', Array.isArray(q.correct));
+                    });
+                    
+                    // 根据题目类型筛选错题
+                    console.log('根据题型筛选错题，当前题型:', questionType);
+                    const filteredWrongQuestions = wrongQuestionsList.filter(q => {
+                        // 优先使用题目的type字段进行匹配，同时处理中英文题型
+                        const chineseType = questionType === 'single' ? '单选题' : 
+                                          questionType === 'multiple' ? '多选题' : 
+                                          questionType === 'judge' ? '判断题' : questionType;
+                        
+                        if (q.type && (q.type === questionType || q.type === chineseType)) {
+                            console.log('根据type字段匹配到题目:', q.question, 'type:', q.type, '筛选类型:', questionType, '中文类型:', chineseType);
+                            return true;
+                        }
+                        
+                        // 如果没有type字段或type字段不匹配，则使用选项和正确答案特征判断
+                        if (questionType === '判断题') {
+                            return q.options && q.options.length === 2 && 
+                                   q.options.includes('正确') && q.options.includes('错误');
+                        } else if (questionType === '多选题') {
+                            console.log('检查多选题:', q.question, '正确答案:', q.correct, '是否数组:', Array.isArray(q.correct));
+                            return Array.isArray(q.correct) && q.correct.length > 1;
+                        } else if (questionType === '单选题') {
+                            // 单选题：correct可能是数字或长度为1的数组
+                            return !Array.isArray(q.correct) || (Array.isArray(q.correct) && q.correct.length === 1);
+                        } else {
+                            // 如果没有指定题型或题型为'all'，返回所有错题
+                            return true;
+                        }
+                    });
+                    
+                    console.log('筛选后的错题数量:', filteredWrongQuestions.length);
                     questions = filteredWrongQuestions.slice(0, questionCount);
+                }
+                
+                if (questions.length > 0) {
                     totalQuestions = questions.length;
                     console.log('错题练习题目数量:', questions.length);
                 } else {
@@ -381,22 +445,26 @@
         function saveProgress() {
             if (!practiceId) return;
             
+            // 在错题练习模式下使用questions.length作为totalQuestions的值
+            const actualTotalQuestions = practiceMode === 'wrong' ? questions.length : totalQuestions;
+            
             const progressData = {
                 practiceId: practiceId,
                 questionType: questionType,
                 questionCount: questionCount,
                 currentQuestionIndex: currentQuestionIndex,
-                totalQuestions: totalQuestions,
+                totalQuestions: actualTotalQuestions, // 使用根据练习模式确定的题目总数
                 correctCount: correctCount,
                 wrongCount: wrongCount,
                 timeLeft: timeLeft,
                 startTime: startTime.getTime(),
                 correctQuestions: correctQuestions,
                 wrongQuestions: wrongQuestions,
-                questions: questions, // 保存题目顺序
+                questions: questions, // 保存题目顺序，确保顺序不变
                 lastSaveTime: Date.now(),
-                practiceMode: practiceMode // 添加练习模式标识
-            };
+                practiceMode: practiceMode, // 添加练习模式标识
+                questionIds: practiceMode === 'wrong' ? questions.map(q => q.id) : null // 保存错题ID顺序
+            }
             
             // 根据题目类型和练习模式确定存储键
             const typeMap = {
@@ -470,7 +538,23 @@
                 startTime = new Date(progressData.startTime);
                 correctQuestions = progressData.correctQuestions || [];
                 wrongQuestions = progressData.wrongQuestions || [];
-                questions = progressData.questions || [];
+                
+                // 确保题目顺序与保存时一致
+                if (progressData.practiceMode === 'wrong' && progressData.questionIds && progressData.questionIds.length > 0) {
+                    // 如果是错题练习模式且有保存的题目ID顺序，则从错题库中按照保存的ID顺序重新获取题目
+                    const wrongQuestionsList = JSON.parse(WebViewCompat.storage.getItem('wrongQuestions') || '[]');
+                    questions = [];
+                    progressData.questionIds.forEach(id => {
+                        const question = wrongQuestionsList.find(q => String(q.id) === String(id) || q.id === id);
+                        if (question) {
+                            questions.push(question);
+                        }
+                    });
+                    console.log('根据保存的ID顺序恢复题目，数量:', questions.length);
+                } else {
+                    // 否则直接使用保存的题目数组
+                    questions = progressData.questions || [];
+                }
                 
                 // 验证恢复的数据完整性
                 if (!questions || questions.length === 0) {
@@ -587,6 +671,14 @@
                          console.log('设置总题目数为:', totalQuestions);
                          console.log('题库中实际题目数:', questions.length);
                          
+                         // 在错题练习模式下，打印题目顺序，用于调试
+                         if (practiceMode === 'wrong') {
+                             console.log('错题练习模式 - 题目顺序:');
+                             questions.forEach((q, index) => {
+                                 console.log(`${index + 1}. ID: ${q.id}, 题目: ${q.question}`);
+                             });
+                         }
+                         
                          // 更新总题目数显示
                          document.getElementById('total-questions').textContent = totalQuestions;
                          
@@ -606,6 +698,14 @@
                      
                      console.log('设置总题目数为:', totalQuestions);
                      console.log('题库中实际题目数:', questions.length);
+                     
+                     // 在错题练习模式下，打印题目顺序，用于调试
+                     if (practiceMode === 'wrong') {
+                         console.log('错题练习模式 - 题目顺序:');
+                         questions.forEach((q, index) => {
+                             console.log(`${index + 1}. ID: ${q.id}, 题目: ${q.question}`);
+                         });
+                     }
                      
                      // 更新总题目数显示
                      document.getElementById('total-questions').textContent = totalQuestions;
@@ -633,8 +733,12 @@
             // 确保题目索引在有效范围内
             if (currentQuestionIndex >= questions.length) {
                 console.error('题目索引超出范围:', currentQuestionIndex, '题目总数:', questions.length);
-                return;
+                // 如果索引超出范围，重置为最后一题
+                currentQuestionIndex = questions.length - 1;
             }
+            
+            // 打印当前显示的题目信息，用于调试
+            console.log('显示题目 - 索引:', currentQuestionIndex, '题目:', questions[currentQuestionIndex].question);
             
             let question = questions[currentQuestionIndex];
             
@@ -643,15 +747,16 @@
                 question = convertQuestionFormat(question);
             }
             
-            // 更新进度
-            const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            // 更新进度 - 在错题练习模式下使用questions.length而不是totalQuestions
+            const totalQuestionsToUse = practiceMode === 'wrong' ? questions.length : totalQuestions;
+            const progress = ((currentQuestionIndex + 1) / totalQuestionsToUse) * 100;
             document.querySelector('.progress-bar').style.width = progress + '%';
             document.querySelector('.text-sm.font-medium.text-blue-600').textContent = Math.round(progress) + '%';
             
             // 更新当前题目显示
             const progressText = document.getElementById('progress-text');
             if (progressText) {
-                progressText.innerHTML = `第 ${currentQuestionIndex + 1} 题 / 共 <span id="total-questions-display">${totalQuestions}</span> 题`;
+                progressText.innerHTML = `第 ${currentQuestionIndex + 1} 题 / 共 <span id="total-questions-display">${totalQuestionsToUse}</span> 题`;
             }
             
             // 更新题目编号
@@ -674,6 +779,9 @@
                                      question.options.includes('正确') && question.options.includes('错误');
             const isMultipleChoice = Array.isArray(question.correct) && question.correct.length > 1;
             
+            // 检查是否有选项映射（打乱后的选项顺序）
+            const hasOptionMapping = question.optionMapping && Array.isArray(question.optionMapping);
+            
             // 判断题只显示两个选项
             if (isJudgmentQuestion) {
                 options.forEach((option, index) => {
@@ -694,7 +802,9 @@
                 options.forEach((option, index) => {
                     if (index < question.options.length) {
                         option.style.display = 'block';
-                        const letter = String.fromCharCode(65 + index); // A, B, C, D, E, F
+                        // 使用原始索引或映射后的索引来显示选项字母
+                        const displayIndex = hasOptionMapping ? question.optionMapping[index] : index;
+                        const letter = String.fromCharCode(65 + displayIndex); // A, B, C, D, E, F
                         option.querySelector('span.font-semibold').textContent = letter;
                         option.querySelector('span.text-gray-800').textContent = question.options[index];
                         
@@ -805,6 +915,9 @@
                                      question.options.includes('正确') && question.options.includes('错误');
             const isMultipleChoice = Array.isArray(question.correct) && question.correct.length > 1;
             
+            // 检查是否有选项映射（打乱后的选项顺序）
+            const hasOptionMapping = question.optionMapping && Array.isArray(question.optionMapping);
+            
             if (isMultipleChoice) {
                 // 多选题显示逻辑
                 options.forEach((option, index) => {
@@ -859,12 +972,22 @@
                 // 记录答对的题目ID
                 if (currentQuestion && currentQuestion.id) {
                     correctQuestions.push(currentQuestion.id);
+                    
+                    // 如果是错题练习模式，更新连续答对次数
+                    if (practiceMode === 'wrong') {
+                        updateConsecutiveCorrect(currentQuestion.id, true);
+                    }
                 }
             } else {
                 wrongCount++;
                 // 记录答错的题目ID
                 if (currentQuestion && currentQuestion.id) {
                     wrongQuestions.push(currentQuestion.id);
+                    
+                    // 如果是错题练习模式，重置连续答对次数
+                    if (practiceMode === 'wrong') {
+                        updateConsecutiveCorrect(currentQuestion.id, false);
+                    }
                 }
             }
             
@@ -891,11 +1014,15 @@
         }
         
         function showResultModal(isCorrect, question) {
+            // 添加调试信息
+            console.log('showResultModal called with isCorrect:', isCorrect);
             // 立即显示结果弹窗
-            showAnswerPopup(isCorrect, question);
+            showPopup(isCorrect, question);
         }
         
         function selectOption(element, option, isCorrect) {
+            console.log('selectOption called with isCorrect:', isCorrect);
+            
             // 禁用所有选项
             document.querySelectorAll('.option-hover').forEach(el => {
                 el.style.pointerEvents = 'none';
@@ -904,28 +1031,60 @@
             // 显示正确答案
             const question = questions[currentQuestionIndex % questions.length];
             showCorrectAnswers(question, isCorrect, element);
+            
+            // 更新统计
+            updateStats(isCorrect);
+            
+            // 显示弹窗
+            showPopup(isCorrect, question);
         }
         
-        function showAnswerPopup(isCorrect, question) {
+        function showPopup(isCorrect, question) {
+            console.log('showPopup called with isCorrect:', isCorrect);
+            
             // 如果是correctAnswers/wrongAnswers格式，先转换
             if (question.correctAnswers && question.wrongAnswers) {
                 question = convertQuestionFormat(question);
             }
             
+            // 检查是否有选项映射
+            const hasOptionMapping = question.optionMapping && Array.isArray(question.optionMapping);
+            
+            // 获取弹窗元素
             const popup = document.getElementById('answerPopup');
             const resultIcon = document.getElementById('resultIcon');
             const resultTitle = document.getElementById('resultTitle');
+            const resultSubtitle = document.getElementById('resultSubtitle');
             const correctAnswer = document.getElementById('correctAnswer');
+            const correctLetter = document.getElementById('correctLetter');
+            const correctText = document.getElementById('correctText');
             
-            // 读取设置
+            // 获取用户设置
             const userSettings = JSON.parse(WebViewCompat.storage.getItem('appSettings') || '{}');
             const vibrationEnabled = userSettings.vibration !== undefined ? userSettings.vibration : false;
             const soundEnabled = userSettings.sound !== undefined ? userSettings.sound : true;
             
             if (isCorrect) {
-                resultIcon.className = 'w-10 h-10 bg-green-100 rounded-full flex items-center justify-center';
-                resultIcon.innerHTML = '<i class="fas fa-check text-xl text-green-600"></i>';
-                resultTitle.textContent = '回答正确！';
+                // 设置正确状态
+                resultIcon.className = 'w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center';
+                resultIcon.innerHTML = '<i class="fas fa-check text-xl text-green-600 dark:text-green-400"></i>';
+                
+                // 如果是错题练习模式，检查连续答对次数
+                if (practiceMode === 'wrong' && question.id) {
+                    const consecutiveCount = getConsecutiveCorrect(question.id);
+                    if (consecutiveCount >= 3) {
+                        resultTitle.textContent = '恭喜！连续答对3次';
+                        resultSubtitle.textContent = '该题已从错题库移除！';
+                    } else {
+                        resultTitle.textContent = '回答正确！';
+                        resultSubtitle.textContent = `连续答对${consecutiveCount}/3次`;
+                    }
+                } else {
+                    resultTitle.textContent = '回答正确！';
+                    resultSubtitle.textContent = '继续保持';
+                }
+                
+                // 隐藏正确答案区域
                 correctAnswer.classList.add('hidden');
                 
                 // 播放正确音效
@@ -933,15 +1092,49 @@
                     playCorrectSound();
                 }
             } else {
-                resultIcon.className = 'w-10 h-10 bg-red-100 rounded-full flex items-center justify-center';
-                resultIcon.innerHTML = '<i class="fas fa-times text-xl text-red-600"></i>';
+                // 设置错误状态
+                resultIcon.className = 'w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center';
+                resultIcon.innerHTML = '<i class="fas fa-times text-xl text-red-600 dark:text-red-400"></i>';
                 resultTitle.textContent = '回答错误';
+                resultSubtitle.textContent = '查看正确答案';
+                
+                // 显示正确答案区域
                 correctAnswer.classList.remove('hidden');
+                
+                // 设置正确答案内容
+                // 根据题目数据结构判断题目类型
+                const isJudgmentQuestion = question.options && question.options.length === 2 && 
+                                         question.options.includes('正确') && question.options.includes('错误');
+                const isMultipleChoice = Array.isArray(question.correct) && question.correct.length > 1;
+                
+                if (isJudgmentQuestion) {
+                    const correctIndex = question.correct[0];
+                    const correctTextValue = question.options[correctIndex];
+                    correctLetter.textContent = correctIndex === 0 ? '√' : '×';
+                    correctText.textContent = correctTextValue;
+                } else if (isMultipleChoice) {
+                    // 使用原始索引或映射后的索引来显示正确答案字母
+                    const correctLetters = question.correct.map(index => {
+                        const displayIndex = hasOptionMapping ? question.optionMapping[index] : index;
+                        return String.fromCharCode(65 + displayIndex);
+                    }).join(', ');
+                    const correctOptions = question.correct.map(index => question.options[index]).join('; ');
+                    correctLetter.textContent = correctLetters;
+                    correctText.textContent = correctOptions;
+                } else {
+                    // 单选题：correct可能是数字或数组格式
+                    const correctIndex = Array.isArray(question.correct) ? question.correct[0] : question.correct;
+                    // 使用原始索引或映射后的索引来显示正确答案字母
+                    const displayIndex = hasOptionMapping ? question.optionMapping[correctIndex] : correctIndex;
+                    const correctLetterValue = String.fromCharCode(65 + displayIndex);
+                    correctLetter.textContent = correctLetterValue;
+                    correctText.textContent = question.options[correctIndex];
+                }
                 
                 // 震动反馈
                 if (vibrationEnabled) {
-            WebViewCompat.vibration.vibrate(200); // 震动200毫秒
-        }
+                    WebViewCompat.vibration.vibrate(200); // 震动200毫秒
+                }
                 
                 // 播放错误音效
                 if (soundEnabled) {
@@ -950,40 +1143,10 @@
                 
                 // 保存错题到localStorage
                 saveWrongQuestion(question);
-                
-                // 显示正确答案
-                const optionElement = correctAnswer.querySelector('.w-6.h-6 span');
-                const textElement = correctAnswer.querySelector('span.text-green-800');
-                
-                if (optionElement && textElement) {
-                    // 根据题目数据结构判断题目类型
-                    const isJudgmentQuestion = question.options && question.options.length === 2 && 
-                                             question.options.includes('正确') && question.options.includes('错误');
-                    const isMultipleChoice = Array.isArray(question.correct) && question.correct.length > 1;
-                    
-                    if (isJudgmentQuestion) {
-                        const correctIndex = question.correct[0];
-                        const correctText = question.options[correctIndex];
-                        optionElement.textContent = correctIndex === 0 ? '√' : '×';
-                        textElement.textContent = correctText;
-                    } else if (isMultipleChoice) {
-                        const correctLetters = question.correct.map(index => String.fromCharCode(65 + index)).join(', ');
-                        const correctOptions = question.correct.map(index => question.options[index]).join('; ');
-                        optionElement.textContent = correctLetters;
-                        textElement.textContent = correctOptions;
-                    } else {
-                        // 单选题：correct可能是数字或数组格式
-                        const correctIndex = Array.isArray(question.correct) ? question.correct[0] : question.correct;
-                        const correctLetter = String.fromCharCode(65 + correctIndex);
-                        optionElement.textContent = correctLetter;
-                        textElement.textContent = question.options[correctIndex];
-                    }
-                }
             }
             
-
-            
-            popup.classList.remove('hidden');
+            // 显示弹窗
+            popup.style.display = 'flex';
             
             // 检查自动下一题设置
             const autoSettings = JSON.parse(WebViewCompat.storage.getItem('appSettings') || '{}');
@@ -1000,13 +1163,15 @@
                 countdownSeconds = Math.ceil(displayDuration / 1000);
                 startCountdown();
             } else {
-                // 如果关闭自动下一题，隐藏倒计时，只显示手动按钮
-                const countdownSection = document.querySelector('#answerPopup .flex.items-center.justify-center.mb-4');
-                if (countdownSection) {
-                    countdownSection.style.display = 'none';
+                // 如果关闭自动下一题，隐藏倒计时
+                const countdownContainer = document.getElementById('countdownContainer');
+                if (countdownContainer) {
+                    countdownContainer.style.display = 'none';
                 }
             }
         }
+        
+        // showAnswerPopup函数已完全删除
         
         function startCountdown() {
             const countdownText = document.getElementById('countdownText');
@@ -1044,6 +1209,8 @@
                 // 如果题目已存在，增加错误次数
                 wrongQuestions[existingIndex].wrongCount = (wrongQuestions[existingIndex].wrongCount || 1) + 1;
                 wrongQuestions[existingIndex].lastWrongDate = new Date().toISOString();
+                // 重置连续答对次数
+                wrongQuestions[existingIndex].consecutiveCorrect = 0;
             } else {
                 // 如果题目不存在，添加新的错题记录
                 const wrongQuestion = {
@@ -1051,7 +1218,9 @@
                     question: question.question,
                     options: question.options,
                     correct: question.correct,
-                    type: questionType,
+                    type: questionType === 'single' ? '单选题' : 
+                          questionType === 'multiple' ? '多选题' : 
+                          questionType === 'judge' ? '判断题' : questionType,
                     wrongCount: 1,
                     status: '待复习',
                     addedDate: new Date().toISOString(),
@@ -1067,13 +1236,22 @@
         }
         
         function closePopup() {
+            // 关闭弹窗
             const popup = document.getElementById('answerPopup');
-            popup.classList.add('hidden');
+            if (popup) {
+                popup.style.display = 'none';
+            }
+            
+            // 清除倒计时
             if (countdownTimer) {
                 clearInterval(countdownTimer);
             }
+            
             // 重置圆环
-            document.getElementById('countdownCircle').style.strokeDashoffset = '283';
+            const countdownCircle = document.getElementById('countdownCircle');
+            if (countdownCircle) {
+                countdownCircle.style.strokeDashoffset = '283';
+            }
         }
         
         function nextQuestion() {
@@ -1090,7 +1268,12 @@
                 submitBtn.style.display = 'none';
             }
             
-            if (currentQuestionIndex >= totalQuestions) {
+            // 打印当前题目索引和总题目数，用于调试
+            console.log('下一题 - 当前题目索引:', currentQuestionIndex, '总题目数:', totalQuestions, '题目数组长度:', questions.length);
+            
+            // 确保在错题练习模式下使用questions.length作为结束条件，而不是totalQuestions
+            if ((practiceMode === 'wrong' && currentQuestionIndex >= questions.length) || 
+                (practiceMode !== 'wrong' && currentQuestionIndex >= totalQuestions)) {
                 // 练习完成，清除进度
                 clearProgress();
                 clearInterval(timerInterval);
@@ -1199,7 +1382,52 @@
                 saveProgress();
                 WebViewCompat.dialog.alert('练习进度已保存，下次进入可以继续练习。');
             }
+            
+            // 修复：错题练习模式下，练习完成后直接返回错题页面，而不是使用history.back()
+            if (practiceMode === 'wrong') {
+                console.log('错题练习完成，返回错题页面');
+                if (window.parent !== window) {
+                    window.parent.postMessage({ action: 'navigate', page: 'wrong' }, '*');
+                } else {
+                    window.location.href = 'wrong.html';
+                }
+                return;
+            }
+            
             window.history.back();
+        }
+        
+        // 更新连续答对次数
+        function updateConsecutiveCorrect(questionId, isCorrect) {
+            let allWrongQuestions = JSON.parse(WebViewCompat.storage.getItem('wrongQuestions') || '[]');
+            const questionIndex = allWrongQuestions.findIndex(q => q.id === questionId);
+            
+            if (questionIndex !== -1) {
+                if (isCorrect) {
+                    // 答对了，增加连续答对次数
+                    allWrongQuestions[questionIndex].consecutiveCorrect = (allWrongQuestions[questionIndex].consecutiveCorrect || 0) + 1;
+                    
+                    // 如果连续答对3次，标记为已移除
+                    if (allWrongQuestions[questionIndex].consecutiveCorrect >= 3) {
+                        allWrongQuestions[questionIndex].isRemoved = true;
+                        allWrongQuestions[questionIndex].status = '已掌握';
+                        allWrongQuestions[questionIndex].removedDate = new Date().toISOString();
+                    }
+                } else {
+                    // 答错了，重置连续答对次数
+                    allWrongQuestions[questionIndex].consecutiveCorrect = 0;
+                }
+                
+                allWrongQuestions[questionIndex].lastReviewDate = new Date().toISOString();
+                WebViewCompat.storage.setItem('wrongQuestions', JSON.stringify(allWrongQuestions));
+            }
+        }
+        
+        // 获取连续答对次数
+        function getConsecutiveCorrect(questionId) {
+            let allWrongQuestions = JSON.parse(WebViewCompat.storage.getItem('wrongQuestions') || '[]');
+            const question = allWrongQuestions.find(q => q.id === questionId);
+            return question ? (question.consecutiveCorrect || 0) : 0;
         }
         
         // 音效播放函数
