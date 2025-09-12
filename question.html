@@ -436,6 +436,7 @@
         let correctQuestions = []; // 记录答对的题目ID
         let wrongQuestions = []; // 记录答错的题目ID
         let practiceId = null; // 练习会话ID
+        let autoNextScheduled = false; // 是否已安排自动下一题
         
         // 进度保存函数
         function saveProgress() {
@@ -1140,10 +1141,19 @@
             const autoNext = autoSettings.autoNext !== undefined ? autoSettings.autoNext : true;
             const displayDuration = autoSettings.answerDelay || 1000; // 默认1000ms
             
+            // 重置自动下一题标志
+            autoNextScheduled = false;
+            
             if (autoNext) {
+                // 标记已安排自动下一题
+                autoNextScheduled = true;
+                
                 // 使用设置中的显示时长来控制弹窗显示时间
                 setTimeout(() => {
-                    nextQuestion();
+                    // 只有在标志仍为true时才执行自动下一题
+                    if (autoNextScheduled) {
+                        nextQuestion();
+                    }
                 }, displayDuration);
                 
                 // 更新倒计时显示
@@ -1243,6 +1253,9 @@
         }
         
         function nextQuestion() {
+            // 重置自动下一题标志，防止重复触发
+            autoNextScheduled = false;
+            
             closePopup();
             currentQuestionIndex++;
             
