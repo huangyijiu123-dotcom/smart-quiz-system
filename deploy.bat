@@ -19,7 +19,7 @@ echo [信息] Git已安装 ✓
 echo.
 
 :: 获取用户输入
-set /p REPO_URL="请输入您的GitHub仓库地址 (例如: https://github.com/username/repo.git): "
+set /p REPO_URL="请输入您的GitHub仓库地址 (例如: https://github.com/huangyijiu123-dotcom/smart-quiz-system): "
 if "%REPO_URL%"=="" (
     echo [错误] 仓库地址不能为空
     pause
