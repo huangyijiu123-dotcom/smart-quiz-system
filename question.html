@@ -1047,10 +1047,33 @@
             const correctLetter = document.getElementById('correctLetter');
             const correctText = document.getElementById('correctText');
             
+            // 获取或创建解析元素
+            let explanationContainer = document.getElementById('explanationContainer');
+            if (!explanationContainer) {
+                explanationContainer = document.createElement('div');
+                explanationContainer.id = 'explanationContainer';
+                explanationContainer.className = 'mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg';
+                
+                const explanationTitle = document.createElement('div');
+                explanationTitle.className = 'font-medium text-gray-700 dark:text-gray-300 mb-1';
+                explanationTitle.textContent = '解析：';
+                
+                const explanationContent = document.createElement('div');
+                explanationContent.id = 'explanationContent';
+                explanationContent.className = 'text-gray-600 dark:text-gray-400 text-sm';
+                
+                explanationContainer.appendChild(explanationTitle);
+                explanationContainer.appendChild(explanationContent);
+                
+                // 将解析容器添加到弹窗中，放在正确答案区域后面
+                correctAnswer.parentNode.insertBefore(explanationContainer, correctAnswer.nextSibling);
+            }
+            
             // 获取用户设置
             const userSettings = JSON.parse(WebViewCompat.storage.getItem('appSettings') || '{}');
             const vibrationEnabled = userSettings.vibration !== undefined ? userSettings.vibration : false;
             const soundEnabled = userSettings.sound !== undefined ? userSettings.sound : true;
+            const showExplanation = userSettings.showExplanation !== undefined ? userSettings.showExplanation : true;
             
             if (isCorrect) {
                 // 设置正确状态
@@ -1075,6 +1098,9 @@
                 // 隐藏正确答案区域
                 correctAnswer.classList.add('hidden');
                 
+                // 隐藏解析区域
+                explanationContainer.classList.add('hidden');
+                
                 // 播放正确音效
                 if (soundEnabled) {
                     playCorrectSound();
@@ -1088,6 +1114,18 @@
                 
                 // 显示正确答案区域
                 correctAnswer.classList.remove('hidden');
+                
+                // 获取当前练习模式
+                const urlParams = new URLSearchParams(window.location.search);
+                const currentMode = urlParams.get('mode');
+                
+                // 显示解析区域（如果有解析内容，且是错题练习模式或用户设置为显示解析）
+                if (question.explanation && (currentMode === 'wrong' || showExplanation)) {
+                    document.getElementById('explanationContent').textContent = question.explanation;
+                    explanationContainer.classList.remove('hidden');
+                } else {
+                    explanationContainer.classList.add('hidden');
+                }
                 
                 // 设置正确答案内容
                 // 根据题目数据结构判断题目类型
@@ -1209,6 +1247,10 @@
                 wrongQuestions[existingIndex].lastWrongDate = new Date().toISOString();
                 // 重置连续答对次数
                 wrongQuestions[existingIndex].consecutiveCorrect = 0;
+                // 确保解析内容被保存
+                if (question.explanation && !wrongQuestions[existingIndex].explanation) {
+                    wrongQuestions[existingIndex].explanation = question.explanation;
+                }
             } else {
                 // 如果题目不存在，添加新的错题记录
                 const wrongQuestion = {
@@ -1216,6 +1258,7 @@
                     question: question.question,
                     options: question.options,
                     correct: question.correct,
+                    explanation: question.explanation, // 保存解析内容
                     type: questionType === 'single' ? '单选题' : 
                           questionType === 'multiple' ? '多选题' : 
                           questionType === 'judge' ? '判断题' : questionType,
@@ -1230,7 +1273,7 @@
             }
             
             // 保存到localStorage
-        WebViewCompat.storage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
+            WebViewCompat.storage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
         }
         
         function closePopup() {

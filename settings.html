@@ -201,6 +201,20 @@
                     </div>
                 </div>
                 
+                <!-- 显示解析 -->
+                <div class="p-6 border-b border-gray-100">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-medium text-gray-800">显示解析</h4>
+                            <p class="text-sm text-gray-500">答错时显示题目解析</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
                 <!-- 震动反馈 -->
                 <div class="p-6 border-b border-gray-100">
                     <div class="flex items-center justify-between">
@@ -375,6 +389,7 @@
             theme: 'light',
             answerDelay: 1000, // 默认值设为最小值1000ms
             autoNext: true,
+            showExplanation: true, // 默认显示解析
             vibration: false,
             sound: true,
             dailyTarget: 20,
@@ -437,10 +452,11 @@
             // 更新开关状态
             const toggles = document.querySelectorAll('.toggle-switch input');
             toggles[0].checked = settings.autoNext;
-            toggles[1].checked = settings.vibration;
-            toggles[2].checked = settings.sound;
-            toggles[3].checked = settings.studyReminder;
-            toggles[4].checked = settings.wrongReminder;
+            toggles[1].checked = settings.showExplanation;
+            toggles[2].checked = settings.vibration;
+            toggles[3].checked = settings.sound;
+            toggles[4].checked = settings.studyReminder;
+            toggles[5].checked = settings.wrongReminder;
         }
 
         // 应用主题
@@ -518,20 +534,28 @@
             
             // 开关切换功能
             const toggles = document.querySelectorAll('.toggle-switch input');
-            const settingKeys = ['autoNext', 'vibration', 'sound', 'studyReminder', 'wrongReminder'];
+            const settingKeys = ['autoNext', 'showExplanation', 'vibration', 'sound', 'studyReminder', 'wrongReminder'];
             
             toggles.forEach((toggle, index) => {
                 toggle.addEventListener('change', function() {
                     settings[settingKeys[index]] = this.checked;
-                    saveSettings();
                     
-                    // 特殊处理
+                    // 特殊处理：当打开显示解析功能时，自动关闭自动下一题功能
+                    if (settingKeys[index] === 'showExplanation' && this.checked) {
+                        settings.autoNext = false;
+                        toggles[0].checked = false;
+                        showToast('已关闭自动下一题功能，以便您有足够时间查看解析');
+                    }
+                    
+                    // 特殊处理：震动测试
                     if (settingKeys[index] === 'vibration' && this.checked) {
                         // 测试震动
                         if (navigator.vibrate) {
                             navigator.vibrate(100);
                         }
                     }
+                    
+                    saveSettings();
                 });
             });
 
