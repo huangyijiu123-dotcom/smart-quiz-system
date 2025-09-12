@@ -26,10 +26,7 @@
                     <i class="fas fa-arrow-left text-gray-600 text-lg cursor-pointer"></i>
                     <span id="question-type-title" class="text-lg font-semibold text-gray-800">单选题练习</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-clock text-gray-500"></i>
-                    <span id="timer-display" class="text-sm text-gray-600">12:35</span>
-                </div>
+                <!-- 时间限制已移除 -->
             </div>
             
             <!-- 进度条 -->
@@ -432,8 +429,7 @@
         let wrongCount = 0;
         let countdownTimer;
         let countdownSeconds = 3;
-        let timeLeft = 30 * 60; // 30分钟倒计时
-        let timerInterval;
+        // 时间限制已移除
         let selectedAnswers = []; // 多选题选中的答案
         let multipleChoiceSubmitted = false; // 多选题是否已提交
         let startTime = new Date(); // 记录练习开始时间
@@ -456,7 +452,7 @@
                 totalQuestions: actualTotalQuestions, // 使用根据练习模式确定的题目总数
                 correctCount: correctCount,
                 wrongCount: wrongCount,
-                timeLeft: timeLeft,
+                // 时间限制已移除
                 startTime: startTime.getTime(),
                 correctQuestions: correctQuestions,
                 wrongQuestions: wrongQuestions,
@@ -534,7 +530,7 @@
                 totalQuestions = progressData.totalQuestions;
                 correctCount = progressData.correctCount;
                 wrongCount = progressData.wrongCount;
-                timeLeft = progressData.timeLeft;
+                // 时间限制已移除
                 startTime = new Date(progressData.startTime);
                 correctQuestions = progressData.correctQuestions || [];
                 wrongQuestions = progressData.wrongQuestions || [];
@@ -625,7 +621,7 @@
                         
                         // 更新页面显示
                         updateQuestionDisplay();
-                        startTimer();
+                        // 时间限制已移除
                         
                         // 恢复进度后不需要再次保存，避免索引重复增加
                         return;
@@ -651,7 +647,7 @@
                         
                         // 更新页面显示
                         updateQuestionDisplay();
-                        startTimer();
+                        // 时间限制已移除
                         
                         // 恢复进度后不需要再次保存，避免索引重复增加
                         return;
@@ -687,7 +683,7 @@
                          
                          // 更新页面显示
                          updateQuestionDisplay();
-                         startTimer();
+                         // 时间限制已移除
                          
                          // 保存初始进度
                          saveProgress();
@@ -715,7 +711,7 @@
                      
                      // 更新页面显示
                      updateQuestionDisplay();
-                     startTimer();
+                     // 时间限制已移除
                      
                      // 保存初始进度
                      saveProgress();
@@ -828,19 +824,10 @@
             document.querySelector('.text-orange-700').innerHTML = `<i class="fas fa-question mr-1"></i>未掌握: ${wrongCount}题`;
         }
         
+        // 时间限制功能已移除
         function startTimer() {
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                document.getElementById('timer-display').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    WebViewCompat.dialog.alert('时间到！练习结束。');
-                    goBack();
-                }
-            }, 1000);
+            // 此函数保留但不执行任何操作，以避免其他地方的调用出错
+            return;
         }
         
         function toggleMultipleChoice(element, index) {
@@ -1173,6 +1160,7 @@
         
         // showAnswerPopup函数已完全删除
         
+        // 自动下一题倒计时功能保留，但与时间限制无关
         function startCountdown() {
             const countdownText = document.getElementById('countdownText');
             const countdownCircle = document.getElementById('countdownCircle');
@@ -1242,7 +1230,7 @@
                 popup.style.display = 'none';
             }
             
-            // 清除倒计时
+            // 清除自动下一题倒计时（与时间限制无关）
             if (countdownTimer) {
                 clearInterval(countdownTimer);
             }
@@ -1276,7 +1264,7 @@
                 (practiceMode !== 'wrong' && currentQuestionIndex >= totalQuestions)) {
                 // 练习完成，清除进度
                 clearProgress();
-                clearInterval(timerInterval);
+                // 时间限制已移除，不需要清除计时器
                 const accuracy = Math.round((correctCount / totalQuestions) * 100);
                 
                 // 保存练习记录到practiceHistory
