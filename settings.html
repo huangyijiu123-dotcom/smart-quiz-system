@@ -457,6 +457,16 @@
             toggles[3].checked = settings.sound;
             toggles[4].checked = settings.studyReminder;
             toggles[5].checked = settings.wrongReminder;
+            
+            // 如果显示解析开启，则禁用自动下一题
+            if (settings.showExplanation) {
+                toggles[0].checked = false;
+                toggles[0].disabled = true;
+                toggles[0].parentElement.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                toggles[0].disabled = false;
+                toggles[0].parentElement.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
         }
 
         // 应用主题
@@ -536,15 +546,31 @@
             const toggles = document.querySelectorAll('.toggle-switch input');
             const settingKeys = ['autoNext', 'showExplanation', 'vibration', 'sound', 'studyReminder', 'wrongReminder'];
             
+            
             toggles.forEach((toggle, index) => {
                 toggle.addEventListener('change', function() {
                     settings[settingKeys[index]] = this.checked;
                     
-                    // 特殊处理：当打开显示解析功能时，自动关闭自动下一题功能
-                    if (settingKeys[index] === 'showExplanation' && this.checked) {
+                    // 特殊处理：当打开显示解析功能时，自动关闭自动下一题功能并禁用
+                    if (settingKeys[index] === 'showExplanation') {
+                        if (this.checked) {
+                            settings.autoNext = false;
+                            toggles[0].checked = false;
+                            toggles[0].disabled = true;
+                            toggles[0].parentElement.classList.add('opacity-50', 'cursor-not-allowed');
+                            showToast('已关闭自动下一题功能，以便您有足够时间查看解析');
+                        } else {
+                            toggles[0].disabled = false;
+                            toggles[0].parentElement.classList.remove('opacity-50', 'cursor-not-allowed');
+                        }
+                    }
+                    
+                    // 特殊处理：当尝试开启自动下一题时，如果解析功能已开启，则阻止操作
+                    if (settingKeys[index] === 'autoNext' && this.checked && settings.showExplanation) {
+                        this.checked = false;
                         settings.autoNext = false;
-                        toggles[0].checked = false;
-                        showToast('已关闭自动下一题功能，以便您有足够时间查看解析');
+                        showToast('请先关闭解析功能，才能开启自动下一题');
+                        return; // 阻止继续执行
                     }
                     
                     // 特殊处理：震动测试
