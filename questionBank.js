@@ -993,7 +993,7 @@ const multipleChoiceQuestions = [
 
 // 判断题题库
 const trueFalseQuestions = [
-    [
+    
     {
         "id": 1,
         "question": "在动环监控系统的数据库服务器上安装了Windows2003系统，如果要使得BASS2100或者C3M系统的数据库支持4G以上的内存，那么应该安装32位企业版本。（）",
@@ -1274,7 +1274,7 @@ const trueFalseQuestions = [
         "correct": [1],
         "explanation": "职业道德具有行业性，不同行业的职业道德适用范围不同，并非无限，故该说法错误。"
     }
-]
+
 
 ];
 
