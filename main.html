@@ -114,6 +114,26 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 实操题 -->
+                <div class="card-hover bg-white rounded-2xl p-5 shadow-sm border border-gray-100 cursor-pointer">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-flask text-purple-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">实操题</h3>
+                                <p class="text-sm text-gray-500">动手实践，解决实际问题</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">0题</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -175,8 +195,12 @@
 
         // 题目类型选择跳转
         function selectQuestionType(type) {
-            WebViewCompat.storage.setItem('questionType', type);
-            navigateTo('select.html');
+            if (type === 'practical') {
+                window.location.href = 'shicao.html';
+            } else {
+                localStorage.setItem('selectedQuestionType', type);
+                window.location.href = 'question.html';
+            }
         }
 
         // 底部导航栏跳转
@@ -240,16 +264,18 @@
                 const singleChoiceCount = window.questionBank.getTotalCount('单选题') || 0;
                 const multipleChoiceCount = window.questionBank.getTotalCount('多选题') || 0;
                 const judgmentCount = window.questionBank.getTotalCount('判断题') || 0;
+                const practicalCount = window.questionBank.getTotalCount('实操题') || 0;
                 
                 console.log('题目数量统计:', {
                     单选题: singleChoiceCount,
                     多选题: multipleChoiceCount,
-                    判断题: judgmentCount
+                    判断题: judgmentCount,
+                    实操题: practicalCount
                 });
                 
                 // 更新单选题数量显示
                 const questionCards = document.querySelectorAll('.card-hover');
-                if (questionCards.length >= 3) {
+                if (questionCards.length >= 4) {
                     const singleChoiceSpan = questionCards[0].querySelector('span.text-xs.bg-blue-100');
                     if (singleChoiceSpan) {
                         singleChoiceSpan.textContent = singleChoiceCount + '题';
@@ -265,6 +291,12 @@
                     const judgmentSpan = questionCards[2].querySelector('span.text-xs.bg-orange-100');
                     if (judgmentSpan) {
                         judgmentSpan.textContent = judgmentCount + '题';
+                    }
+
+                    // 更新实操题数量显示
+                    const practicalSpan = questionCards[3].querySelector('span.text-xs.bg-purple-100');
+                    if (practicalSpan) {
+                        practicalSpan.textContent = practicalCount + '题';
                     }
                 }
                 
@@ -299,8 +331,8 @@
             const questionCards = document.querySelectorAll('.card-hover');
             questionCards.forEach((card, index) => {
                 card.addEventListener('click', function() {
-                    const types = ['single', 'multiple', 'judge'];
-                    if (index < 3) {
+                    const types = ['single', 'multiple', 'judge', 'practical'];
+                    if (index < types.length) {
                         selectQuestionType(types[index]);
                     }
                 });

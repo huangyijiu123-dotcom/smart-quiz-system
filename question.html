@@ -241,6 +241,8 @@
                     displayType = '多选题';
                 } else if (questionType === 'judge') {
                     displayType = '判断题';
+                } else if (questionType === 'practical') {
+                    displayType = '实操题';
                 }
                 
                 if (practiceMode === 'wrong') {
@@ -320,7 +322,8 @@
                         // 优先使用题目的type字段进行匹配，同时处理中英文题型
                         const chineseType = questionType === 'single' ? '单选题' : 
                                           questionType === 'multiple' ? '多选题' : 
-                                          questionType === 'judge' ? '判断题' : questionType;
+                                          questionType === 'judge' ? '判断题' :
+                                          questionType === 'practical' ? '实操题' : questionType;
                         
                         if (q.type && (q.type === questionType || q.type === chineseType)) {
                             console.log('根据type字段匹配到题目:', q.question, 'type:', q.type, '筛选类型:', questionType, '中文类型:', chineseType);
@@ -467,7 +470,8 @@
             const typeMap = {
                 '单选题': 'single',
                 '多选题': 'multiple',
-                '判断题': 'judge'
+                '判断题': 'judge',
+                '实操题': 'practical'
             };
             const englishType = typeMap[questionType] || 'single';
             
@@ -489,7 +493,8 @@
             const typeMap = {
                 '单选题': 'single',
                 '多选题': 'multiple',
-                '判断题': 'judge'
+                '判断题': 'judge',
+                '实操题': 'practical'
             };
             const englishType = typeMap[questionType] || 'single';
             
@@ -1261,7 +1266,8 @@
                     explanation: question.explanation, // 保存解析内容
                     type: questionType === 'single' ? '单选题' : 
                           questionType === 'multiple' ? '多选题' : 
-                          questionType === 'judge' ? '判断题' : questionType,
+                          questionType === 'judge' ? '判断题' :
+                          questionType === 'practical' ? '实操题' : questionType,
                     wrongCount: 1,
                     status: '待复习',
                     addedDate: new Date().toISOString(),

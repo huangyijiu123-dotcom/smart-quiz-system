@@ -1279,11 +1279,13 @@ const trueFalseQuestions = [
 ];
 
 // 题库管理类
+const practicalQuestions = [];
 class QuestionBank {
     constructor() {
         this.singleChoice = singleChoiceQuestions;
         this.multipleChoice = multipleChoiceQuestions;
         this.trueFalse = trueFalseQuestions;
+        this.practical = practicalQuestions;
     }
 
     // 根据类型获取题目
@@ -1295,6 +1297,8 @@ class QuestionBank {
                 return this.multipleChoice;
             case '判断题':
                 return this.trueFalse;
+            case '实操题':
+                return this.practical;
             default:
                 return [];
         }

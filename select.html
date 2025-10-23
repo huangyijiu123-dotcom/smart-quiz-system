@@ -341,6 +341,11 @@
                     icon: 'fas fa-question-circle',
                     title: '判断题练习',
                     chineseType: '判断题'
+                },
+                'practical': {
+                    icon: 'fas fa-flask',
+                    title: '实操题练习',
+                    chineseType: '实操题'
                 }
             };
 
@@ -372,7 +377,8 @@
                 const typeMapping = {
                     'single': '单选题',
                     'multiple': '多选题',
-                    'judge': '判断题'
+                    'judge': '判断题',
+                    'practical': '实操题'
                 };
                 const chineseType = typeMapping[currentType];
                 console.log('转换后的中文类型:', chineseType);
@@ -555,10 +561,11 @@
             let isProgressValid = false;
             if (progress) {
                 const typeMap = {
-                    'single': '单选题',
-                    'multiple': '多选题', 
-                    'judge': '判断题'
-                };
+                'single': '单选题',
+                'multiple': '多选题', 
+                'judge': '判断题',
+                'practical': '实操题'
+            };
                 const currentChineseType = typeMap[currentQuestionType];
                 const savedTypeMatches = progress.questionType === currentChineseType || 
                                        progress.questionType === currentQuestionType;
@@ -711,7 +718,8 @@
             const typeMap = {
                 'single': '单选题',
                 'multiple': '多选题',
-                'judge': '判断题'
+                'judge': '判断题',
+                'practical': '实操题'
             };
             
             const chineseType = typeMap[questionType] || '单选题';

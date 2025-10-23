@@ -1,0 +1,1810 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编程填空题练习系统</title>
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                        success: '#22c55e',
+                        danger: '#ef4444',
+                        warning: '#f59e0b',
+                        info: '#0ea5e9',
+                        light: '#f8fafc',
+                        dark: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    },
+                    boxShadow: {
+                        'inner-lg': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+                        'glass': '0 8px 32px rgba(0, 0, 0, 0.1)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.5s ease-in-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-effect {
+                @apply bg-white bg-opacity-20 backdrop-blur-lg;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .transition-all-300 {
+                @apply transition-all duration-300 ease-in-out;
+            }
+            .code-block {
+                @apply font-mono text-sm bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto my-4;
+            }
+            .fill-blank {
+                @apply inline-block w-32 md:w-48 h-8 md:h-10 bg-gray-100 text-red-600 border-b-2 border-primary focus:border-blue-700 focus:outline-none transition-all duration-300 text-center;
+            }
+            .fill-blank.correct {
+                @apply border-success bg-green-50 text-green-700;
+            }
+            .fill-blank.incorrect {
+                @apply border-danger bg-red-50 text-red-700;
+            }
+            .fill-blank.hint {
+                @apply border-warning animate-pulse-slow bg-yellow-50 text-yellow-700;
+            }
+            .btn-primary {
+                @apply bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+            }
+            .btn-secondary {
+                @apply bg-secondary hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50;
+            }
+            .btn-success {
+                @apply bg-success hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50;
+            }
+            .btn-danger {
+                @apply bg-danger hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50;
+            }
+            .btn-icon {
+                @apply flex items-center justify-center gap-2;
+            }
+            .progress-bar {
+                @apply h-2 bg-gray-200 rounded-full overflow-hidden;
+            }
+            .progress-value {
+                @apply h-full bg-primary transition-all duration-500 ease-out;
+            }
+            .quiz-card {
+                @apply bg-white rounded-xl shadow-lg p-6 mb-6 transform hover:scale-[1.01] transition-all duration-300;
+            }
+            .quiz-card.active {
+                @apply ring-2 ring-primary ring-opacity-50;
+            }
+            .quiz-card.completed {
+                @apply opacity-75;
+            }
+            .quiz-card.correct {
+                @apply border-l-4 border-success;
+            }
+            .quiz-card.incorrect {
+                @apply border-l-4 border-danger;
+            }
+            .tooltip {
+                @apply invisible absolute bg-dark text-white text-xs rounded py-1 px-2 -mt-8 opacity-0 transition-opacity duration-300;
+            }
+            .has-tooltip:hover .tooltip {
+                @apply visible opacity-100;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- 顶部导航栏 -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fa fa-code text-primary text-2xl"></i>
+                <h1 class="text-xl md:text-2xl font-bold text-gray-800">编程填空题练习系统</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center gap-2 text-sm text-gray-600">
+                    <i class="fa fa-check-circle text-success"></i>
+                    <span id="correct-count">0</span>
+                    <span class="mx-1">/</span>
+                    <span id="total-count">16</span>
+                </div>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 transition-all duration-300">
+                    <i class="fa fa-moon-o text-gray-600"></i>
+                </button>
+                <button id="help-btn" class="p-2 rounded-full hover:bg-gray-100 transition-all duration-300">
+                    <i class="fa fa-question-circle text-gray-600"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 进度条 -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-lg font-semibold text-gray-700">完成进度</h2>
+                <span id="progress-text" class="text-sm text-gray-600">1/16</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-bar" class="progress-value" style="width: 10%"></div>
+            </div>
+        </div>
+
+        <!-- 题目导航 -->
+        <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-16 gap-2 mb-8">
+            <button class="quiz-nav-btn active flex items-center justify-center h-10 rounded-lg bg-primary text-white font-medium hover:bg-blue-700 transition-all duration-300" data-index="0">1</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="1">2</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="2">3</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="3">4</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="4">5</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="5">6</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="6">7</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="7">8</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="8">9</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="9">10</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="10">11</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="11">12</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="12">13</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="13">14</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="14">15</button>
+            <button class="quiz-nav-btn flex items-center justify-center h-10 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all duration-300" data-index="15">16</button>
+        </div>
+
+        <!-- 题目内容区域 -->
+        <div class="quiz-container">
+            <!-- 题目1 -->
+            <div class="quiz-item active" data-index="0">
+                <div class="quiz-card active">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务一：图像噪声添加</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请在下面补充完正确的代码，生成随机噪声，并完成归一化。</p>
+                    
+                    <div class="code-block">
+                        <pre>import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+import requests
+from PIL import Image
+from io import BytesIO
+
+# 从网络获取图像
+url = 'https://cdn.tzspace.cn/383d0cea-6afe-4a30-8d98-f431102f27f/4316.png'
+response = requests.get(url)
+image = cv2.imdecode(np.frombuffer(response.content, np.uint8), cv2.IMREAD_COLOR)
+
+image_float = image.astype(np.float32) / 255.0
+
+# 请在下面补充完正确的代码，生成随机噪声，并完成归一化
+noise = <input type="text" class="fill-blank" data-answer="np.random.normal" placeholder="请输入代码">(0, 25, image.shape).astype(np.float32) / <input type="text" class="fill-blank" data-answer="255.0" placeholder="请输入代码">
+noisy_image = np.clip(image_float + noise, 0, 1)
+noisy_image = (noisy_image * 255).astype(np.uint8)
+
+# 显示原图与噪声图
+plt.figure(figsize=(5, 3))
+plt.subplot(1, 2, 1)
+plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(cv2.cvtColor(noisy_image, cv2.COLOR_BGR2RGB))
+plt.title("Noisy Image")
+plt.axis("off")
+plt.show()</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用numpy的random.normal函数生成高斯噪声</p>
+                        <p>2. 第一个空需要填写完整的函数调用，包括numpy前缀</p>
+                        <p>3. 第二个空需要填写归一化的值，将像素值从0-255范围转换到0-1范围</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn opacity-50 cursor-not-allowed" disabled="">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目2 -->
+            <div class="quiz-item hidden" data-index="1">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务二：图像灰度转换</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充下面代码，将彩色图像转为灰度图。</p>
+                    
+                    <div class="code-block">
+                        <pre>import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+import requests
+
+# 读取网络图像
+url = 'https://cdn.tzspace.cn/383d0cea-6afe-4a30-8d98-f431102f27f/4316.png'
+response = requests.get(url)
+image = cv2.imdecode(np.frombuffer(response.content, np.uint8), cv2.IMREAD_COLOR)
+
+# 补充下面代码，转为灰度图
+gray_image = <input type="text" class="fill-blank" data-answer="cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)" placeholder="请输入代码">
+
+# 显示灰度图
+plt.figure(figsize=(5, 3))
+plt.imshow(gray_image, cmap='gray')
+plt.title("Grayscale Image")
+plt.axis("off")
+plt.show()</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用OpenCV的cvtColor函数进行颜色空间转换</p>
+                        <p>2. 转换代码为cv2.COLOR_BGR2GRAY</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目3 -->
+            <div class="quiz-item hidden" data-index="2">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务三：图像锐化滤波</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充下面代码，应用3x3的锐化滤波。</p>
+                    
+                    <div class="code-block">
+                        <pre>import matplotlib.pyplot as plt
+import numpy as np
+import requests
+
+# 读取网络图像
+url = 'https://cdn.tzspace.cn/383d0cea-6afe-4a30-8d98-f431102f27f/4316.png'
+response = requests.get(url)
+image = cv2.imdecode(np.frombuffer(response.content, np.uint8), cv2.IMREAD_COLOR)
+
+# 定义锐化滤波核
+sharpen_kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+
+# 应用锐化滤波
+<input type="text" class="fill-blank" data-answer="sharpened = cv2.filter2D(image, -1, sharpen_kernel)" placeholder="请输入代码">
+
+# 显示原图和锐化图
+plt.figure(figsize=(5, 3))
+plt.subplot(1, 2, 1)
+plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(cv2.cvtColor(sharpened, cv2.COLOR_BGR2RGB))
+plt.title("Sharpened Image")
+plt.axis("off")
+plt.show()</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用OpenCV的filter2D函数应用滤波</p>
+                        <p>2. 完整格式为：变量名 = cv2.filter2D(源图像, 目标深度, 核矩阵)</p>
+                        <p>3. 目标深度为-1表示与源图像相同</p>
+                        <p>4. 变量名应为sharpened，源图像为image，核矩阵为sharpen_kernel</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目4 -->
+            <div class="quiz-item hidden" data-index="3">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务四：图像旋转变换</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充下面代码中的函数名，完成旋转矩阵计算和旋转变换。</p>
+                    
+                    <div class="code-block">
+                        <pre>import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+import requests
+
+# 读取网络图像
+url = 'https://cdn.tzspace.cn/383d0cea-6afe-4a30-8d98-f431102f27f/4316.png'
+response = requests.get(url)
+image = cv2.imdecode(np.frombuffer(response.content, np.uint8), cv2.IMREAD_COLOR)
+
+# 获取图像尺寸和中心点
+(h, w) = image.shape[:2]
+center = (w // 2, h // 2)
+
+# 定义旋转角度（例如：逆时针旋转45度）
+angle = 45
+
+# 计算旋转矩阵
+rotation_matrix = cv2.<input type="text" class="fill-blank" data-answer="getRotationMatrix2D" placeholder="请输入函数名">(center, angle, 1.0)
+
+# 执行旋转变换
+rotated = cv2.<input type="text" class="fill-blank" data-answer="warpAffine" placeholder="请输入函数名">(image, rotation_matrix, (w, h), borderValue=(255, 255, 255))
+
+# 显示原图与旋转后的图像
+plt.figure(figsize=(5, 3))
+plt.subplot(1, 2, 1)
+plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(cv2.cvtColor(rotated, cv2.COLOR_BGR2RGB))
+plt.title(f"Rotated Image ({angle}°)")
+plt.axis("off")
+plt.show()</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用cv2.getRotationMatrix2D计算旋转矩阵</p>
+                        <p>2. 参数包括中心点、角度和缩放因子</p>
+                        <p>3. 使用cv2.warpAffine执行旋转变换</p>
+                        <p>4. borderValue=(255,255,255)设置白色边框</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目5 -->
+            <div class="quiz-item hidden" data-index="4">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务五：Pandas数据查看</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充【1】处代码，打印DataFrame的前10行数据。</p>
+                    
+                    <div class="code-block">
+                        <pre>import pandas as pd
+import numpy as np
+
+# 创建一个稍微复杂的 DataFrame 数据集
+data_1 = {
+    '评论ID': np.arange(1, 21),
+    '评论者': ['用户' + str(i) for i in range(1, 21)],
+    '评分': np.random.randint(1, 6, size=20),  # 随机生成 1 到 5 的评分
+    '电影评论': [
+        "这部电影非常好", "剧情很有意思", "演员表现很棒", "非常无聊", "电影节奏太慢",
+        "特效很震撼", "故事情节扣人心弦", "浪费时间", "演员不行", "挺好看的",
+        "剧情很感人", "真的是烂片", "音乐很好听", "导演太差了", "电影拍得不错",
+        "没有意思", "剧情平淡", "很喜欢", "不错的电影", "很失望"
+    ],
+    '评论时间': pd.date_range('2024-01-01', periods=20, freq='D')  # 评论时间从2024年1月1日开始
+}
+
+# 创建 DataFrame
+df_1 = pd.DataFrame(data_1)
+
+# 补充【1】处代码，打印前10行数据
+print("任务一 - 前10行数据：")
+print(<input type="text" class="fill-blank" data-answer="df_1.head(10)" placeholder="请输入代码">)
+#任务一结束</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用DataFrame的head()方法查看前几行数据</p>
+                        <p>2. head(n)方法返回前n行数据，默认为5行</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目6 -->
+            <div class="quiz-item hidden" data-index="5">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务六：Pandas列选择</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充【2】处代码，打印"电影评论"一列。</p>
+                    
+                    <div class="code-block">
+                        <pre>import pandas as pd
+import numpy as np
+
+# 创建一个稍微复杂的 DataFrame 数据集
+data_2 = {
+    '评论ID': np.arange(1, 21),
+    '评论者': ['用户' + str(i) for i in range(1, 21)],
+    '评分': np.random.randint(1, 6, size=20),  # 随机生成 1 到 5 的评分
+    '电影评论': [
+        "剧情复杂", "演员演技很差", "好看的电影", "情节拖沓", "情感细腻",
+        "非常喜欢这部电影", "电影拍得太慢", "没有亮点", "剧情没有意义", "电影好评",
+        "演技不错", "情节非常紧张", "特效差", "评分不高", "剧情很普通",
+        "非常感人", "真心不好看", "导演很棒", "制作精良", "期待续集"
+    ],
+    '评论时间': pd.date_range('2024-01-01', periods=20, freq='D')  # 评论时间从2024年1月1日开始
+}
+
+# 创建 DataFrame
+df_2 = pd.DataFrame(data_2)
+
+# 补充【2】处代码，打印"电影评论"一列
+print("\n任务二 - 电影评论列：")
+print(<input type="text" class="fill-blank" data-answer="df_2['电影评论']" placeholder="请输入代码">)
+#任务二结束</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用方括号[]选择DataFrame的列</p>
+                        <p>2. 列名需要用引号括起来</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目7 -->
+            <div class="quiz-item hidden" data-index="6">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务七：Pandas数据筛选</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充代码，筛选出评分大于等于3的评论。</p>
+                    
+                    <div class="code-block">
+                        <pre>import pandas as pd
+import numpy as np
+
+# 创建一个稍微复杂的 DataFrame 数据集
+data_3 = {
+    '评论ID': np.arange(1, 21),
+    '评论者': ['用户' + str(i) for i in range(1, 21)],
+    '评分': np.random.randint(1, 6, size=20),  # 随机生成 1 到 5 的评分
+    '电影评论': [
+    "这部电影非常好", "剧情很有意思", "演员表现很棒", "非常无聊", "电影节奏太慢",
+    "特效很震撼", "故事情节扣人心弦", "浪费时间", "演员不行", "挺好看的",
+    "剧情很感人", "真的是烂片", "音乐很好听", "导演太差了", "电影拍得不错",
+    "没有意思", "剧情平淡", "很喜欢", "不错的电影", "很失望"
+],
+'评论时间': pd.date_range('2024-01-01', periods=20, freq='D')  # 评论时间从2024年1月1日开始
+}
+# 创建 DataFrame
+df_3 = pd.DataFrame(data_3)
+
+# 筛选出评分大于等于 3 的评论
+df_filtered = <input type="text" class="fill-blank" data-answer="df_3[df_3['评分'] >= 3]" placeholder="请输入代码">
+
+# 打印修改后的表格
+print("\n任务三 - 删除评分低于 3 的评论后的表格：")
+print(df_filtered)
+#任务三结束</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用布尔索引进行数据筛选</p>
+                        <p>2. 条件表达式为：df_3['评分'] &gt;= 3</p>
+                        <p>3. 将条件表达式放在方括号中进行筛选</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目8 -->
+            <div class="quiz-item hidden" data-index="7">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务八：Pandas时间格式清洗</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充下面代码中的函数名，将清洗后的时间转换为标准格式。</p>
+                    
+                    <div class="code-block">
+                        <pre>    "很好看", "剧情不错", "不推荐", "推荐", "特效炸裂",
+    "演技差", "演技在线", "情节紧凑", "音乐动听", "节奏慢"
+],
+'评论时间': [
+    "2024/01/01",
+    "2024年01月02日",
+    "2024.01.03",
+    "2024/01/04",
+    "2024年01月05日",
+    "2024.01.06",
+    "2024/01/07",
+    "2024年01月08日",
+    "2024.01.09",
+    "2024/01/10"
+]
+}
+
+# 创建 DataFrame
+df = pd.DataFrame(data_simple)
+
+# 清洗函数（只用字符串方法，不用 re）
+def clean_time_str(s):
+    s = s.replace("年", "-").replace("月", "-").replace("日", "")
+    s = s.replace("/", "-").replace(".", "-")
+    return s.strip()
+
+# 修改【4】处代码清洗并转换
+df['评论时间_清洗后'] = df['评论时间'].apply(clean_time_str)
+df['评论时间_标准格式'] = <input type="text" class="fill-blank" data-answer="pd.to_datetime" placeholder="请输入函数名">(df['评论时间_清洗后'], errors='coerce').dt.strftime('%Y-%m-%d')
+
+print("\n 修正时间格式后的表格：")
+print(df[['评论ID', '评论时间', '评论时间_清洗后', '评论时间_标准格式']])</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用pandas的to_datetime()函数将字符串转换为日期时间格式</p>
+                        <p>2. 函数格式为：pd.to_datetime(日期字符串, errors='coerce')</p>
+                        <p>3. errors='coerce'参数表示无法解析的日期将被设为NaT</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目9 -->
+            <div class="quiz-item hidden" data-index="8">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务九：OpenCV图像通道数</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充&lt;1&gt;处代码，打印第一张图像的色彩通道数。</p>
+                    
+                    <div class="code-block">
+                        <pre>    'https://cdn.tzspace.cn/exam/20240513-level3-exam/%E7%AC%AC%E5%9B%9B%E9%A2%98/%E7%90%83/basketball_3.png',
+    'https://cdn.tzspace.cn/exam/20240513-level3-exam/%E7%AC%AC%E5%9B%9B%E9%A2%98/%E7%90%83/basketball_4.png',
+    'https://cdn.tzspace.cn/exam/20240513-level3-exam/%E7%AC%AC%E5%9B%9B%E9%A2%98/%E7%90%83/basketball_5.png',
+]
+
+# 系统代码 勿动 函数：从URL下载图片并转换为OpenCV格式
+def download_image_cv2(url):
+    resp = requests.get(url)
+    image_array = np.asarray(bytearray(resp.content), dtype=np.uint8)
+    image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+    return image
+
+# 系统代码 勿动 下载所有图片并转换格式，并存储图片名称
+images_list = []
+for url in image_urls:
+    image = download_image_cv2(url)
+    images_list.append((url, image))
+
+first_image = images_list[0][1]
+
+# 任务一：补充&lt;1&gt;处，打印第一张图像的色彩通道数
+print(f"第一张图像的色彩通道数：{<input type="text" class="fill-blank" data-answer="first_image.shape[2]" placeholder="请输入代码">}")
+#print(f"第一张图像的色彩通道数：{first_image.shape[2]}")
+#任务一结束</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. OpenCV图像的shape属性返回(height, width, channels)</p>
+                        <p>2. 彩色图像通常有3个通道（BGR）</p>
+                        <p>3. 使用shape[2]获取通道数</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目10 -->
+            <div class="quiz-item hidden" data-index="9">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务十：OpenCV图像数据类型</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充代码，打印第一张图像的数据类型。</p>
+                    
+                    <div class="code-block">
+                        <pre># 系统代码 勿动 函数：从URL下载图片并转换为OpenCV格式
+def download_image_cv2(url):
+    resp = requests.get(url)
+    image_array = np.asarray(bytearray(resp.content), dtype=np.uint8)
+    image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+    return image
+
+# 系统代码 勿动 下载所有图片并转换格式，并存储图片名称
+images_list = []
+for url in image_urls:
+    image = download_image_cv2(url)
+    images_list.append((url, image))
+
+first_image = images_list[0][1]
+
+# 任务二：打印第一张图像的数据类型
+print(f"第一张图像的数据类型：{<input type="text" class="fill-blank" data-answer="first_image.dtype" placeholder="请输入代码">}")
+#print(f"第一张图像的数据类型：{first_image.dtype}")
+#任务二结束</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. NumPy数组的dtype属性返回数据类型</p>
+                        <p>2. OpenCV图像通常使用uint8（无符号8位整数）类型</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn opacity-50 cursor-not-allowed" disabled="">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目11 -->
+            <div class="quiz-item hidden" data-index="10">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务十一：图像尺寸获取</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充代码，使用height, width = 【】的形式获取并打印第一张图像的宽度和高度。</p>
+                    
+                    <div class="code-block">
+                        <pre>"https://cdn.tzspace.cn/exam/20240513-level3-exam/%E7%AC%AC%E5%9B%9B%E9%A2%98/%E7%90%83/basketball_1
+]
+
+# 系统代码 勿动 函数：从URL下载图片并转换为OpenCV格式
+def download_image_cv2(url):
+    resp = requests.get(url)
+    image_array = np.asarray(bytearray(resp.content), dtype=np.uint8)
+    image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+    return image
+
+# 系统代码 勿动 下载所有图片并转换格式，并存储图片名称
+images_list = []
+for url in image_urls:
+    image = download_image_cv2(url)
+    images_list.append((url, image))
+
+first_image = images_list[0][1]
+
+# 任务十一：打印第一张图像的宽度和高度
+height, width = <input type="text" class="fill-blank" data-answer="first_image.shape[:2]" placeholder="请输入代码">
+print(f"第一张图像的宽度：{width}，高度：{height}")
+#任务十一结束</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. OpenCV图像的shape属性返回(height, width, channels)</p>
+                        <p>2. 使用shape[:2]获取高度和宽度</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目12 -->
+            <div class="quiz-item hidden" data-index="11">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务十二：灰度图像平均值</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充代码，使用函数调用形式完成图像灰度转换和均值计算：gray_image=【】(first_image,【】) 和 gray_mean=【】(gray_image)。</p>
+                    
+                    <div class="code-block">
+                        <pre>import cv2
+import numpy as np
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+
+# 系统代码 勿动 数据集准备
+image_urls = [
+    'https://cdn.tzspace.cn/exam/20240513-level3-exam/%E7%AC%AC%E5%9B%9B%E9%A2%98/%E7%90%83/basketball_1.png',
+    'https://cdn.tzspace.cn/exam/20240513-level3-exam/%E7%AC%AC%E5%9B%9B%E9%A2%98/%E7%90%83/basketball_2.png',
+    'https://cdn.tzspace.cn/exam/20240513-level3-exam/%E7%AC%AC%E5%9B%9B%E9%A2%98/%E7%90%83/basketball_3.png',
+    'https://cdn.tzspace.cn/exam/20240513-level3-exam/%E7%AC%AC%E5%9B%9B%E9%A2%98/%E7%90%83/basketball_4.png',
+    'https://cdn.tzspace.cn/exam/20240513-level3-exam/%E7%AC%AC%E5%9B%9B%E9%A2%98/%E7%90%83/basketball_5.png',
+]
+
+# 系统代码 勿动 函数：从URL下载图片并转换为OpenCV格式
+def download_image_cv2(url):
+    resp = requests.get(url)
+    image_array = np.asarray(bytearray(resp.content), dtype=np.uint8)
+    image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+    return image
+
+# 系统代码 勿动 下载所有图片并转换格式，并存储图片名称
+images_list = []
+for url in image_urls:
+    image = download_image_cv2(url)
+    images_list.append((url, image))
+
+# 获取第一张图像
+first_image = images_list[0][1]
+
+# 将图像转换为灰度图
+gray_image = <input type="text" class="fill-blank" data-answer="cv2.cvtColor" placeholder="请输入函数名">(first_image, <input type="text" class="fill-blank" data-answer="cv2.COLOR_BGR2GRAY" placeholder="请输入参数">)
+
+# 计算灰度图的平均值
+gray_mean = <input type="text" class="fill-blank" data-answer="np.mean" placeholder="请输入函数名">(gray_image)
+
+# 打印灰度平均值
+print(f"第一张图像的灰度平均值为：{gray_mean:.2f}")</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用cv2.cvtColor()函数将彩色图像转换为灰度图像</p>
+                        <p>2. 颜色转换参数为cv2.COLOR_BGR2GRAY</p>
+                        <p>3. 使用numpy的mean()函数计算灰度图像的平均值</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目13 -->
+            <div class="quiz-item hidden" data-index="12">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务十三：图像显示与标签</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充【1】处代码，提取第一张图片的标签。</p>
+                    
+                    <div class="code-block">
+                        <pre>import requests
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ======== 系统提供代码 ========
+image_urls = [
+    'https://d.ifengimg.com/w1125_q90_webp/x0.ifengimg.com/ucms/2025_15/05B90418E325993E5D424B5EBBD1ACA1576F059_size865_w2570_h1713.jpg',
+    'https://d.ifengimg.com/w1125_q90_webp/x0.ifengimg.com/ucms/2025_16/F97955E89EC37F714EAFAA08F4F80AA82D506AC_size89_w1267_h713.jpg',
+]
+
+def download_image_cv2(url):
+    resp = requests.get(url)
+    image_array = np.asarray(bytearray(resp.content), dtype=np.uint8)
+    image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+    return image
+
+images_list = []
+for url in image_urls:
+    image = download_image_cv2(url)
+    images_list.append((url, image))
+
+# ======== 新增标签定义 ========
+labels = ['bike22', 'phone1']  # 标签
+
+# ======== 任务一 ========
+# 提取第一个图像的标签
+first_label = <input type="text" class="fill-blank" data-answer="labels[0]" placeholder="请输入代码">
+
+# 打印第一个图像的标签
+print(f"第一个图像的标签：{first_label}")</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用索引访问列表中的元素</p>
+                        <p>2. labels列表中第一个元素的索引是0</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目14 -->
+            <div class="quiz-item hidden" data-index="13">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务十四：图像归一化</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充【3】处代码，对图像进行归一化处理。</p>
+                    
+                    <div class="code-block">
+                        <pre>image_array = np.asarray(bytearray(resp.content), dtype=np.uint8)
+image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+return image
+
+images_list = []
+for url in image_urls:
+    image = download_image_cv2(url)
+    images_list.append((url, image))
+
+# ======== 新增标签定义 ========
+labels = ['bike22', 'phone1']  # 标签
+
+# 提取第一个图像
+first_url, first_img = images_list[0]
+first_img_rgb = cv2.cvtColor(first_img, cv2.COLOR_BGR2RGB)  # BGR转RGB
+
+# ======== 任务二 ========
+# 修改【3】处代码，进行归一化处理
+img_array = first img_rgb.astype(np.float32)<input type="text" class="fill-blank" data-answer="/255.0" placeholder="请输入代码">
+
+print("归一化后的图像数组：")
+print("形状：", img_array.shape)
+print("前10个像素值（R通道第一行）:\n", img_array[0, :10, 0])  # 展示红色通道前10像素</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 图像归一化通常是将像素值从0-255范围转换到0-1范围</p>
+                        <p>2. 先将数据类型转换为float32，然后除以255</p>
+                    </div>
+                    
+                    
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目15 -->
+            <div class="quiz-item hidden" data-index="14">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务十五：数据分割</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充代码，将数据集随机打乱并分为训练集和测试集，比例为7:3。</p>
+                    
+                    <div class="code-block">
+                        <pre>#任务一
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+url = "https://cdn.tzspace.cn/exam/20240519-level3-exam/exam4/rich_texts.csv"
+df = pd.read_csv(url)
+
+# 随机打乱并分为训练集和测试集，比例为7:3
+train_df, test_df = <input type="text" class="fill-blank" data-answer="train_test_split" placeholder="【1】">(df, test_size=<input type="text" class="fill-blank" data-answer="0.3" placeholder="【2】">, random_state=42)
+
+# 打印训练集和测试集
+print("训练集：")
+print(train_df)
+print("\n测试集：")
+print(test_df)
+#任务一结束</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用sklearn的train_test_split函数</p>
+                        <p>2. test_size参数设置为0.3表示测试集占30%</p>
+                        <p>3. 设置random_state确保结果可重现</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目16 -->
+            <div class="quiz-item hidden" data-index="15">
+                <div class="quiz-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">任务十六：数据集信息</h2>
+                        <div class="flex gap-2">
+                            <button class="hint-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-lightbulb-o text-warning"></i>
+                                <span class="tooltip">查看提示</span>
+                            </button>
+                            <button class="save-btn p-2 rounded-full hover:bg-gray-100 transition-all duration-300 has-tooltip">
+                                <i class="fa fa-save text-gray-600"></i>
+                                <span class="tooltip">保存答案</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">请补充代码，打印训练集的数量和训练集中的部分文本内容。</p>
+                    
+                    <div class="code-block">
+                        <pre>#任务二
+
+# 打印训练集的数量
+print(f"训练集数量：{<input type="text" class="fill-blank" data-answer="len(train_df)" placeholder="请输入代码">}")
+
+# 打印训练集中的部分文本内容
+print("训练集中三条文本内容：")
+print(<input type="text" class="fill-blank" data-answer="train_df.head(3)" placeholder="请输入代码">)
+#任务二结束</pre>
+                    </div>
+                    
+                    <div class="hint-content hidden mt-4 p-4 bg-yellow-50 border-l-4 border-warning rounded-r-lg">
+                        <h3 class="font-bold text-warning mb-2">提示：</h3>
+                        <p>1. 使用len()函数获取DataFrame的行数</p>
+                        <p>2. 使用head()方法获取前几行数据，默认是5行</p>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button class="btn-secondary prev-btn">
+                            <i class="fa fa-arrow-left"></i> 上一题
+                        </button>
+                        <button class="check-btn btn-primary">
+                            <i class="fa fa-check"></i> 检查答案
+                        </button>
+                        <button class="btn-primary next-btn opacity-50 cursor-not-allowed" disabled="">
+                            下一题 <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 帮助模态框 -->
+    <div id="help-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl shadow-xl p-6 max-w-md w-full mx-4 animate-fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">使用帮助</h3>
+                <button id="close-help" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="font-semibold text-gray-700">如何答题</h4>
+                    <p class="text-gray-600">在代码中的空白处输入正确的代码，然后点击"检查答案"按钮验证。</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-700">提示功能</h4>
+                    <p class="text-gray-600">点击灯泡图标可以查看当前题目的提示信息。</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-700">保存答案</h4>
+                    <p class="text-gray-600">点击保存按钮可以将当前答案保存到本地存储，下次打开页面时会自动恢复。</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-700">题目导航</h4>
+                    <p class="text-gray-600">点击顶部的数字按钮可以快速跳转到对应题目。</p>
+                </div>
+            </div>
+            <div class="mt-6">
+                <button id="got-it" class="btn-primary w-full">我知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 完成提示模态框 -->
+    <div id="complete-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl shadow-xl p-6 max-w-md w-full mx-4 animate-fade-in">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-success mb-4">
+                    <i class="fa fa-check-circle text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800">恭喜完成所有题目！</h3>
+                <p class="text-gray-600 mt-2">你的得分：<span id="final-score" class="font-bold text-primary">0</span>/16</p>
+            </div>
+            <div class="space-y-3 mb-6">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">正确率：</span>
+                    <span id="accuracy" class="font-semibold">0%</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">用时：</span>
+                    <span id="time-spent" class="font-semibold">0分钟</span>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button id="review-btn" class="btn-secondary flex-1">
+                    <i class="fa fa-list"></i> 查看错题
+                </button>
+                <button id="restart-btn" class="btn-primary flex-1">
+                    <i class="fa fa-refresh"></i> 重新开始
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部信息 -->
+    <footer class="bg-white shadow-inner py-4 mt-8">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>© 2025 编程填空题练习系统 | 专为编程学习者设计</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化变量
+            let currentQuestionIndex = 0;
+            const totalQuestions = document.querySelectorAll('.quiz-item').length;
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let startTime = new Date();
+            let userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+            let questionStatus = JSON.parse(localStorage.getItem('questionStatus')) || {};
+            
+            // DOM元素
+            const quizItems = document.querySelectorAll('.quiz-item');
+            const quizNavBtns = document.querySelectorAll('.quiz-nav-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const correctCountEl = document.getElementById('correct-count');
+            const helpBtn = document.getElementById('help-btn');
+            const helpModal = document.getElementById('help-modal');
+            const closeHelp = document.getElementById('close-help');
+            const gotIt = document.getElementById('got-it');
+            const completeModal = document.getElementById('complete-modal');
+            const finalScore = document.getElementById('final-score');
+            const accuracy = document.getElementById('accuracy');
+            const timeSpent = document.getElementById('time-spent');
+            const reviewBtn = document.getElementById('review-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // 初始化页面
+            updateProgress();
+            loadSavedAnswers();
+            updateQuestionStatus();
+            
+            // 为每个题目添加答案内容到解析中
+            document.querySelectorAll('.quiz-item').forEach(quizItem => {
+                const hintContent = quizItem.querySelector('.hint-content');
+                const inputs = quizItem.querySelectorAll('.fill-blank');
+                
+                if (hintContent && inputs.length > 0) {
+                    // 创建答案标题
+                    const answerTitle = document.createElement('h3');
+                    answerTitle.className = 'font-bold text-success mb-2';
+                    answerTitle.textContent = '答案：';
+                    
+                    // 创建答案列表
+                    const answerList = document.createElement('div');
+                    answerList.className = 'space-y-2 mt-3 pt-3 border-t border-gray-200';
+                    
+                    // 为每个输入框添加答案
+                    inputs.forEach((input, index) => {
+                        const correctAnswer = input.dataset.answer;
+                        const placeholder = input.placeholder || `【${index + 1}】`;
+                        
+                        const answerItem = document.createElement('p');
+                        answerItem.className = 'text-success';
+                        answerItem.innerHTML = `<span class="font-medium">${placeholder}：</span>${correctAnswer}`;
+                        
+                        answerList.appendChild(answerItem);
+                    });
+                    
+                    // 添加到解析内容中
+                    hintContent.appendChild(answerTitle);
+                    hintContent.appendChild(answerList);
+                }
+            });
+            
+            // 显示当前题目
+            showQuestion(currentQuestionIndex);
+            
+            // 上一题按钮点击事件
+            document.querySelectorAll('.prev-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (currentQuestionIndex > 0) {
+                        // 重置当前题目的状态
+                        const currentQuizItem = document.querySelector(`.quiz-item[data-index="${currentQuestionIndex}"]`);
+                        const inputs = currentQuizItem.querySelectorAll('.fill-blank');
+                        const hintContent = currentQuizItem.querySelector('.hint-content');
+                        
+                        // 清除输入框内容和样式
+                        inputs.forEach(input => {
+                            input.value = '';
+                            input.classList.remove('correct', 'incorrect', 'hint');
+                        });
+                        
+                        // 隐藏解析内容
+                        if (hintContent) {
+                            hintContent.classList.add('hidden');
+                        }
+                        
+                        // 更新题目状态为未完成
+                        delete questionStatus[currentQuestionIndex];
+                        localStorage.setItem('questionStatus', JSON.stringify(questionStatus));
+                        
+                        // 更新计数
+                        updateCounts();
+                        
+                        // 更新UI
+                        updateQuestionStatus();
+                        
+                        // 切换到上一题
+                        currentQuestionIndex--;
+                        showQuestion(currentQuestionIndex);
+                    }
+                });
+            });
+            
+            // 下一题按钮点击事件
+            document.querySelectorAll('.next-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (currentQuestionIndex < totalQuestions - 1) {
+                        // 重置当前题目的状态
+                        const currentQuizItem = document.querySelector(`.quiz-item[data-index="${currentQuestionIndex}"]`);
+                        const inputs = currentQuizItem.querySelectorAll('.fill-blank');
+                        const hintContent = currentQuizItem.querySelector('.hint-content');
+                        
+                        // 清除输入框内容和样式
+                        inputs.forEach(input => {
+                            input.value = '';
+                            input.classList.remove('correct', 'incorrect', 'hint');
+                        });
+                        
+                        // 隐藏解析内容
+                        if (hintContent) {
+                            hintContent.classList.add('hidden');
+                        }
+                        
+                        // 更新题目状态为未完成
+                        delete questionStatus[currentQuestionIndex];
+                        localStorage.setItem('questionStatus', JSON.stringify(questionStatus));
+                        
+                        // 更新计数
+                        updateCounts();
+                        
+                        // 更新UI
+                        updateQuestionStatus();
+                        
+                        // 切换到下一题
+                        currentQuestionIndex++;
+                        showQuestion(currentQuestionIndex);
+                    }
+                });
+            });
+            
+            // 题目导航按钮点击事件
+            quizNavBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    currentQuestionIndex = index;
+                    showQuestion(currentQuestionIndex);
+                });
+            });
+            
+            // 检查答案按钮点击事件
+            document.querySelectorAll('.check-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const quizItem = this.closest('.quiz-item');
+                    const index = parseInt(quizItem.dataset.index);
+                    const inputs = quizItem.querySelectorAll('.fill-blank');
+                    let allCorrect = true;
+                    
+                    inputs.forEach(input => {
+                        const userAnswer = input.value.trim();
+                        const correctAnswer = input.dataset.answer.trim();
+                        
+                        // 简单的代码归一化，去除所有空格和换行符
+                        const normalize = (code) => code.replace(/\s+/g, '').trim();
+                        
+                        if (normalize(userAnswer) === normalize(correctAnswer)) {
+                            input.classList.remove('incorrect', 'hint');
+                            input.classList.add('correct');
+                        } else {
+                            input.classList.remove('correct', 'hint');
+                            input.classList.add('incorrect');
+                            allCorrect = false;
+                        }
+                    });
+                    
+                    // 更新题目状态
+                    questionStatus[index] = allCorrect ? 'correct' : 'incorrect';
+                    localStorage.setItem('questionStatus', JSON.stringify(questionStatus));
+                    
+                    // 更新计数
+                    updateCounts();
+                    
+                    // 更新UI
+                    updateQuestionStatus();
+                    
+                    // 显示解析内容
+                    const hintContent = quizItem.querySelector('.hint-content');
+                    hintContent.classList.remove('hidden');
+                    
+                    // 检查是否完成所有题目
+                    checkCompletion();
+                });
+            });
+            
+            // 提示按钮点击事件
+            document.querySelectorAll('.hint-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const quizItem = this.closest('.quiz-item');
+                    const hintContent = quizItem.querySelector('.hint-content');
+                    hintContent.classList.toggle('hidden');
+                    
+                    // 如果显示提示，给输入框添加提示样式
+                    if (!hintContent.classList.contains('hidden')) {
+                        const inputs = quizItem.querySelectorAll('.fill-blank');
+                        inputs.forEach(input => {
+                            if (!input.classList.contains('correct')) {
+                                input.classList.add('hint');
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // 保存按钮点击事件
+            document.querySelectorAll('.save-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const quizItem = this.closest('.quiz-item');
+                    const index = parseInt(quizItem.dataset.index);
+                    const inputs = quizItem.querySelectorAll('.fill-blank');
+                    const answers = [];
+                    
+                    inputs.forEach(input => {
+                        answers.push(input.value);
+                    });
+                    
+                    userAnswers[index] = answers;
+                    localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+                    
+                    // 显示保存成功提示
+                    const saveIcon = this.querySelector('i');
+                    const originalClass = saveIcon.className;
+                    saveIcon.className = 'fa fa-check text-success';
+                    
+                    setTimeout(() => {
+                        saveIcon.className = originalClass;
+                    }, 2000);
+                });
+            });
+            
+            // 帮助按钮点击事件
+            helpBtn.addEventListener('click', function() {
+                helpModal.classList.remove('hidden');
+            });
+            
+            // 关闭帮助模态框
+            closeHelp.addEventListener('click', function() {
+                helpModal.classList.add('hidden');
+            });
+            
+            // 我知道了按钮点击事件
+            gotIt.addEventListener('click', function() {
+                helpModal.classList.add('hidden');
+            });
+            
+            // 查看错题按钮点击事件
+            reviewBtn.addEventListener('click', function() {
+                completeModal.classList.add('hidden');
+                
+                // 找到第一个错误的题目
+                for (let i = 0; i < totalQuestions; i++) {
+                    if (questionStatus[i] === 'incorrect') {
+                        currentQuestionIndex = i;
+                        showQuestion(currentQuestionIndex);
+                        break;
+                    }
+                }
+            });
+            
+            // 重新开始按钮点击事件
+            restartBtn.addEventListener('click', function() {
+                // 清除本地存储
+                localStorage.removeItem('userAnswers');
+                localStorage.removeItem('questionStatus');
+                
+                // 重置状态
+                userAnswers = {};
+                questionStatus = {};
+                correctCount = 0;
+                incorrectCount = 0;
+                currentQuestionIndex = 0;
+                startTime = new Date();
+                
+                // 重置UI
+                document.querySelectorAll('.fill-blank').forEach(input => {
+                    input.value = '';
+                    input.classList.remove('correct', 'incorrect', 'hint');
+                });
+                
+                document.querySelectorAll('.hint-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                
+                updateCounts();
+                updateQuestionStatus();
+                showQuestion(currentQuestionIndex);
+                
+                completeModal.classList.add('hidden');
+            });
+            
+            // 主题切换按钮点击事件
+            themeToggle.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.className = 'fa fa-sun-o text-yellow-400';
+                    // 这里可以添加更多的暗色模式样式
+                } else {
+                    icon.className = 'fa fa-moon-o text-gray-600';
+                    // 这里可以移除暗色模式样式
+                }
+            });
+            
+            // 显示指定题目
+            function showQuestion(index) {
+                // 隐藏所有题目
+                quizItems.forEach(item => {
+                    item.classList.add('hidden');
+                });
+                
+                // 显示当前题目
+                const currentQuizItem = document.querySelector(`.quiz-item[data-index="${index}"]`);
+                currentQuizItem.classList.remove('hidden');
+                currentQuizItem.classList.add('animate-fade-in');
+                
+                // 更新导航按钮状态
+                quizNavBtns.forEach(btn => {
+                    btn.classList.remove('active', 'bg-primary', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                
+                const currentNavBtn = document.querySelector(`.quiz-nav-btn[data-index="${index}"]`);
+                currentNavBtn.classList.add('active', 'bg-primary', 'text-white');
+                currentNavBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                
+                // 更新上一题/下一题按钮状态
+                const prevBtn = currentQuizItem.querySelector('.prev-btn');
+                const nextBtn = currentQuizItem.querySelector('.next-btn');
+                
+                if (index === 0) {
+                    prevBtn.disabled = true;
+                    prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    prevBtn.disabled = false;
+                    prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                
+                if (index === totalQuestions - 1) {
+                    nextBtn.disabled = true;
+                    nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    nextBtn.disabled = false;
+                    nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                
+                // 更新进度
+                updateProgress();
+            }
+            
+            // 更新进度条
+            function updateProgress() {
+                const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${currentQuestionIndex + 1}/${totalQuestions}`;
+            }
+            
+            // 加载保存的答案
+            function loadSavedAnswers() {
+                for (const index in userAnswers) {
+                    const quizItem = document.querySelector(`.quiz-item[data-index="${index}"]`);
+                    if (quizItem) {
+                        const inputs = quizItem.querySelectorAll('.fill-blank');
+                        const answers = userAnswers[index];
+                        
+                        inputs.forEach((input, i) => {
+                            if (answers[i]) {
+                                input.value = answers[i];
+                            }
+                        });
+                    }
+                }
+            }
+            
+            // 更新题目状态
+            function updateQuestionStatus() {
+                for (const index in questionStatus) {
+                    const status = questionStatus[index];
+                    const quizNavBtn = document.querySelector(`.quiz-nav-btn[data-index="${index}"]`);
+                    const quizCard = document.querySelector(`.quiz-item[data-index="${index}"] .quiz-card`);
+                    
+                    if (quizNavBtn && quizCard) {
+                        // 移除所有状态类
+                        quizNavBtn.classList.remove('bg-success', 'bg-danger', 'bg-warning');
+                        quizCard.classList.remove('correct', 'incorrect');
+                        
+                        // 添加当前状态类
+                        if (status === 'correct') {
+                            quizNavBtn.classList.add('bg-success', 'text-white');
+                            quizCard.classList.add('correct');
+                        } else if (status === 'incorrect') {
+                            quizNavBtn.classList.add('bg-danger', 'text-white');
+                            quizCard.classList.add('incorrect');
+                        }
+                    }
+                }
+            }
+            
+            // 更新计数
+            function updateCounts() {
+                correctCount = 0;
+                incorrectCount = 0;
+                
+                for (const index in questionStatus) {
+                    if (questionStatus[index] === 'correct') {
+                        correctCount++;
+                    } else if (questionStatus[index] === 'incorrect') {
+                        incorrectCount++;
+                    }
+                }
+                
+                correctCountEl.textContent = correctCount;
+            }
+            
+            // 检查是否完成所有题目
+            function checkCompletion() {
+                if (Object.keys(questionStatus).length === totalQuestions) {
+                    // 计算用时
+                    const endTime = new Date();
+                    const minutes = Math.floor((endTime - startTime) / (1000 * 60));
+                    
+                    // 更新完成模态框
+                    finalScore.textContent = correctCount;
+                    accuracy.textContent = `${Math.round((correctCount / totalQuestions) * 100)}%`;
+                    timeSpent.textContent = `${minutes}分钟`;
+                    
+                    // 显示完成模态框
+                    completeModal.classList.remove('hidden');
+                }
+            }
+            
+            // 图像预览功能
+            function setupImagePreviews() {
+                // 任务十三：图像显示与标签
+                const previewImage13 = document.getElementById('preview-image-13');
+                const previewLabel13 = document.getElementById('preview-label-13');
+                
+                if (previewImage13 && previewLabel13) {
+                    // 预加载图像
+                    const img = new Image();
+                    img.src = previewImage13.src;
+                    img.onload = function() {
+                        previewImage13.classList.remove('opacity-0');
+                        previewImage13.classList.add('opacity-100');
+                    };
+                    img.onerror = function() {
+                        previewImage13.src = 'https://via.placeholder.com/400x300?text=图像加载失败';
+                        previewLabel13.textContent = '图像加载失败';
+                    };
+                }
+                
+                
+            }
+            
+            // 点击模态框外部关闭
+            window.addEventListener('click', function(event) {
+                if (event.target === helpModal) {
+                    helpModal.classList.add('hidden');
+                }
+                
+                if (event.target === completeModal) {
+                    completeModal.classList.add('hidden');
+                }
+            });
+            
+            // 按ESC键关闭模态框
+            window.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    helpModal.classList.add('hidden');
+                    completeModal.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+
+</body></html>
