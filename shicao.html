@@ -1216,6 +1216,14 @@ print(test_df)
                     
                     <div class="code-block">
                         <pre>#任务二
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+url = "https://cdn.tzspace.cn/exam/20240519-level3-exam/exam4/rich_texts.csv"
+df = pd.read_csv(url)
+
+# 随机打乱并分为训练集和测试集，比例为7:3
+train_df, test_df = train_test_split(df, test_size=0.3, random_state=42)
 
 # 打印训练集的数量
 print(f"训练集数量：{<input type="text" class="fill-blank" data-answer="len(train_df)" placeholder="请输入代码">}")
