@@ -1,6 +1,16 @@
 // 题库管理系统
 // 包含单选题、多选题和判断题的完整题库
 
+// 辅助函数：打乱数组
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+
 // 单选题题库
 const singleChoiceQuestions = [
                                      {
@@ -990,6 +1000,16 @@ const multipleChoiceQuestions = [
         "explanation": "智能采购需数据分析与需求预测：深度学习可处理复杂采购数据（如供应链波动），机器学习可构建采购需求预测模型；人脸识别用于身份验证，视频处理用于视觉场景，语言学分析用于文本处理，均与智能采购核心需求关联不大，故正确答案为 A、C。"
     }
 ];
+
+multipleChoiceQuestions.forEach(question => {
+    const optionsWithIndex = question.options.map((option, index) => ({ option, originalIndex: index }));
+    const shuffledOptionsWithIndex = shuffleArray(optionsWithIndex);
+    question.options = shuffledOptionsWithIndex.map(item => item.option);
+    question.correct = question.correct.map(correctIndex => {
+        const newIndex = shuffledOptionsWithIndex.findIndex(item => item.originalIndex === correctIndex);
+        return newIndex;
+    });
+});
 
 // 判断题题库
 const trueFalseQuestions = [
