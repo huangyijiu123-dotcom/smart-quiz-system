@@ -116,15 +116,15 @@
                 </div>
 
                 <!-- 实操题 -->
-                <div class="card-hover bg-white rounded-2xl p-5 shadow-sm border border-gray-100 cursor-pointer">
+                <div class="card-hover bg-white rounded-2xl p-5 shadow-sm border border-gray-100 cursor-pointer" data-type="shicao">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-4">
                             <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-flask text-purple-600 text-xl"></i>
+                                <i class="fas fa-laptop-code text-purple-600 text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="font-semibold text-gray-800">实操题</h3>
-                                <p class="text-sm text-gray-500">动手实践，解决实际问题</p>
+                                <h3 class="font-semibold text-gray-800">实操题目</h3>
+                                <p class="text-sm text-gray-500">动手操作，检验实际技能</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
@@ -133,7 +133,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -195,12 +194,8 @@
 
         // 题目类型选择跳转
         function selectQuestionType(type) {
-            if (type === 'practical') {
-                window.location.href = 'shicao.html';
-            } else {
-                localStorage.setItem('selectedQuestionType', type);
-                window.location.href = 'question.html';
-            }
+            WebViewCompat.storage.setItem('questionType', type);
+            navigateTo('select.html');
         }
 
         // 底部导航栏跳转
@@ -264,13 +259,13 @@
                 const singleChoiceCount = window.questionBank.getTotalCount('单选题') || 0;
                 const multipleChoiceCount = window.questionBank.getTotalCount('多选题') || 0;
                 const judgmentCount = window.questionBank.getTotalCount('判断题') || 0;
-                const practicalCount = window.questionBank.getTotalCount('实操题') || 0;
+                const shicaoCount = window.questionBank.getTotalCount('实操题目') || 0;
                 
                 console.log('题目数量统计:', {
                     单选题: singleChoiceCount,
                     多选题: multipleChoiceCount,
                     判断题: judgmentCount,
-                    实操题: practicalCount
+                    实操题目: shicaoCount
                 });
                 
                 // 更新单选题数量显示
@@ -293,10 +288,10 @@
                         judgmentSpan.textContent = judgmentCount + '题';
                     }
 
-                    // 更新实操题数量显示
-                    const practicalSpan = questionCards[3].querySelector('span.text-xs.bg-purple-100');
-                    if (practicalSpan) {
-                        practicalSpan.textContent = practicalCount + '题';
+                    // 更新实操题目数量显示
+                    const shicaoSpan = questionCards[3].querySelector('span.text-xs.bg-purple-100');
+                    if (shicaoSpan) {
+                        shicaoSpan.textContent = shicaoCount + '题';
                     }
                 }
                 
@@ -329,11 +324,17 @@
             
             // 题目类型卡片点击事件
             const questionCards = document.querySelectorAll('.card-hover');
-            questionCards.forEach((card, index) => {
+            questionCards.forEach((card) => {
                 card.addEventListener('click', function() {
-                    const types = ['single', 'multiple', 'judge', 'practical'];
-                    if (index < types.length) {
-                        selectQuestionType(types[index]);
+                    const type = card.getAttribute('data-type');
+                    if (type === 'shicao') {
+                        navigateTo('shicao.html');
+                    } else {
+                        const types = ['single', 'multiple', 'judge'];
+                        const index = Array.from(questionCards).indexOf(card);
+                        if (index < 3) {
+                            selectQuestionType(types[index]);
+                        }
                     }
                 });
             });
